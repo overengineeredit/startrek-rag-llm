@@ -1,1 +1,4 @@
 venv/**
+
+# Ignore _temp directory
+startrek-rag/_temp/
