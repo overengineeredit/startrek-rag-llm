@@ -3,7 +3,7 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 from langchain_community.document_loaders import UnstructuredPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from get_vector_db import get_vector_db
+from db_config import get_collection
 
 TEMP_FOLDER = os.getenv('TEMP_FOLDER', './_temp')
 
@@ -38,9 +38,9 @@ def embed(file):
     if file.filename != '' and file and allowed_file(file.filename):
         file_path = save_file(file)
         chunks = load_and_split_data(file_path)
-        db = get_vector_db()
-        db.add_documents(chunks)
-        db.persist()
+        collection = get_collection()
+        collection.add_documents(chunks)
+        collection.persist()
         os.remove(file_path)
         
         return True
