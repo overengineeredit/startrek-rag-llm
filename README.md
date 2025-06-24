@@ -9,26 +9,39 @@ A complete Retrieval-Augmented Generation (RAG) system built with ChromaDB, Lang
 - **RAG Pipeline**: Complete retrieval-augmented generation workflow
 - **Docker Support**: Containerized deployment for easy setup
 - **LLM Integration**: Ollama integration for local LLM inference
-- **REST API**: Flask-based API for embedding and querying
+- **REST API**: Flask-based API with clean architecture
+- **Service Layer**: Modular, maintainable code structure
+- **Request Validation**: Input validation with Marshmallow schemas
 
 ## 🏗️ Architecture
 
-The system consists of two main services:
+The system follows a clean, modular architecture with clear separation of concerns:
 
-### 1. **RAG Application** (`startrek-rag/`)
-- Flask web server with REST API endpoints
-- ChromaDB integration for vector storage
-- LangChain integration for LLM orchestration
-- Ollama integration for local LLM inference
+### **Core Components**
 
-### 2. **Content Loader** (`content_loader/`)
+#### 1. **RAG Application** (`startrek-rag/`)
+- **Application Factory**: Clean Flask app initialization
+- **API Blueprints**: Organized REST endpoints under `/api/` prefix
+- **Service Layer**: Business logic encapsulated in `services/rag_service.py`
+- **Configuration Management**: Centralized config with dataclasses
+- **Error Handling**: Comprehensive exception handling throughout
+
+#### 2. **Content Loader** (`content_loader/`)
 - Content processing and chunking
-- Embedding generation
+- Embedding generation via API calls
 - Vector database population
 
-### 3. **Vector Database** (`chroma/`)
+#### 3. **Vector Database** (`chroma/`)
 - ChromaDB instance for storing embeddings
 - Persistent storage for vector data
+
+### **Architecture Benefits**
+- ✅ **Modular Design**: Easy to extend and maintain
+- ✅ **Testability**: Clear separation enables unit testing
+- ✅ **Scalability**: Service layer supports horizontal scaling
+- ✅ **Maintainability**: Clean code structure with proper abstractions
+- ✅ **Error Handling**: Comprehensive error management
+- ✅ **Validation**: Input validation with Marshmallow schemas
 
 ## 📋 Prerequisites
 
@@ -105,30 +118,47 @@ The system consists of two main services:
 
 ### API Endpoints
 
-#### 1. **Generate Embeddings**
+All endpoints are organized under the `/api/` prefix for consistency:
+
+#### **Root Endpoint**
 ```bash
-curl -X POST http://localhost:8080/embed \
+curl http://localhost:8080/
+```
+Returns API information and available endpoints.
+
+#### **1. Query the RAG System**
+```bash
+curl -X POST http://localhost:8080/api/query \
   -H "Content-Type: application/json" \
-  -d '{"text": "Your text here"}'
+  -d '{"query": "Who is Captain Kirk?", "num_results": 5}'
 ```
 
-#### 2. **Add Documents to Vector Database**
+#### **2. Add Documents to Vector Database**
 ```bash
-curl -X POST http://localhost:8080/add \
+curl -X POST http://localhost:8080/api/add \
   -H "Content-Type: application/json" \
   -d '{
-    "embedding": [0.1, 0.2, ...],
     "document": "Your document text",
     "metadata": {"source": "filename", "chunk_id": 1},
     "id": "unique_id"
   }'
 ```
 
-#### 3. **Query the RAG System**
+#### **3. Generate Embeddings**
 ```bash
-curl -X POST http://localhost:8080/query \
+curl -X POST http://localhost:8080/api/embed \
   -H "Content-Type: application/json" \
-  -d '{"query": "Who is Captain Kirk?"}'
+  -d '{"text": "Your text here"}'
+```
+
+#### **4. Get Collection Statistics**
+```bash
+curl http://localhost:8080/api/stats
+```
+
+#### **5. Health Check**
+```bash
+curl http://localhost:8080/api/health
 ```
 
 ### Content Processing
@@ -152,10 +182,16 @@ docker compose run --rm \
 ```
 startrek-rag-llm/
 ├── startrek-rag/              # Main RAG application
-│   ├── app.py                # Flask application with API endpoints
+│   ├── app.py                # Application factory and main entry point
+│   ├── config.py             # Centralized configuration management
 │   ├── embed.py              # Embedding generation utilities
-│   ├── query.py              # Query processing and LLM integration
 │   ├── db_config.py          # ChromaDB configuration
+│   ├── routes/               # API route blueprints
+│   │   ├── __init__.py
+│   │   └── api.py           # REST API endpoints
+│   ├── services/             # Business logic layer
+│   │   ├── __init__.py
+│   │   └── rag_service.py   # RAG operations service
 │   ├── requirements.txt      # Python dependencies
 │   └── Dockerfile           # Container configuration
 ├── content_loader/           # Content processing service
@@ -175,10 +211,20 @@ startrek-rag-llm/
 
 The system uses the following environment variables:
 
-- `CHROMA_HOST`: ChromaDB host (default: `chroma`)
+#### **Database Configuration**
+- `CHROMA_HOST`: ChromaDB host (default: `localhost`)
 - `CHROMA_PORT`: ChromaDB port (default: `8000`)
-- `OLLAMA_HOST`: Ollama host (default: `host.docker.internal`)
+- `COLLECTION_NAME`: ChromaDB collection name (default: `startrek`)
+
+#### **Ollama Configuration**
+- `OLLAMA_HOST`: Ollama host (default: `localhost`)
+- `OLLAMA_PORT`: Ollama port (default: `11434`)
 - `LLM_MODEL`: LLM model name (default: `llama3.2`)
+
+#### **Application Configuration**
+- `FLASK_HOST`: Flask host (default: `0.0.0.0`)
+- `FLASK_PORT`: Flask port (default: `8080`)
+- `FLASK_DEBUG`: Debug mode (default: `True`)
 - `TEMP_FOLDER`: Temporary files directory (default: `./_temp`)
 
 ### Docker Configuration
@@ -208,15 +254,24 @@ The `docker-compose.yml` file configures:
    OLLAMA_HOST=0.0.0.0:11434 ollama serve
    ```
 
-4. **Test queries:**
+4. **Test all endpoints:**
    ```bash
-   # Test basic query
-   curl -X POST http://localhost:8080/query \
+   # Test root endpoint
+   curl http://localhost:8080/
+   
+   # Test health check
+   curl http://localhost:8080/api/health
+   
+   # Test stats
+   curl http://localhost:8080/api/stats
+   
+   # Test query
+   curl -X POST http://localhost:8080/api/query \
      -H "Content-Type: application/json" \
      -d '{"query": "Who is Captain Kirk?"}'
    
    # Test embedding generation
-   curl -X POST http://localhost:8080/embed \
+   curl -X POST http://localhost:8080/api/embed \
      -H "Content-Type: application/json" \
      -d '{"text": "Star Trek is a science fiction franchise"}'
    ```
@@ -241,6 +296,10 @@ The `docker-compose.yml` file configures:
    - Ensure ports 8080 and 8000 are available
    - Modify `docker-compose.yml` if needed
 
+5. **Import Errors**
+   - Ensure all dependencies are installed: `pip install -r requirements.txt`
+   - Check Python path and virtual environment activation
+
 ### Logs and Debugging
 
 ```bash
@@ -252,6 +311,9 @@ docker compose logs chroma
 
 # Follow logs in real-time
 docker compose logs -f app
+
+# Check service status
+docker compose ps
 ```
 
 ## 📚 Dependencies
@@ -262,17 +324,36 @@ docker compose logs -f app
 - **Flask**: Web framework for API
 - **Ollama**: Local LLM inference
 - **Python-dotenv**: Environment variable management
+- **Marshmallow**: Request validation and serialization
+- **Flask-restx**: API documentation (future enhancement)
 
 ### Development Dependencies
 - **Docker**: Containerization
 - **Docker Compose**: Service orchestration
 - **Make**: Build automation
 
+## 🔄 Architecture Evolution
+
+### **Previous Architecture**
+- Monolithic Flask application
+- Mixed concerns in single files
+- Direct endpoint definitions
+- Limited error handling
+
+### **Current Architecture**
+- ✅ **Application Factory Pattern**: Clean app initialization
+- ✅ **Service Layer**: Business logic encapsulation
+- ✅ **API Blueprints**: Organized route structure
+- ✅ **Centralized Configuration**: Environment-based config management
+- ✅ **Comprehensive Error Handling**: Proper exception management
+- ✅ **Request Validation**: Input validation with schemas
+- ✅ **Modular Design**: Easy to extend and maintain
+
 ## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature-name`
-3. Make your changes
+3. Make your changes following the established architecture patterns
 4. Test thoroughly
 5. Commit your changes: `git commit -m 'Add feature'`
 6. Push to the branch: `git push origin feature-name`
@@ -288,6 +369,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - **ChromaDB** for vector database functionality
 - **LangChain** for LLM orchestration
 - **Ollama** for local LLM inference
+- **Flask** for the web framework foundation
 
 ---
 
