@@ -1,6 +1,8 @@
 import os
 import logging
 from dotenv import load_dotenv
+import datetime
+import requests
 
 # Configure logging
 logging.basicConfig(
@@ -134,6 +136,45 @@ def route_add():
     except Exception as e:
         logger.exception("Error adding document to ChromaDB")
         return jsonify({"error": f"Add error: {str(e)}"}), 500
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    """Health check endpoint to verify system status"""
+    logger.debug("Received health check request")
+    try:
+        # Check database connection
+        collection = get_collection()
+        # Try a simple operation to verify connection
+        collection.count()
+        
+        # Check if Ollama is accessible
+        ollama_url = f"http://{OLLAMA_HOST}:11434/api/tags"
+        ollama_response = requests.get(ollama_url, timeout=5)
+        
+        if ollama_response.status_code == 200:
+            logger.info("Health check passed - all systems operational")
+            return jsonify({
+                "status": "healthy",
+                "database": "connected",
+                "ollama": "accessible",
+                "model": LLM_MODEL,
+                "timestamp": str(datetime.datetime.now())
+            }), 200
+        else:
+            logger.warning("Health check failed - Ollama not accessible")
+            return jsonify({
+                "status": "degraded",
+                "database": "connected",
+                "ollama": "not accessible",
+                "error": "Ollama service not responding"
+            }), 503
+    except Exception as e:
+        logger.exception("Health check failed")
+        return jsonify({
+            "status": "unhealthy",
+            "error": str(e),
+            "timestamp": str(datetime.datetime.now())
+        }), 500
 
 if __name__ == '__main__':
     logger.info("Starting Flask application")

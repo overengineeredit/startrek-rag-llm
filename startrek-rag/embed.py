@@ -3,9 +3,14 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 from langchain_community.document_loaders import UnstructuredPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from db_config import get_collection
+from db_config import get_collection, get_embedding_function
 
 TEMP_FOLDER = os.getenv('TEMP_FOLDER', './_temp')
+
+def get_embedding(text):
+    """Get embedding for a single text string."""
+    embedding_function = get_embedding_function()
+    return embedding_function([text])[0]
 
 # Function to check if the uploaded file is allowed (only PDF files)
 def allowed_file(filename):
