@@ -1,7 +1,7 @@
 flask==3.0.2
 python-dotenv==1.0.1
 chromadb==0.4.24
-langchain==0.1.12
+langchain==0.2.5
 langchain-community>=0.0.28
 langchain-core>=0.1.27
 langchain-text-splitters>=0.0.1
