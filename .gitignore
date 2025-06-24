@@ -44,3 +44,9 @@ Thumbs.db
 # Docker volumes and runtime data
 data/
 volumes/
+
+# Content loader runtime directories
+content_loader/_temp/
+content_loader/chroma-data/
+content_loader/content/
+content_loader/__pycache__/
