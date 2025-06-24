@@ -1,6 +1,5 @@
-.PHONY: setup run clean
+.PHONY: setup run clean process-content
 
-# Python virtual environment
 VENV = venv
 PYTHON = $(VENV)/bin/python
 PIP = $(VENV)/bin/pip
@@ -22,8 +21,13 @@ clean:
 	rm -rf startrek-rag/__pycache__
 	rm -rf startrek-rag/*.pyc
 
+process-content:
+	@echo "Processing content files..."
+	docker compose run --rm -v $(PWD)/content_loader:/app -v $(PWD)/test_content:/app/content app python /app/process_content.py /app/content
+
 help:
 	@echo "Available commands:"
 	@echo "  make setup    - Create virtual environment and install dependencies"
 	@echo "  make run      - Start the application"
-	@echo "  make clean    - Remove virtual environment and temporary files" 
+	@echo "  make clean    - Remove virtual environment and temporary files"
+	@echo "  make process-content - Process content files and add to ChromaDB" 
