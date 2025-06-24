@@ -7,5 +7,5 @@ langchain-core>=0.1.27
 langchain-text-splitters>=0.0.1
 ollama==0.1.6
 unstructured==0.12.5
-werkzeug==3.0.1
+werkzeug==3.0.6
 requests==2.31.0 
