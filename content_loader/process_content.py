@@ -8,7 +8,7 @@ def get_embedding(text, app_url="http://app:8080"):
     """Get embedding from the app's embed endpoint."""
     try:
         response = requests.post(
-            f"{app_url}/embed",
+            f"{app_url}/api/embed",
             json={"text": text},
             headers={"Content-Type": "application/json"}
         )
@@ -35,7 +35,7 @@ def process_and_add_to_chroma(file_path, source_name, app_url="http://app:8080")
 
                 # Add to ChromaDB through app's API
                 response = requests.post(
-                    f"{app_url}/add",
+                    f"{app_url}/api/add",
                     json={
                         "embedding": embedding,
                         "document": chunk,
