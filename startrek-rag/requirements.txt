@@ -6,6 +6,6 @@ langchain-community>=0.0.28
 langchain-core>=0.1.27
 langchain-text-splitters>=0.0.1
 ollama==0.1.6
-unstructured==0.12.5
+unstructured==0.14.3
 werkzeug==3.0.1
 requests==2.31.0 
