@@ -1,4 +1,46 @@
-venv/**
+# Virtual environment
+venv/
+.venv/
 
-# Ignore _temp directory
-startrek-rag/_temp/
+# ChromaDB data and runtime files
+chroma-data/
+chroma/
+chroma_data/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Temporary files
+_temp/
+temp/
+*.tmp
+
+# Database files
+*.sqlite3
+*.db
+
+# Log files
+*.log
+
+# Environment files
+.env
+.env.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker volumes and runtime data
+data/
+volumes/

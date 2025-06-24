@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 from flask import Flask, request, jsonify
-from embed import embed
+from embed import embed, get_embedding
 from query import query
 from db_config import get_collection
 
@@ -37,28 +37,50 @@ except Exception as e:
 @app.route('/embed', methods=['POST'])
 def route_embed():
     logger.debug("Received embed request")
-    if 'file' not in request.files:
-        logger.error("No file part in request")
-        return jsonify({"error": "No file part"}), 400
+    logger.debug(f"Request headers: {dict(request.headers)}")
+    logger.debug(f"Request data: {request.data}")
+    logger.debug(f"Content-Type: {request.content_type}")
+    logger.debug(f"Is JSON: {request.is_json}")
+    
+    # Check if this is a file upload or direct text
+    if request.is_json or request.content_type == 'application/json':
+        data = request.get_json()
+        logger.debug(f"Parsed JSON data: {data}")
+        if 'text' not in data:
+            logger.error("No text in request data")
+            return jsonify({"error": "No text provided"}), 400
+        
+        try:
+            embedding = get_embedding(data['text'])
+            logger.info("Text embedded successfully")
+            return jsonify({"embedding": embedding}), 200
+        except Exception as e:
+            logger.exception("Error during text embedding")
+            return jsonify({"error": f"Embedding error: {str(e)}"}), 500
+    else:
+        # Handle file upload
+        if 'file' not in request.files:
+            logger.error("No file part in request")
+            return jsonify({"error": "No file part"}), 400
 
-    file = request.files['file']
-    logger.debug(f"Received file: {file.filename}")
+        file = request.files['file']
+        logger.debug(f"Received file: {file.filename}")
 
-    if file.filename == '':
-        logger.error("No selected file")
-        return jsonify({"error": "No selected file"}), 400
+        if file.filename == '':
+            logger.error("No selected file")
+            return jsonify({"error": "No selected file"}), 400
 
-    try:
-        embedded = embed(file)
-        if embedded:
-            logger.info("File embedded successfully")
-            return jsonify({"message": "File embedded successfully"}), 200
-        else:
-            logger.error("File embedding failed")
-            return jsonify({"error": "File embedded unsuccessfully"}), 400
-    except Exception as e:
-        logger.exception("Error during embedding")
-        return jsonify({"error": f"Embedding error: {str(e)}"}), 500
+        try:
+            embedded = embed(file)
+            if embedded:
+                logger.info("File embedded successfully")
+                return jsonify({"message": "File embedded successfully"}), 200
+            else:
+                logger.error("File embedding failed")
+                return jsonify({"error": "File embedded unsuccessfully"}), 400
+        except Exception as e:
+            logger.exception("Error during embedding")
+            return jsonify({"error": f"Embedding error: {str(e)}"}), 500
 
 @app.route('/query', methods=['POST'])
 def route_query():
@@ -86,6 +108,32 @@ def route_query():
     except Exception as e:
         logger.exception("Error processing query")
         return jsonify({"error": f"Query error: {str(e)}"}), 500
+
+@app.route('/add', methods=['POST'])
+def route_add():
+    logger.debug("Received add request")
+    if not request.is_json:
+        logger.error("Request is not JSON")
+        return jsonify({"error": "Request must be JSON"}), 400
+    data = request.get_json()
+    logger.debug(f"Add request data: {data}")
+    required_fields = ["embedding", "document", "metadata", "id"]
+    if not all(field in data for field in required_fields):
+        logger.error("Missing required fields in add request")
+        return jsonify({"error": "Missing required fields: embedding, document, metadata, id"}), 400
+    try:
+        collection = get_collection()
+        collection.add(
+            embeddings=[data["embedding"]],
+            documents=[data["document"]],
+            metadatas=[data["metadata"]],
+            ids=[data["id"]]
+        )
+        logger.info("Document added to ChromaDB successfully")
+        return jsonify({"message": "Document added to ChromaDB successfully"}), 200
+    except Exception as e:
+        logger.exception("Error adding document to ChromaDB")
+        return jsonify({"error": f"Add error: {str(e)}"}), 500
 
 if __name__ == '__main__':
     logger.info("Starting Flask application")
