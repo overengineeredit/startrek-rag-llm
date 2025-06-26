@@ -5,7 +5,7 @@ import os
 import sys
 import time
 from datetime import datetime
-from typing import Any, Dict, List, Union, Tuple, cast
+from typing import Any, Dict, List, Tuple, Union, cast
 
 import requests
 from dotenv import load_dotenv
