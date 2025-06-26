@@ -84,6 +84,89 @@ The system follows a clean, modular architecture with clear separation of concer
    ollama pull llama3.2
    ```
 
+## 🚀 Quick Start Commands
+
+### Prerequisites: Build Environment (First Time Setup)
+
+**Before running the local startup commands, ensure your environment is built:**
+
+```bash
+# 1. Clone the repository (if not already done)
+git clone <your-repo-url>
+cd startrek-rag-llm
+
+# 2. Install Ollama (if not already installed)
+# Follow: https://ollama.com/download
+
+# 3. Pull the required model
+ollama pull llama3.2
+
+# 4. Build Docker images (first time or after code changes)
+docker compose build
+
+# 5. Verify Docker and Docker Compose are installed
+docker --version
+docker compose --version
+```
+
+### Local Startup (Recommended for Development)
+
+**Step 1: Start Ollama with Docker compatibility**
+```bash
+# Stop any existing Ollama service
+sudo systemctl stop ollama
+
+# Start Ollama with host binding for Docker containers
+nohup bash -c 'OLLAMA_HOST=0.0.0.0:11434 ollama serve' > ollama.log 2>&1 &
+
+# Verify Ollama is accessible
+curl -s http://localhost:11434/api/tags
+```
+
+**Step 2: Start Docker services**
+```bash
+# Start the application and ChromaDB
+docker compose up -d
+
+# Verify services are running
+docker compose ps
+
+# Check system health
+curl -s http://localhost:8080/api/health
+```
+
+**Step 3: Process Star Trek content (optional)**
+```bash
+# Add Star Trek content to the vector database
+make process-content
+
+# Check database stats
+curl -s http://localhost:8080/api/stats
+```
+
+**Step 4: Test the system**
+```bash
+# Ask a Star Trek question
+curl -X POST http://localhost:8080/api/query \\
+  -H "Content-Type: application/json" \\
+  -d '{"query": "Who is Captain Kirk?", "num_results": 5}'
+```
+
+### Local Shutdown
+
+**Stop all services:**
+```bash
+# Stop Docker containers
+docker compose down
+
+# Stop Ollama processes
+pkill ollama
+
+# Verify everything is stopped
+docker compose ps
+ps aux | grep ollama
+```
+
 ### Option 2: Local Development Setup
 
 1. **Clone the repository:**
