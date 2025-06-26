@@ -4,6 +4,9 @@
 
 A complete Retrieval-Augmented Generation (RAG) system built with ChromaDB, LangChain, and Ollama, designed to answer questions about Star Trek content using vector embeddings and large language models.
 
+testing a verified commit
+
+
 ## 🚀 Features
 
 - **Vector Database**: ChromaDB for efficient similarity search
