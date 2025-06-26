@@ -41,7 +41,7 @@ class EnhancedContentProcessor:
         self.chunk_size = chunk_size
         self.overlap = overlap
         self.html_processor = HTMLProcessor(chunk_size=chunk_size, overlap=overlap)
-        
+
         # Initialize stats with proper types
         self.stats: Dict[str, Union[int, float, Dict[str, int]]] = {
             "total_files_processed": 0,
@@ -56,7 +56,7 @@ class EnhancedContentProcessor:
                 "urls": 0,
             },
         }
-        
+
         logger.info(
             f"Initialized EnhancedContentProcessor with app_url={app_url}, chunk_size={chunk_size}, overlap={overlap}"
         )
@@ -88,27 +88,29 @@ class EnhancedContentProcessor:
         print(f"Total Text Length: {self.stats['total_text_length']}")
         print(f"Errors Encountered: {self.stats['errors']}")
         print(f"Total Processing Time: {self.stats['processing_time']:.2f} seconds")
-        
+
         # Type-safe access to file_types
-        file_types = self.stats.get('file_types', {})
+        file_types = self.stats.get("file_types", {})
         if isinstance(file_types, dict):
             print("\nFile Type Breakdown:")
             print(f"  Text files: {file_types.get('text', 0)}")
             print(f"  HTML files: {file_types.get('html', 0)}")
             print(f"  URLs: {file_types.get('urls', 0)}")
-        
+
         # Calculate averages if we have data
-        total_chunks = self.stats.get('total_chunks_processed', 0)
+        total_chunks = self.stats.get("total_chunks_processed", 0)
         if isinstance(total_chunks, int) and total_chunks > 0:
-            processing_time = self.stats.get('processing_time', 0.0)
+            processing_time = self.stats.get("processing_time", 0.0)
             if isinstance(processing_time, (int, float)):
-                print(f"Average Time per Chunk: {processing_time/total_chunks:.3f} seconds")
-            
-            total_length = self.stats.get('total_text_length', 0)
+                print(
+                    f"Average Time per Chunk: {processing_time/total_chunks:.3f} seconds"
+                )
+
+            total_length = self.stats.get("total_text_length", 0)
             if isinstance(total_length, int):
                 print(f"Average Chunk Size: {total_length/total_chunks:.0f} characters")
 
-        errors = self.stats.get('errors', 0)
+        errors = self.stats.get("errors", 0)
         if isinstance(errors, int) and errors > 0:
             print(f"\n⚠️  WARNING: {errors} errors occurred during processing")
         else:
@@ -279,12 +281,14 @@ class EnhancedContentProcessor:
                 # Access the chunk data properly with type checking
                 if isinstance(chunk_data, dict):
                     chunk_text = cast(str, chunk_data.get("text", ""))
-                    chunk_metadata = cast(Dict[str, Any], chunk_data.get("metadata", {}))
+                    chunk_metadata = cast(
+                        Dict[str, Any], chunk_data.get("metadata", {})
+                    )
                 else:
                     # Fallback if chunk_data is not a dict
                     chunk_text = str(chunk_data)
                     chunk_metadata = {"source": source_name, "chunk_id": i}
-                
+
                 logger.info(
                     f"   Processing HTML chunk {i+1}/{len(chunks)} (length: {len(chunk_text):,} chars)"
                 )
@@ -355,12 +359,14 @@ class EnhancedContentProcessor:
                 # Access the chunk data properly with type checking
                 if isinstance(chunk_data, dict):
                     chunk_text = cast(str, chunk_data.get("text", ""))
-                    chunk_metadata = cast(Dict[str, Any], chunk_data.get("metadata", {}))
+                    chunk_metadata = cast(
+                        Dict[str, Any], chunk_data.get("metadata", {})
+                    )
                 else:
                     # Fallback if chunk_data is not a dict
                     chunk_text = str(chunk_data)
                     chunk_metadata = {"source": source_name, "chunk_id": i}
-                
+
                 logger.info(
                     f"   Processing URL chunk {i+1}/{len(chunks)} (length: {len(chunk_text):,} chars)"
                 )
