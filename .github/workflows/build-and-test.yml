@@ -59,16 +59,23 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
-    - name: Run Bandit security scan
-      uses: python-security/bandit-action@v1
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v4
       with:
-        path: "startrek-rag/,content_loader/"
-        level: low
-        confidence: low
+        python-version: ${{ env.PYTHON_VERSION }}
+        
+    - name: Install security tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install bandit safety
+        
+    - name: Run Bandit security scan
+      run: |
+        bandit -r startrek-rag/ content_loader/ -f json -o bandit-report.json || true
+        cat bandit-report.json
         
     - name: Run Safety check
       run: |
-        pip install safety
         safety check --json --output safety-report.json || true
         cat safety-report.json
 
