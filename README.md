@@ -6,6 +6,9 @@ A complete Retrieval-Augmented Generation (RAG) system built with ChromaDB, Lang
 
 - **Vector Database**: ChromaDB for efficient similarity search
 - **Content Processing**: Automated text chunking and embedding generation
+- **HTML Processing**: Extract text from HTML files and web pages
+- **URL Processing**: Fetch and process content from web URLs
+- **Custom Folder Support**: Process content from any folder or URLs from any file
 - **RAG Pipeline**: Complete retrieval-augmented generation workflow
 - **Docker Support**: Containerized deployment for easy setup
 - **LLM Integration**: Ollama integration for local LLM inference
@@ -246,18 +249,305 @@ curl http://localhost:8080/api/health
 
 ### Content Processing
 
+#### **Custom Folder Support** 🆕
+
+The system now supports processing content from custom folders and URLs from custom files:
+
+```bash
+# Process content from a custom folder
+CONTENT_FOLDER=/path/to/your/content make process-content
+
+# Process URLs from a custom file
+URLS_FILE=/path/to/your/urls.txt make process-urls
+
+# Process both with custom paths
+CONTENT_FOLDER=/path/to/content URLS_FILE=/path/to/urls.txt make process-all
+
+# With verbose logging
+CONTENT_FOLDER=/path/to/content make process-content-verbose
+```
+
+**Examples:**
+```bash
+# Process content from your documents folder
+CONTENT_FOLDER=/home/user/star_trek_docs make process-content
+
+# Process URLs from a different file
+URLS_FILE=/home/user/my_urls.txt make process-urls
+
+# Process everything with custom paths
+CONTENT_FOLDER=/home/user/docs URLS_FILE=/home/user/urls.txt make process-all
+```
+
+**Default Paths:**
+- **Content Folder**: `$(PWD)/test_content` (your current test_content folder)
+- **URLs File**: `$(PWD)/test_content/star_trek_urls.txt`
+
 #### Process New Content
+
 ```bash
 # Add your content files to test_content/
 make process-content
+
+# Or use a custom folder
+CONTENT_FOLDER=/path/to/your/content make process-content
+```
+
+#### Process HTML Files
+```bash
+# Process HTML files in test_content/
+make process-html
+
+# Or use a custom folder
+CONTENT_FOLDER=/path/to/your/html make process-html
+```
+
+#### Process URLs from File
+```bash
+# Process URLs listed in test_content/star_trek_urls.txt
+make process-urls
+
+# Or use a custom URLs file
+URLS_FILE=/path/to/your/urls.txt make process-urls
+```
+
+#### Process All Content Types
+```bash
+# Process text, HTML, and URLs in one command
+make process-all
+
+# Or use custom paths for all
+CONTENT_FOLDER=/path/to/content URLS_FILE=/path/to/urls.txt make process-all
+```
+
+#### Enhanced Output and Logging
+
+The content processors now provide detailed output and comprehensive statistics during processing:
+
+**Standard Output (Default)**
+- Real-time progress tracking for each file/URL
+- File size and content length information
+- Chunk processing progress with timing
+- Success/failure indicators for each operation
+- Summary statistics at completion
+
+**Verbose Logging (Optional)**
+```bash
+# Enable verbose logging for detailed debugging
+make process-content-verbose
+make process-html-verbose
+make process-urls-verbose
+make process-all-verbose
+```
+
+**Statistics Output**
+The processors provide comprehensive statistics including:
+- Total files/URLs processed
+- Total chunks extracted and processed
+- Total embeddings generated
+- Total documents added to ChromaDB
+- Processing time and performance metrics
+- Error counts and success rates
+- File type breakdowns
+- Average chunk sizes and processing times
+
+**Example Output**
+```
+🚀 Starting Enhanced Content Processor at 2024-01-15 10:30:00
+   App URL: http://app:8080
+   Chunk Size: 1000
+   Overlap: 200
+
+📁 Processing folder: /app/content
+📁 Found 5 files to process:
+   Text files: 3
+   HTML files: 2
+
+📄 Processing text file 1/3: startrek_original_series.txt
+   File size: 15,432 bytes
+   Content length: 15,432 characters
+   Split into 45 potential chunks
+   Found 42 non-empty chunks
+   Processing chunk 1/42 (length: 1,234 chars)
+   ✅ Chunk 1 processed successfully in 0.045s
+   ...
+📄 Completed processing startrek_original_series.txt: 42/42 chunks in 2.34s
+
+============================================================
+PROCESSING STATISTICS
+============================================================
+Total Files Processed: 5
+Total URLs Processed: 0
+Total Chunks Processed: 156
+Total Embeddings Generated: 156
+Total Documents Added to ChromaDB: 156
+Errors Encountered: 0
+Total Processing Time: 8.45 seconds
+Average Time per Chunk: 0.054 seconds
+
+File Type Breakdown:
+  Text Files: 3
+  HTML Files: 2
+  URLs: 0
+
+✅ SUCCESS: All content processed without errors
+============================================================
 ```
 
 #### Manual Content Processing
 ```bash
+# Process text files
 docker compose run --rm \
   -v $(PWD)/content_loader:/app \
   -v $(PWD)/test_content:/app/content \
   app python /app/process_content.py /app/content
+
+# Process HTML files
+docker compose run --rm \
+  -v $(PWD)/content_loader:/app \
+  -v $(PWD)/test_content:/app/content \
+  app python /app/enhanced_processor.py --folder /app/content
+
+# Process URLs from file
+docker compose run --rm \
+  -v $(PWD)/content_loader:/app \
+  -v $(PWD)/test_content:/app/content \
+  app python /app/enhanced_processor.py --urls-file /app/content/star_trek_urls.txt
+```
+
+### HTML and URL Processing
+
+The system now supports processing HTML documents and web URLs:
+
+> **Note:**
+> Advanced HTML chunking with the `unstructured` library fails due to a bug where it requests non-existent NLTK resources (like `averaged_perceptron_tagger_eng`). This is a known upstream issue that affects multiple versions. The system automatically falls back to BeautifulSoup-based extraction, which provides reliable HTML ingestion and good content extraction. A bug report has been submitted to the [unstructured GitHub](https://github.com/Unstructured-IO/unstructured) project. The fallback solution ensures your HTML and URL processing works reliably in production.
+
+#### **Supported File Types**
+- **Text Files**: `.txt`, `.md`, `.rst`
+- **HTML Files**: `.html`, `.htm`, `.xhtml`
+
+#### **HTML Processing Features**
+- **Structured Extraction**: Uses `unstructured` library for intelligent content parsing (if available)
+- **BeautifulSoup Integration**: Fallback parsing for complex HTML structures or NLTK issues
+- **Content Cleaning**: Removes scripts, styles, and normalizes text
+- **Metadata Extraction**: Captures titles, headings, and content structure
+- **Smart Chunking**: Creates overlapping chunks with sentence boundary awareness
+
+#### **URL Processing Features**
+- **Web Scraping**: Fetches content from web pages
+- **User-Agent Headers**: Proper browser identification for compatibility
+- **Error Handling**: Graceful handling of network issues and invalid URLs
+- **Content Validation**: Ensures meaningful content extraction
+
+#### **Processing Options**
+```bash
+# Custom chunk size and overlap
+docker compose run --rm \
+  -v $(PWD)/content_loader:/app \
+  -v $(PWD)/test_content:/app/content \
+  app python /app/enhanced_processor.py \
+    --folder /app/content \
+    --chunk-size 1500 \
+    --overlap 300
+
+# Process specific URLs
+docker compose run --rm \
+  -v $(PWD)/content_loader:/app \
+  -v $(PWD)/test_content:/app/content \
+  app python /app/enhanced_processor.py \
+    --urls-file /app/content/star_trek_urls.txt \
+    --app-url http://app:8080
+```
+
+### Makefile Commands
+
+The system provides convenient Makefile commands for common operations:
+
+#### **Available Commands**
+```bash
+# View all available commands
+make help
+```
+
+**Output:**
+```
+Available commands:
+  make setup         - Create virtual environment and install dependencies
+  make run           - Start the application
+  make clean         - Remove virtual environment and temporary files
+
+Content Processing (with detailed output):
+  make process-content - Process text content files and add to ChromaDB
+  make process-html  - Process HTML files and add to ChromaDB
+  make process-urls  - Process URLs from file and add to ChromaDB
+  make process-all   - Process all content types (text, HTML, URLs)
+
+Content Processing (with verbose logging):
+  make process-content-verbose - Process text files with verbose logging
+  make process-html-verbose  - Process HTML files with verbose logging
+  make process-urls-verbose  - Process URLs with verbose logging
+  make process-all-verbose   - Process all content with verbose logging
+
+Custom Paths:
+  You can override default paths using environment variables:
+  CONTENT_FOLDER=/path/to/your/content make process-content
+  URLS_FILE=/path/to/your/urls.txt make process-urls
+  CONTENT_FOLDER=/path/to/content URLS_FILE=/path/to/urls.txt make process-all
+
+Current defaults:
+  Content folder: /path/to/your/test_content
+  URLs file: /path/to/your/test_content/star_trek_urls.txt
+```
+
+#### **Basic Commands**
+```bash
+# Setup development environment
+make setup
+
+# Start the application locally
+make run
+
+# Clean up temporary files
+make clean
+```
+
+#### **Content Processing Commands**
+```bash
+# Process text content (default: test_content/)
+make process-content
+
+# Process HTML files (default: test_content/)
+make process-html
+
+# Process URLs from file (default: test_content/star_trek_urls.txt)
+make process-urls
+
+# Process all content types
+make process-all
+```
+
+#### **Verbose Logging Commands**
+```bash
+# Process with detailed HTTP request logging
+make process-content-verbose
+make process-html-verbose
+make process-urls-verbose
+make process-all-verbose
+```
+
+#### **Custom Path Commands**
+```bash
+# Process content from custom folder
+CONTENT_FOLDER=/path/to/your/content make process-content
+
+# Process URLs from custom file
+URLS_FILE=/path/to/your/urls.txt make process-urls
+
+# Process all with custom paths
+CONTENT_FOLDER=/path/to/content URLS_FILE=/path/to/urls.txt make process-all
+
+# Verbose processing with custom paths
+CONTENT_FOLDER=/path/to/content make process-content-verbose
 ```
 
 ## 📁 Project Structure
@@ -278,11 +568,15 @@ startrek-rag-llm/
 │   ├── requirements.txt      # Python dependencies
 │   └── Dockerfile           # Container configuration
 ├── content_loader/           # Content processing service
-│   ├── process_content.py   # Content processing script
+│   ├── process_content.py   # Original text content processing script
+│   ├── enhanced_processor.py # Enhanced processor supporting HTML and URLs
+│   ├── html_processor.py    # HTML parsing and text extraction utilities
 │   ├── requirements.txt     # Dependencies
 │   └── Dockerfile          # Container configuration
 ├── test_content/            # Sample content for testing
-│   └── startrek_original_series.txt
+│   ├── startrek_original_series.txt
+│   ├── star_trek_wikipedia.html
+│   └── star_trek_urls.txt
 ├── docker-compose.yml       # Service orchestration
 ├── Makefile                # Build and run commands
 └── README.md               # This file
