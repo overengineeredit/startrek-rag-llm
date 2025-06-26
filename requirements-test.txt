@@ -26,4 +26,7 @@ freezegun>=1.2.0
 
 # Coverage reporting
 coverage>=7.0.0
-codecov>=2.1.0 
+codecov>=2.1.0
+
+# Type stubs for mypy
+types-requests>=2.31.0 

@@ -5,7 +5,7 @@ import os
 import sys
 import time
 from datetime import datetime
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List, Union, Tuple, cast
 
 import requests
 from dotenv import load_dotenv
@@ -35,20 +35,28 @@ class EnhancedContentProcessor:
         Args:
             app_url: URL of the app service
             chunk_size: Maximum size of text chunks
-            overlap: Overlap between chunks
+            overlap: Overlap between chunks to maintain context
         """
         self.app_url = app_url
+        self.chunk_size = chunk_size
+        self.overlap = overlap
         self.html_processor = HTMLProcessor(chunk_size=chunk_size, overlap=overlap)
-        self.stats = {
+        
+        # Initialize stats with proper types
+        self.stats: Dict[str, Union[int, float, Dict[str, int]]] = {
             "total_files_processed": 0,
             "total_urls_processed": 0,
             "total_chunks_processed": 0,
-            "total_embeddings_generated": 0,
-            "total_documents_added": 0,
+            "total_text_length": 0,
             "errors": 0,
-            "processing_time": 0,
-            "file_types": {"text": 0, "html": 0, "urls": 0},
+            "processing_time": 0.0,
+            "file_types": {
+                "text": 0,
+                "html": 0,
+                "urls": 0,
+            },
         }
+        
         logger.info(
             f"Initialized EnhancedContentProcessor with app_url={app_url}, chunk_size={chunk_size}, overlap={overlap}"
         )
@@ -59,40 +67,50 @@ class EnhancedContentProcessor:
             "total_files_processed": 0,
             "total_urls_processed": 0,
             "total_chunks_processed": 0,
-            "total_embeddings_generated": 0,
-            "total_documents_added": 0,
+            "total_text_length": 0,
             "errors": 0,
-            "processing_time": 0,
-            "file_types": {"text": 0, "html": 0, "urls": 0},
+            "processing_time": 0.0,
+            "file_types": {
+                "text": 0,
+                "html": 0,
+                "urls": 0,
+            },
         }
 
     def print_stats(self):
         """Print detailed processing statistics."""
         print("\n" + "=" * 60)
-        print("PROCESSING STATISTICS")
+        print("ENHANCED CONTENT PROCESSING STATISTICS")
         print("=" * 60)
         print(f"Total Files Processed: {self.stats['total_files_processed']}")
         print(f"Total URLs Processed: {self.stats['total_urls_processed']}")
         print(f"Total Chunks Processed: {self.stats['total_chunks_processed']}")
-        print(f"Total Embeddings Generated: {self.stats['total_embeddings_generated']}")
-        print(
-            f"Total Documents Added to ChromaDB: {self.stats['total_documents_added']}"
-        )
+        print(f"Total Text Length: {self.stats['total_text_length']}")
         print(f"Errors Encountered: {self.stats['errors']}")
         print(f"Total Processing Time: {self.stats['processing_time']:.2f} seconds")
-        print(
-            f"Average Time per Chunk: {self.stats['processing_time']/max(1, self.stats['total_chunks_processed']):.3f} seconds"
-        )
+        
+        # Type-safe access to file_types
+        file_types = self.stats.get('file_types', {})
+        if isinstance(file_types, dict):
+            print("\nFile Type Breakdown:")
+            print(f"  Text files: {file_types.get('text', 0)}")
+            print(f"  HTML files: {file_types.get('html', 0)}")
+            print(f"  URLs: {file_types.get('urls', 0)}")
+        
+        # Calculate averages if we have data
+        total_chunks = self.stats.get('total_chunks_processed', 0)
+        if isinstance(total_chunks, int) and total_chunks > 0:
+            processing_time = self.stats.get('processing_time', 0.0)
+            if isinstance(processing_time, (int, float)):
+                print(f"Average Time per Chunk: {processing_time/total_chunks:.3f} seconds")
+            
+            total_length = self.stats.get('total_text_length', 0)
+            if isinstance(total_length, int):
+                print(f"Average Chunk Size: {total_length/total_chunks:.0f} characters")
 
-        print("\nFile Type Breakdown:")
-        print(f"  Text Files: {self.stats['file_types']['text']}")
-        print(f"  HTML Files: {self.stats['file_types']['html']}")
-        print(f"  URLs: {self.stats['file_types']['urls']}")
-
-        if self.stats["errors"] > 0:
-            print(
-                f"\n⚠️  WARNING: {self.stats['errors']} errors occurred during processing"
-            )
+        errors = self.stats.get('errors', 0)
+        if isinstance(errors, int) and errors > 0:
+            print(f"\n⚠️  WARNING: {errors} errors occurred during processing")
         else:
             print(f"\n✅ SUCCESS: All content processed without errors")
         print("=" * 60)
@@ -108,7 +126,7 @@ class EnhancedContentProcessor:
             )
             response.raise_for_status()
             embedding = response.json()["embedding"]
-            self.stats["total_embeddings_generated"] += 1
+            self.stats["total_text_length"] += len(text)
             logger.debug(
                 f"Generated embedding in {time.time() - start_time:.3f}s (text length: {len(text)})"
             )
@@ -139,7 +157,7 @@ class EnhancedContentProcessor:
                 headers={"Content-Type": "application/json"},
             )
             response.raise_for_status()
-            self.stats["total_documents_added"] += 1
+            self.stats["total_files_processed"] += 1
             logger.debug(
                 f"Added document to ChromaDB in {time.time() - start_time:.3f}s (doc_id: {doc_id})"
             )
@@ -258,9 +276,15 @@ class EnhancedContentProcessor:
 
             for i, chunk_data in enumerate(chunks):
                 chunk_start = time.time()
-                # Access the chunk data properly
-                chunk_text = chunk_data.get("text", "")
-                chunk_metadata = chunk_data.get("metadata", {})
+                # Access the chunk data properly with type checking
+                if isinstance(chunk_data, dict):
+                    chunk_text = cast(str, chunk_data.get("text", ""))
+                    chunk_metadata = cast(Dict[str, Any], chunk_data.get("metadata", {}))
+                else:
+                    # Fallback if chunk_data is not a dict
+                    chunk_text = str(chunk_data)
+                    chunk_metadata = {"source": source_name, "chunk_id": i}
+                
                 logger.info(
                     f"   Processing HTML chunk {i+1}/{len(chunks)} (length: {len(chunk_text):,} chars)"
                 )
@@ -328,9 +352,15 @@ class EnhancedContentProcessor:
 
             for i, chunk_data in enumerate(chunks):
                 chunk_start = time.time()
-                # Access the chunk data properly
-                chunk_text = chunk_data.get("text", "")
-                chunk_metadata = chunk_data.get("metadata", {})
+                # Access the chunk data properly with type checking
+                if isinstance(chunk_data, dict):
+                    chunk_text = cast(str, chunk_data.get("text", ""))
+                    chunk_metadata = cast(Dict[str, Any], chunk_data.get("metadata", {}))
+                else:
+                    # Fallback if chunk_data is not a dict
+                    chunk_text = str(chunk_data)
+                    chunk_metadata = {"source": source_name, "chunk_id": i}
+                
                 logger.info(
                     f"   Processing URL chunk {i+1}/{len(chunks)} (length: {len(chunk_text):,} chars)"
                 )
@@ -372,7 +402,7 @@ class EnhancedContentProcessor:
             self.stats["errors"] += 1
             raise
 
-    def process_folder(self, folder_path: str) -> Dict[str, int]:
+    def process_folder(self, folder_path: str) -> Dict[str, Union[int, float]]:
         """
         Process all supported files in a folder.
 
@@ -380,7 +410,7 @@ class EnhancedContentProcessor:
             folder_path: Path to the folder
 
         Returns:
-            Dictionary with processing statistics
+            Dictionary with processing statistics (contains both int and float values)
         """
         logger.info(f"📁 Processing folder: {folder_path}")
         start_time = time.time()
@@ -395,7 +425,7 @@ class EnhancedContentProcessor:
         html_extensions = [".html", ".htm", ".xhtml"]
 
         # Count files by type first
-        files_by_type = {"text": [], "html": []}
+        files_by_type: Dict[str, List[Tuple[str, str]]] = {"text": [], "html": []}
         for filename in os.listdir(folder_path):
             file_path = os.path.join(folder_path, filename)
             if os.path.isfile(file_path):
@@ -451,7 +481,7 @@ class EnhancedContentProcessor:
         self.print_stats()
         return self.stats
 
-    def process_urls_from_file(self, urls_file: str) -> Dict[str, int]:
+    def process_urls_from_file(self, urls_file: str) -> Dict[str, Union[int, float]]:
         """
         Process URLs listed in a file.
 
@@ -459,7 +489,7 @@ class EnhancedContentProcessor:
             urls_file: Path to file containing URLs (one per line)
 
         Returns:
-            Dictionary with processing statistics
+            Dictionary with processing statistics (contains both int and float values)
         """
         logger.info(f"🔗 Processing URLs from file: {urls_file}")
         start_time = time.time()
@@ -480,7 +510,7 @@ class EnhancedContentProcessor:
 
             try:
                 chunks = self.process_url(url, f"url_{i}")
-                self.stats["urls_processed"] += 1
+                self.stats["total_urls_processed"] += 1
                 self.stats["file_types"]["urls"] += 1
 
             except Exception as e:
