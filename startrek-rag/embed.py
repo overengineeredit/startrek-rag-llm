@@ -1,20 +1,24 @@
 import os
 from datetime import datetime
-from werkzeug.utils import secure_filename
+
+from db_config import get_collection, get_embedding_function
 from langchain_community.document_loaders import UnstructuredPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from db_config import get_collection, get_embedding_function
+from werkzeug.utils import secure_filename
 
-TEMP_FOLDER = os.getenv('TEMP_FOLDER', './_temp')
+TEMP_FOLDER = os.getenv("TEMP_FOLDER", "./_temp")
+
 
 def get_embedding(text):
     """Get embedding for a single text string."""
     embedding_function = get_embedding_function()
     return embedding_function([text])[0]
 
+
 # Function to check if the uploaded file is allowed (only PDF files)
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'pdf'}
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in {"pdf"}
+
 
 # Function to save the uploaded file to the temporary folder
 def save_file(file):
@@ -27,6 +31,7 @@ def save_file(file):
 
     return file_path
 
+
 # Function to load and split the data from the PDF file
 def load_and_split_data(file_path):
     # Load the PDF file and split the data into chunks
@@ -37,17 +42,18 @@ def load_and_split_data(file_path):
 
     return chunks
 
+
 # Main function to handle the embedding process
 def embed(file):
     # Check if the file is valid, save it, load and split the data, add to the database, and remove the temporary file
-    if file.filename != '' and file and allowed_file(file.filename):
+    if file.filename != "" and file and allowed_file(file.filename):
         file_path = save_file(file)
         chunks = load_and_split_data(file_path)
         collection = get_collection()
         collection.add_documents(chunks)
         collection.persist()
         os.remove(file_path)
-        
+
         return True
 
     return False
