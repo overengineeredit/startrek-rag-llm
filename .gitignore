@@ -15,6 +15,13 @@ __pycache__/
 .Python
 *.so
 
+# Coverage files
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.pytest_cache/
+
 # Temporary files
 _temp/
 temp/
