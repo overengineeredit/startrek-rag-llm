@@ -173,10 +173,12 @@ jobs:
         ports:
           - 8000:8000
         options: >-
-          --health-cmd "curl -f http://localhost:8000/api/v1/heartbeat"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-cmd "curl -f http://localhost:8000/api/v1/heartbeat || curl -f http://localhost:8000/ || exit 1"
+          --health-interval 30s
+          --health-timeout 10s
+          --health-retries 10
+          --env CHROMA_SERVER_HOST=0.0.0.0
+          --env CHROMA_SERVER_HTTP_PORT=8000
           
     steps:
     - name: Checkout code
@@ -193,6 +195,26 @@ jobs:
         pip install pytest pytest-cov pytest-mock
         pip install -r startrek-rag/requirements.txt
         pip install -r content_loader/requirements.txt
+        
+    - name: Wait for ChromaDB to be ready
+      run: |
+        echo "Waiting for ChromaDB to be ready..."
+        for i in {1..30}; do
+          if curl -s http://localhost:8000/api/v1/heartbeat > /dev/null 2>&1 || curl -s http://localhost:8000/ > /dev/null 2>&1; then
+            echo "ChromaDB is ready!"
+            break
+          fi
+          echo "Attempt $i: ChromaDB not ready yet, waiting..."
+          sleep 2
+        done
+        
+        # Final check
+        if curl -s http://localhost:8000/api/v1/heartbeat > /dev/null 2>&1 || curl -s http://localhost:8000/ > /dev/null 2>&1; then
+          echo "✅ ChromaDB is ready for testing"
+        else
+          echo "❌ ChromaDB failed to start"
+          exit 1
+        fi
         
     - name: Create test configuration
       run: |
@@ -302,10 +324,12 @@ jobs:
         ports:
           - 8000:8000
         options: >-
-          --health-cmd "curl -f http://localhost:8000/api/v1/heartbeat"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-cmd "curl -f http://localhost:8000/api/v1/heartbeat || curl -f http://localhost:8000/ || exit 1"
+          --health-interval 30s
+          --health-timeout 10s
+          --health-retries 10
+          --env CHROMA_SERVER_HOST=0.0.0.0
+          --env CHROMA_SERVER_HTTP_PORT=8000
           
     steps:
     - name: Checkout code
@@ -321,6 +345,26 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests pytest
         pip install -r startrek-rag/requirements.txt
+        
+    - name: Wait for ChromaDB to be ready
+      run: |
+        echo "Waiting for ChromaDB to be ready..."
+        for i in {1..30}; do
+          if curl -s http://localhost:8000/api/v1/heartbeat > /dev/null 2>&1 || curl -s http://localhost:8000/ > /dev/null 2>&1; then
+            echo "ChromaDB is ready!"
+            break
+          fi
+          echo "Attempt $i: ChromaDB not ready yet, waiting..."
+          sleep 2
+        done
+        
+        # Final check
+        if curl -s http://localhost:8000/api/v1/heartbeat > /dev/null 2>&1 || curl -s http://localhost:8000/ > /dev/null 2>&1; then
+          echo "✅ ChromaDB is ready for testing"
+        else
+          echo "❌ ChromaDB failed to start"
+          exit 1
+        fi
         
     - name: Start RAG application
       run: |
