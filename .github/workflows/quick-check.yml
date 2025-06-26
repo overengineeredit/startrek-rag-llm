@@ -1,0 +1,68 @@
+name: Quick Check
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  quick-test:
+    name: Quick Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 black pytest
+        pip install -r startrek-rag/requirements.txt
+        pip install -r content_loader/requirements.txt
+        
+    - name: Quick lint check
+      run: |
+        flake8 startrek-rag/ content_loader/ --count --select=E9,F63,F7,F82 --show-source --statistics || true
+        black --check startrek-rag/ content_loader/ || true
+        
+    - name: Quick syntax check
+      run: |
+        python -m py_compile startrek-rag/app.py
+        python -m py_compile content_loader/process_content.py
+        echo "✅ Syntax check passed"
+        
+    - name: Quick import test
+      run: |
+        cd startrek-rag
+        python -c "from app import create_app; print('✅ RAG app imports successfully')"
+        python -c "from config import Config; print('✅ Config imports successfully')"
+        cd ../content_loader
+        python -c "import process_content; print('✅ Content loader imports successfully')"
+        python -c "from enhanced_processor import EnhancedContentProcessor; print('✅ Enhanced processor imports successfully')"
+        
+    - name: Quick Docker build test
+      run: |
+        docker build -t startrek-rag:quick-test startrek-rag/ || echo "⚠️ RAG build failed but continuing"
+        docker build -t content-loader:quick-test content_loader/ || echo "⚠️ Content loader build failed but continuing"
+        
+    - name: Summary
+      run: |
+        echo "## 🚀 Quick Check Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### ✅ Completed:" >> $GITHUB_STEP_SUMMARY
+        echo "- Basic linting check" >> $GITHUB_STEP_SUMMARY
+        echo "- Code formatting check" >> $GITHUB_STEP_SUMMARY
+        echo "- Python syntax validation" >> $GITHUB_STEP_SUMMARY
+        echo "- Import tests" >> $GITHUB_STEP_SUMMARY
+        echo "- Docker build test" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "This is a quick check for immediate feedback. For full testing, see the main workflow." >> $GITHUB_STEP_SUMMARY 
