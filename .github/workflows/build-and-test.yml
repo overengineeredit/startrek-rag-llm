@@ -49,7 +49,7 @@ jobs:
         
     - name: Run mypy
       run: |
-        mypy startrek-rag/ content_loader/ --ignore-missing-imports --ignore-errors || true
+        mypy startrek-rag/ content_loader/ --ignore-missing-imports || true
 
   # Security scan
   security:
