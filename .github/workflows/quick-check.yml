@@ -1,9 +1,7 @@
-name: Quick Check
+name: Quick Check (Fast Feedback)
 
 on:
   push:
-    branches: ["*", "!gh-pages"]
-  pull_request:
     branches: ["*", "!gh-pages"]
   workflow_dispatch:
 

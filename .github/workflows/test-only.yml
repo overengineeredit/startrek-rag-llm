@@ -1,11 +1,14 @@
-name: Test Only
+name: Test Only (Focused Testing)
 
 on:
-  push:
-    branches: ["*", "!gh-pages"]
-  pull_request:
-    branches: ["*", "!gh-pages"]
   workflow_dispatch:
+  # Only run on specific test-related events
+  push:
+    branches: ["test/**"]
+    paths:
+      - 'tests/**'
+      - 'pytest.ini'
+      - '.github/workflows/test-only.yml'
 
 env:
   PYTHON_VERSION: '3.11'
