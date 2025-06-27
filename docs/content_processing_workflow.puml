@@ -1,0 +1,50 @@
+@startuml
+!theme plain
+skinparam backgroundColor #FFFFFF
+
+title Star Trek RAG System - Content Processing Flow
+
+start
+
+:Content Source Selection;
+if (Text Files?) then (yes)
+    :Load Text Files;
+    :Split into Chunks;
+elseif (HTML Files?) then (yes)
+    :Load HTML Files;
+    :Parse with BeautifulSoup;
+    :Extract Text Content;
+    :Split into Chunks;
+elseif (URLs?) then (yes)
+    :Load URL List;
+    :Fetch Web Pages;
+    :Parse HTML Content;
+    :Extract Text Content;
+    :Split into Chunks;
+else (other)
+    :Unsupported Format;
+    stop
+endif
+
+:Initialize Processing Stats;
+
+while (More Chunks?) is (yes)
+    :Get Next Chunk;
+    :Validate Chunk;
+    if (Chunk Valid?) then (yes)
+        :Generate Embedding;
+        :Create Metadata;
+        :Add to ChromaDB;
+        :Update Stats;
+    else (no)
+        :Skip Invalid Chunk;
+        :Increment Error Count;
+    endif
+endwhile (no)
+
+:Print Processing Statistics;
+:Display Summary;
+
+stop
+
+@enduml 

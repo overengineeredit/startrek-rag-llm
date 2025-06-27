@@ -1,0 +1,61 @@
+@startuml
+!theme plain
+skinparam backgroundColor #FFFFFF
+
+title Star Trek RAG System - Data Flow Architecture
+
+package "Content Sources" {
+    [Text Files] as TEXT_FILES #lightblue
+    [HTML Files] as HTML_FILES #lightblue
+    [URLs] as URLS #lightblue
+}
+
+package "Content Processing Pipeline" {
+    [Enhanced Processor] as ENHANCED #orange
+    [HTML Processor] as HTML_PROC #orange
+    [Text Chunker] as CHUNKER #orange
+    [Content Loader] as LOADER #orange
+}
+
+package "Vector Database" {
+    [ChromaDB Collection] as COLLECTION #lightgreen
+    [Embedding Storage] as EMBED_STORE #lightgreen
+    [Document Storage] as DOC_STORE #lightgreen
+    [Metadata Storage] as META_STORE #lightgreen
+}
+
+package "Query Processing" {
+    [Query Input] as QUERY_IN #yellow
+    [Document Retrieval] as RETRIEVAL #yellow
+    [Context Assembly] as CONTEXT #yellow
+    [LLM Generation] as LLM #yellow
+    [Response Output] as RESPONSE #yellow
+}
+
+' Content ingestion flow
+TEXT_FILES --> ENHANCED
+HTML_FILES --> HTML_PROC
+URLS --> ENHANCED
+
+HTML_PROC --> ENHANCED
+ENHANCED --> CHUNKER
+LOADER --> ENHANCED
+
+CHUNKER --> COLLECTION
+COLLECTION --> EMBED_STORE
+COLLECTION --> DOC_STORE
+COLLECTION --> META_STORE
+
+' Query processing flow
+QUERY_IN --> RETRIEVAL
+RETRIEVAL --> COLLECTION
+COLLECTION --> CONTEXT
+CONTEXT --> LLM
+LLM --> RESPONSE
+
+' Data relationships
+EMBED_STORE --> DOC_STORE : "linked by ID"
+DOC_STORE --> META_STORE : "linked by ID"
+META_STORE --> EMBED_STORE : "linked by ID"
+
+@enduml 
