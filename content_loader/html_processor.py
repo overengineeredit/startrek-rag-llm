@@ -3,10 +3,16 @@ import os
 import re
 import time
 from typing import Any, Dict, List, Union
+from typing import Any, Dict, List, Union
 
 import nltk
 import requests
 from bs4 import BeautifulSoup
+
+try:
+    from unstructured.partition.html import partition_html
+except ImportError:
+    partition_html = None
 
 try:
     from unstructured.partition.html import partition_html
@@ -97,6 +103,7 @@ class HTMLProcessor:
         if self.stats["errors"] > 0:
             print(f"\n⚠️  WARNING: {self.stats['errors']} errors occurred during processing")
         else:
+            print("\n✅ SUCCESS: All content processed without errors")
             print("\n✅ SUCCESS: All content processed without errors")
         print("=" * 60)
 
@@ -203,11 +210,16 @@ class HTMLProcessor:
         extraction_start = time.time()
 
         try:
-            logger.info("   Processing HTML content using multiple extraction methods...")
+            logger.info(
+                "   Processing HTML content using multiple extraction methods..."
+            )
 
             # Use unstructured to partition HTML
             logger.info(f"   Attempting extraction with unstructured library...")
             try:
+                if partition_html is not None:
+                    elements = partition_html(text=html_content)
+                    logger.info(f"   Unstructured extracted {len(elements)} elements")
                 if partition_html is not None:
                     elements = partition_html(text=html_content)
                     logger.info(f"   Unstructured extracted {len(elements)} elements")
@@ -217,11 +229,15 @@ class HTMLProcessor:
                     for i, element in enumerate(elements):
                         if hasattr(element, "text") and element.text:
                             cleaned_text = self.clean_text(element.text)
-                            if cleaned_text and len(cleaned_text) > 50:  # Filter out very short content
+                            if (
+                                cleaned_text and len(cleaned_text) > 50
+                            ):  # Filter out very short content
                                 text_content.append(cleaned_text)
                                 logger.debug(f"   Element {i+1}: {len(cleaned_text)} chars")
 
-                    logger.info(f"   Unstructured extracted {len(text_content)} text segments")
+                    logger.info(
+                        f"   Unstructured extracted {len(text_content)} text segments"
+                    )
                     self.stats["extraction_methods"]["unstructured"] += 1
                 else:
                     logger.warning("   Unstructured library not available")
