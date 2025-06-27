@@ -78,7 +78,7 @@ class ContentProcessor:
                 f"\n⚠️  WARNING: {self.stats['errors']} errors occurred during processing"
             )
         else:
-            print(f"\n✅ SUCCESS: All content processed without errors")
+            print("\n✅ SUCCESS: All content processed without errors")
         print("=" * 60)
 
     def get_embedding(self, text: str) -> list:

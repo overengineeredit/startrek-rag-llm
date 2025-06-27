@@ -1,5 +1,4 @@
 import logging
-from typing import Any, Dict, List
 
 from config import config
 from flask import Blueprint, jsonify, request

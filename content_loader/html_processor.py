@@ -2,14 +2,16 @@ import logging
 import os
 import re
 import time
-from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple, Union
-from urllib.parse import urljoin, urlparse
+from typing import Any, Dict, List, Union
 
 import nltk
 import requests
 from bs4 import BeautifulSoup
-from unstructured.partition.html import partition_html
+
+try:
+    from unstructured.partition.html import partition_html
+except ImportError:
+    partition_html = None
 
 # Configure logging with more detailed format
 logging.basicConfig(
@@ -103,7 +105,7 @@ class HTMLProcessor:
                 f"\n⚠️  WARNING: {self.stats['errors']} errors occurred during processing"
             )
         else:
-            print(f"\n✅ SUCCESS: All content processed without errors")
+            print("\n✅ SUCCESS: All content processed without errors")
         print("=" * 60)
 
     def clean_text(self, text: str) -> str:
@@ -222,30 +224,34 @@ class HTMLProcessor:
 
         try:
             logger.info(
-                f"   Processing HTML content using multiple extraction methods..."
+                "   Processing HTML content using multiple extraction methods..."
             )
 
             # Use unstructured to partition HTML
             logger.info(f"   Attempting extraction with unstructured library...")
             try:
-                elements = partition_html(text=html_content)
-                logger.info(f"   Unstructured extracted {len(elements)} elements")
+                if partition_html is not None:
+                    elements = partition_html(text=html_content)
+                    logger.info(f"   Unstructured extracted {len(elements)} elements")
 
-                # Extract text from elements
-                text_content = []
-                for i, element in enumerate(elements):
-                    if hasattr(element, "text") and element.text:
-                        cleaned_text = self.clean_text(element.text)
-                        if (
-                            cleaned_text and len(cleaned_text) > 50
-                        ):  # Filter out very short content
-                            text_content.append(cleaned_text)
-                            logger.debug(f"   Element {i+1}: {len(cleaned_text)} chars")
+                    # Extract text from elements
+                    text_content = []
+                    for i, element in enumerate(elements):
+                        if hasattr(element, "text") and element.text:
+                            cleaned_text = self.clean_text(element.text)
+                            if (
+                                cleaned_text and len(cleaned_text) > 50
+                            ):  # Filter out very short content
+                                text_content.append(cleaned_text)
+                                logger.debug(f"   Element {i+1}: {len(cleaned_text)} chars")
 
-                logger.info(
-                    f"   Unstructured extracted {len(text_content)} text segments"
-                )
-                self.stats["extraction_methods"]["unstructured"] += 1
+                    logger.info(
+                        f"   Unstructured extracted {len(text_content)} text segments"
+                    )
+                    self.stats["extraction_methods"]["unstructured"] += 1
+                else:
+                    logger.warning("   Unstructured library not available")
+                    text_content = []
 
             except Exception as e:
                 logger.warning(f"   Unstructured extraction failed: {str(e)}")

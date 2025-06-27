@@ -1,5 +1,4 @@
 import argparse
-import json
 import logging
 import os
 import sys
@@ -114,7 +113,7 @@ class EnhancedContentProcessor:
         if isinstance(errors, int) and errors > 0:
             print(f"\n⚠️  WARNING: {errors} errors occurred during processing")
         else:
-            print(f"\n✅ SUCCESS: All content processed without errors")
+            print("\n✅ SUCCESS: All content processed without errors")
         print("=" * 60)
 
     def get_embedding(self, text: str) -> List[float]:
