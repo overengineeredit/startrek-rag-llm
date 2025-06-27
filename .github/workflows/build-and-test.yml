@@ -2,9 +2,9 @@ name: Build and Test
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: ["*", "!gh-pages"]
   pull_request:
-    branches: [ main, develop ]
+    branches: ["*", "!gh-pages"]
   workflow_dispatch:
 
 env:

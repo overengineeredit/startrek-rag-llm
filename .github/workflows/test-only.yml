@@ -1,8 +1,10 @@
 name: Test Only
 
 on:
+  push:
+    branches: ["*", "!gh-pages"]
   pull_request:
-    branches: [ main, develop ]
+    branches: ["*", "!gh-pages"]
   workflow_dispatch:
 
 env:
