@@ -77,7 +77,7 @@ test-lint:
 	@if [ ! -d "$(VENV)" ]; then echo "Virtual environment not found. Run 'make setup' first."; exit 1; fi
 	. $(VENV)/bin/activate && pip install flake8
 	. $(VENV)/bin/activate && flake8 startrek-rag/ content_loader/ --count --select=E9,F63,F7,F82 --show-source --statistics
-	. $(VENV)/bin/activate && flake8 startrek-rag/ content_loader/ --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+	. $(VENV)/bin/activate && flake8 startrek-rag/ content_loader/ --count --exit-zero --statistics
 	@echo "✅ Linting checks passed"
 
 test-security:
