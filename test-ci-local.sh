@@ -61,7 +61,7 @@ pip install -r content_loader/requirements.txt
 # Run flake8
 print_status "Running flake8..."
 flake8 startrek-rag/ content_loader/ --count --select=E9,F63,F7,F82 --show-source --statistics
-flake8 startrek-rag/ content_loader/ --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+flake8 startrek-rag/ content_loader/ --count --exit-zero --statistics
 print_success "flake8 passed"
 
 # Run black check
@@ -76,7 +76,7 @@ print_success "isort check passed"
 
 # Run mypy
 print_status "Running mypy..."
-mypy startrek-rag/ content_loader/ --ignore-missing-imports --ignore-errors || true
+mypy startrek-rag/ content_loader/ --ignore-missing-imports || true
 print_success "mypy completed"
 
 # Step 2: Security Scan
@@ -215,8 +215,7 @@ def test_config_creation():
         config = Config()
         assert config is not None
         assert hasattr(config, 'chroma_url')
-        assert hasattr(config, 'database')
-        assert hasattr(config.database, 'collection_name')
+        assert hasattr(config, 'collection_name')
     except Exception as e:
         pytest.fail(f"Failed to create Config: {e}")
 
