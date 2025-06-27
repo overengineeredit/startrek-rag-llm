@@ -1,0 +1,37 @@
+@startuml
+title Star Trek RAG System - Query Processing Flow
+
+start
+
+:User Query Input;
+
+:Preprocess query;
+:Generate query embedding;
+
+:Search ChromaDB;
+:Retrieve relevant documents;
+
+if (Documents found?) then (yes)
+    :Assemble context;
+    :Format for LLM;
+    :Send to Ollama;
+    :Generate response;
+    :Format response;
+else (no)
+    :Return no results message;
+endif
+
+:Return response to user;
+
+stop
+
+note right
+Query processing includes:
+- Query preprocessing
+- Vector similarity search
+- Context assembly
+- LLM generation
+- Response formatting
+end note
+
+@enduml 

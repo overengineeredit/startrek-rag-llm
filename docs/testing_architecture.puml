@@ -1,0 +1,69 @@
+@startuml
+!theme plain
+skinparam backgroundColor #FFFFFF
+
+title Star Trek RAG System - Testing Architecture
+
+package "Test Types" {
+    [Unit Tests] as UNIT #lightgreen
+    [Integration Tests] as INTEGRATION #lightblue
+    [API Tests] as API_TESTS #yellow
+    [Docker Tests] as DOCKER_TESTS #orange
+    [Security Tests] as SECURITY #red
+}
+
+package "Test Components" {
+    [pytest] as PYTEST #purple
+    [pytest-cov] as COVERAGE #green
+    [pytest-mock] as MOCK #blue
+    [bandit] as BANDIT #red
+    [safety] as SAFETY #orange
+}
+
+package "Test Targets" {
+    [RAG Service] as RAG_TEST #lightyellow
+    [API Endpoints] as API_TEST #lightyellow
+    [Content Processing] as CONTENT_TEST #lightyellow
+    [Configuration] as CONFIG_TEST #lightyellow
+    [Database Operations] as DB_TEST #lightyellow
+}
+
+package "CI/CD Integration" {
+    [GitHub Actions] as GITHUB #purple
+    [Codecov] as CODECOV #green
+    [Docker Hub] as DOCKER_HUB #blue
+}
+
+' Test framework connections
+PYTEST --> UNIT
+PYTEST --> INTEGRATION
+PYTEST --> API_TESTS
+COVERAGE --> PYTEST
+MOCK --> PYTEST
+
+' Security testing
+BANDIT --> SECURITY
+SAFETY --> SECURITY
+
+' Test targets
+UNIT --> RAG_TEST
+UNIT --> CONFIG_TEST
+INTEGRATION --> API_TEST
+INTEGRATION --> CONTENT_TEST
+INTEGRATION --> DB_TEST
+API_TESTS --> API_TEST
+
+' CI/CD connections
+GITHUB --> PYTEST
+GITHUB --> BANDIT
+GITHUB --> SAFETY
+GITHUB --> DOCKER_TESTS
+CODECOV --> COVERAGE
+DOCKER_HUB --> DOCKER_TESTS
+
+' Test execution flow
+note right of PYTEST : "1. Run unit tests\n2. Run integration tests\n3. Generate coverage report"
+note right of SECURITY : "1. Run bandit security scan\n2. Run safety dependency check"
+note right of GITHUB : "1. Trigger on push/PR\n2. Run all test suites\n3. Upload coverage\n4. Build Docker images"
+
+@enduml 

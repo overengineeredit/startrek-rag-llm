@@ -1,0 +1,53 @@
+@startuml
+title Star Trek RAG System - API Endpoints
+
+package "Query Endpoints" {
+    [POST /api/query] as QUERY
+    [GET /api/health] as HEALTH
+    [GET /api/stats] as STATS
+}
+
+package "Document Management" {
+    [POST /api/add] as ADD
+    [POST /api/embed] as EMBED
+}
+
+package "Response Format" {
+    [JSON Response] as JSON
+    [Error Handling] as ERROR
+}
+
+' Query endpoint details
+QUERY --> JSON : "Returns answer with context"
+QUERY --> ERROR : "Invalid input or service error"
+
+' Health and stats
+HEALTH --> JSON : "Service status"
+STATS --> JSON : "System statistics"
+
+' Document management
+ADD --> JSON : "Document added confirmation"
+ADD --> ERROR : "Invalid document or metadata"
+EMBED --> JSON : "Embedding vector"
+EMBED --> ERROR : "Invalid text input"
+
+' Common response structure
+note right of JSON
+  JSON Response Format:
+  {
+    "status": "success",
+    "data": {...},
+    "message": "..."
+  }
+end note
+
+note right of ERROR
+  Error Response Format:
+  {
+    "status": "error",
+    "error": "...",
+    "message": "..."
+  }
+end note
+
+@enduml 

@@ -1,0 +1,58 @@
+@startuml
+title Star Trek RAG System - Data Flow Architecture
+
+package "Content Sources" {
+    [Text Files] as TEXT_FILES
+    [HTML Files] as HTML_FILES
+    [URLs] as URLS
+}
+
+package "Content Processing Pipeline" {
+    [Enhanced Processor] as ENHANCED
+    [HTML Processor] as HTML_PROC
+    [Text Chunker] as CHUNKER
+    [Content Loader] as LOADER
+}
+
+package "Vector Database" {
+    [ChromaDB Collection] as COLLECTION
+    [Embedding Storage] as EMBED_STORE
+    [Document Storage] as DOC_STORE
+    [Metadata Storage] as META_STORE
+}
+
+package "Query Processing" {
+    [Query Input] as QUERY_IN
+    [Document Retrieval] as RETRIEVAL
+    [Context Assembly] as CONTEXT
+    [LLM Generation] as LLM
+    [Response Output] as RESPONSE
+}
+
+' Content ingestion flow
+TEXT_FILES --> ENHANCED
+HTML_FILES --> HTML_PROC
+URLS --> ENHANCED
+
+HTML_PROC --> ENHANCED
+ENHANCED --> CHUNKER
+LOADER --> ENHANCED
+
+CHUNKER --> COLLECTION
+COLLECTION --> EMBED_STORE
+COLLECTION --> DOC_STORE
+COLLECTION --> META_STORE
+
+' Query processing flow
+QUERY_IN --> RETRIEVAL
+RETRIEVAL --> COLLECTION
+COLLECTION --> CONTEXT
+CONTEXT --> LLM
+LLM --> RESPONSE
+
+' Data relationships
+EMBED_STORE --> DOC_STORE : "linked by ID"
+DOC_STORE --> META_STORE : "linked by ID"
+META_STORE --> EMBED_STORE : "linked by ID"
+
+@enduml 

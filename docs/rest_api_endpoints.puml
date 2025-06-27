@@ -1,0 +1,76 @@
+@startuml
+!theme plain
+skinparam backgroundColor #FFFFFF
+
+title Star Trek RAG System - API Endpoints
+
+package "REST API Endpoints" {
+    class "GET /" as ROOT #lightyellow
+    class "POST /api/query" as QUERY #orange
+    class "POST /api/add" as ADD #green
+    class "POST /api/embed" as EMBED #blue
+    class "GET /api/stats" as STATS #purple
+    class "GET /api/health" as HEALTH #red
+}
+
+package "Request/Response Models" {
+    class "QueryRequest" {
+        +query: str
+        +num_results: int
+    }
+    
+    class "QueryResponse" {
+        +message: str
+        +error: str
+    }
+    
+    class "AddRequest" {
+        +document: str
+        +metadata: dict
+        +id: str
+    }
+    
+    class "AddResponse" {
+        +message: str
+        +error: str
+    }
+    
+    class "EmbedRequest" {
+        +text: str
+    }
+    
+    class "EmbedResponse" {
+        +embedding: List[float]
+        +error: str
+    }
+    
+    class "StatsResponse" {
+        +document_count: int
+        +collection_name: str
+        +error: str
+    }
+    
+    class "HealthResponse" {
+        +status: str
+        +database: str
+        +ollama: str
+        +model: str
+        +collection_stats: dict
+        +error: str
+    }
+}
+
+' Endpoint connections
+QUERY --> QueryRequest
+QUERY --> QueryResponse
+ADD --> AddRequest
+ADD --> AddResponse
+EMBED --> EmbedRequest
+EMBED --> EmbedResponse
+STATS --> StatsResponse
+HEALTH --> HealthResponse
+
+' Root endpoint info
+ROOT --> note : "Returns API information\nand available endpoints"
+
+@enduml 

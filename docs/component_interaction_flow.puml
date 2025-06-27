@@ -1,0 +1,50 @@
+@startuml
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+
+title Star Trek RAG System - Component Interactions
+
+actor "User" as USER
+participant "Flask App" as APP
+participant "API Routes" as API
+participant "RAG Service" as RAG
+participant "Embedding Service" as EMBED
+participant "ChromaDB" as CHROMA
+participant "Ollama LLM" as OLLAMA
+
+== Query Flow ==
+USER -> APP: POST /api/query
+APP -> API: Route to query handler
+API -> RAG: query(question, num_results)
+RAG -> CHROMA: query(query_texts, n_results)
+CHROMA --> RAG: relevant documents
+RAG -> OLLAMA: generate answer with context
+OLLAMA --> RAG: generated response
+RAG --> API: response text
+API --> APP: JSON response
+APP --> USER: Answer
+
+== Document Addition Flow ==
+USER -> APP: POST /api/add
+APP -> API: Route to add handler
+API -> RAG: add_document(doc, metadata, id)
+RAG -> EMBED: get_embedding(document)
+EMBED --> RAG: embedding vector
+RAG -> CHROMA: add(embeddings, documents, metadatas, ids)
+CHROMA --> RAG: success confirmation
+RAG --> API: success status
+API --> APP: JSON response
+APP --> USER: Confirmation
+
+== Embedding Flow ==
+USER -> APP: POST /api/embed
+APP -> API: Route to embed handler
+API -> EMBED: get_embedding(text)
+EMBED -> CHROMA: generate embedding
+CHROMA --> EMBED: embedding vector
+EMBED --> API: embedding
+API --> APP: JSON response
+APP --> USER: Embedding vector
+
+@enduml 

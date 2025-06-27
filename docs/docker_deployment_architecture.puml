@@ -1,0 +1,76 @@
+@startuml
+!theme plain
+skinparam backgroundColor #FFFFFF
+
+title Star Trek RAG System - Deployment Architecture
+
+package "Docker Environment" {
+    package "Docker Host" {
+        package "Docker Compose Services" {
+            rectangle "Flask App Container" as APP_CONTAINER {
+                [Flask Web App] as APP #lightyellow
+                [API Routes] as API #yellow
+                [RAG Service] as RAG #orange
+                [Embedding Service] as EMBED #pink
+                [Config] as CONFIG #lightgray
+            }
+            
+            rectangle "ChromaDB Container" as CHROMA_CONTAINER {
+                [ChromaDB Server] as CHROMA #lightgreen
+                [Vector Database] as VECTOR_DB #lightgreen
+                [Persistent Storage] as STORAGE #lightgray
+            }
+        }
+    }
+}
+
+package "External Services" {
+    [Ollama LLM] as OLLAMA #lightblue
+}
+
+package "Content Processing" {
+    rectangle "Content Loader Container" as LOADER_CONTAINER {
+        [Enhanced Processor] as ENHANCED #lightcyan
+        [HTML Processor] as HTML_PROC #lightcyan
+        [Content Loader] as LOADER #lightcyan
+    }
+}
+
+package "CI/CD Pipeline" {
+    [GitHub Actions] as GITHUB #purple
+    [Docker Hub] as DOCKER_HUB #blue
+    [Codecov] as CODECOV #green
+}
+
+' Container connections
+APP_CONTAINER --> CHROMA_CONTAINER : "HTTP API"
+APP_CONTAINER --> OLLAMA : "HTTP API"
+LOADER_CONTAINER --> APP_CONTAINER : "HTTP API"
+
+' Internal connections
+APP --> API
+API --> RAG
+API --> EMBED
+RAG --> EMBED
+RAG --> CONFIG
+EMBED --> CONFIG
+
+CHROMA --> VECTOR_DB
+VECTOR_DB --> STORAGE
+
+ENHANCED --> HTML_PROC
+LOADER --> ENHANCED
+
+' CI/CD connections
+GITHUB --> DOCKER_HUB
+GITHUB --> CODECOV
+
+' Port mappings
+note right of APP_CONTAINER : "Port 8080:8080"
+note right of CHROMA_CONTAINER : "Port 8000:8000"
+
+' Volume mounts
+note bottom of APP_CONTAINER : "Volume: ./chroma-data"
+note bottom of CHROMA_CONTAINER : "Volume: ./chroma-data"
+
+@enduml 

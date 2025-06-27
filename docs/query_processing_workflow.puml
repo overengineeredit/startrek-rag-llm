@@ -1,0 +1,43 @@
+@startuml
+!theme plain
+skinparam backgroundColor #FFFFFF
+
+title Star Trek RAG System - Query Processing Flow
+
+start
+
+:Receive User Query;
+
+:Validate Query Input;
+if (Query Valid?) then (no)
+    :Return Error Response;
+    stop
+endif
+
+:Initialize RAG Service;
+
+:Query ChromaDB Collection;
+if (Documents Found?) then (no)
+    :Return "No Information" Response;
+    stop
+endif
+
+:Retrieve Relevant Documents;
+
+:Assemble Context from Documents;
+
+:Initialize LLM (Ollama);
+
+:Generate Answer with Context;
+if (Generation Successful?) then (no)
+    :Return Error Response;
+    stop
+endif
+
+:Format Response;
+
+:Return Answer to User;
+
+stop
+
+@enduml 
