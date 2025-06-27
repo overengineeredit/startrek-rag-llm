@@ -57,3 +57,7 @@ content_loader/_temp/
 content_loader/chroma-data/
 content_loader/content/
 content_loader/__pycache__/
+
+# Security reports
+bandit-report.json
+safety-report.json
