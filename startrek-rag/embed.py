@@ -60,7 +60,7 @@ def embed(file: Any) -> bool:
         collection.add(
             documents=[chunk.page_content for chunk in chunks],
             metadatas=[chunk.metadata for chunk in chunks],
-            ids=[f"pdf_{i}" for i in range(len(chunks))]
+            ids=[f"pdf_{i}" for i in range(len(chunks))],
         )
         os.remove(file_path)
 
