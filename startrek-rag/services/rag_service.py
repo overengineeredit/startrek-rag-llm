@@ -1,12 +1,13 @@
 import logging
 from typing import Any, Dict, Optional
 
-from config import config
 from db_config import get_collection
 from langchain.prompts import ChatPromptTemplate, PromptTemplate
 from langchain_community.chat_models.ollama import ChatOllama
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
+
+from config import config
 
 logger = logging.getLogger(__name__)
 
@@ -78,9 +79,7 @@ class RAGService:
                 logger.error("Collection not initialized")
                 return None
 
-            results = self.collection.query(
-                query_texts=[question], n_results=num_results
-            )
+            results = self.collection.query(query_texts=[question], n_results=num_results)
 
             if not results or "documents" not in results:
                 logger.warning("No results returned from query")
@@ -109,12 +108,7 @@ class RAGService:
 
             _, answer_prompt = self._get_prompt_templates()
 
-            chain = (
-                {"context": lambda _: context, "question": RunnablePassthrough()}
-                | answer_prompt
-                | self.llm
-                | StrOutputParser()
-            )
+            chain = {"context": lambda _: context, "question": RunnablePassthrough()} | answer_prompt | self.llm | StrOutputParser()
 
             response = chain.invoke(question)
             logger.info("Query processed successfully")
@@ -125,9 +119,7 @@ class RAGService:
             logger.exception(f"Error processing query: {e}")
             return None
 
-    def add_document(
-        self, document: str, metadata: Dict[str, Any], doc_id: str
-    ) -> bool:
+    def add_document(self, document: str, metadata: Dict[str, Any], doc_id: str) -> bool:
         """
         Add a document to the vector database.
 

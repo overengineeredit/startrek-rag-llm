@@ -1,9 +1,10 @@
 import logging
 import os
+
 from flask import Flask, jsonify
+from routes.api import api_bp
 
 from config import config
-from routes.api import api_bp
 
 # Configure logging
 logging.basicConfig(
