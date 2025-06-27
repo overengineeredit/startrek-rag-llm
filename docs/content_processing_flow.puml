@@ -1,0 +1,41 @@
+@startuml
+title Star Trek RAG System - Content Processing Flow
+
+start
+
+:Input Content;
+if (Content Type?) then (Text Files)
+    :Load text files;
+    :Extract text content;
+elseif (HTML Files) then
+    :Load HTML files;
+    :Parse HTML structure;
+    :Extract text content;
+    :Clean HTML tags;
+elseif (URLs) then
+    :Fetch web pages;
+    :Parse HTML content;
+    :Extract text content;
+    :Clean HTML tags;
+endif
+
+:Enhanced Processing;
+:Text normalization;
+:Content chunking;
+:Metadata extraction;
+
+:Generate embeddings;
+:Store in ChromaDB;
+
+stop
+
+note right
+Content processing includes:
+- Text extraction and cleaning
+- Chunking for optimal retrieval
+- Metadata preservation
+- Embedding generation
+- Vector storage
+end note
+
+@enduml 

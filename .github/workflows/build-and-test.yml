@@ -80,11 +80,44 @@ jobs:
         safety check --output json > safety-report.json || true
         cat safety-report.json
 
+  # Architecture diagrams
+  diagrams:
+    name: Build Architecture Diagrams
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        
+    - name: Install PlantUML dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y graphviz
+        
+    - name: Generate diagrams
+      run: |
+        cd docs
+        chmod +x generate_diagrams.sh
+        ./generate_diagrams.sh
+        
+    - name: Upload diagram artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: architecture-diagrams
+        path: docs/images/*.png
+        retention-days: 30
+
   # Build Docker images
   build:
     name: Build Docker Images
     runs-on: ubuntu-latest
-    needs: [lint, security]
+    needs: [lint, security, diagrams]
     
     steps:
     - name: Checkout code
@@ -266,7 +299,7 @@ jobs:
   summary:
     name: Build Summary
     runs-on: ubuntu-latest
-    needs: [lint, security, build, test]
+    needs: [lint, security, diagrams, build, test]
     if: always()
     
     steps:
@@ -288,6 +321,12 @@ jobs:
           echo "❌ Security Scan" >> $GITHUB_STEP_SUMMARY
         fi
         
+        if [ "${{ needs.diagrams.result }}" == "success" ]; then
+          echo "✅ Architecture Diagrams" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ Architecture Diagrams" >> $GITHUB_STEP_SUMMARY
+        fi
+        
         if [ "${{ needs.build.result }}" == "success" ]; then
           echo "✅ Docker Image Build" >> $GITHUB_STEP_SUMMARY
         else
@@ -304,12 +343,14 @@ jobs:
         echo "### 🔧 What was tested:" >> $GITHUB_STEP_SUMMARY
         echo "- Code quality (flake8, black, isort, mypy)" >> $GITHUB_STEP_SUMMARY
         echo "- Security vulnerabilities (bandit, safety)" >> $GITHUB_STEP_SUMMARY
+        echo "- Architecture diagram generation (PlantUML)" >> $GITHUB_STEP_SUMMARY
         echo "- Docker image builds" >> $GITHUB_STEP_SUMMARY
         echo "- Unit tests with coverage" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### 📊 Coverage:" >> $GITHUB_STEP_SUMMARY
         echo "- Code coverage reports generated" >> $GITHUB_STEP_SUMMARY
         echo "- Security scan reports available" >> $GITHUB_STEP_SUMMARY
+        echo "- Architecture diagrams generated and uploaded" >> $GITHUB_STEP_SUMMARY
         echo "- Build artifacts preserved" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### 💡 Note:" >> $GITHUB_STEP_SUMMARY

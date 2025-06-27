@@ -1,0 +1,69 @@
+@startuml
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+
+title Star Trek RAG System - High-Level Architecture
+
+package "External Services" {
+    [Ollama LLM] as OLLAMA #lightblue
+    [ChromaDB Vector Database] as CHROMA #lightgreen
+}
+
+package "Core Application" {
+    [Flask Web App] as APP #lightyellow
+    [RAG Service] as RAG #orange
+    [Embedding Service] as EMBED #pink
+    [Database Config] as DB_CONFIG #lightgray
+}
+
+package "Content Processing" {
+    [Enhanced Processor] as ENHANCED #lightcyan
+    [HTML Processor] as HTML_PROC #lightcyan
+    [Content Loader] as LOADER #lightcyan
+}
+
+package "API Layer" {
+    [Query API] as QUERY_API #yellow
+    [Add Document API] as ADD_API #yellow
+    [Embed API] as EMBED_API #yellow
+    [Health API] as HEALTH_API #yellow
+    [Stats API] as STATS_API #yellow
+}
+
+package "Configuration & Testing" {
+    [Config Management] as CONFIG #lightgray
+    [Test Suite] as TESTS #lightgray
+    [CI/CD Pipeline] as CI #lightgray
+}
+
+' Core connections
+APP --> RAG
+APP --> EMBED
+RAG --> OLLAMA
+RAG --> CHROMA
+EMBED --> CHROMA
+DB_CONFIG --> CHROMA
+
+' API connections
+QUERY_API --> RAG
+ADD_API --> RAG
+EMBED_API --> EMBED
+HEALTH_API --> RAG
+STATS_API --> RAG
+
+' Content processing
+ENHANCED --> APP
+HTML_PROC --> ENHANCED
+LOADER --> APP
+
+' Configuration
+CONFIG --> APP
+CONFIG --> RAG
+CONFIG --> EMBED
+
+' Testing
+TESTS --> APP
+CI --> TESTS
+
+@enduml 

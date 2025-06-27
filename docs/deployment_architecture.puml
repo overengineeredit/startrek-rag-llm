@@ -1,0 +1,52 @@
+@startuml
+title Star Trek RAG System - Deployment Architecture
+
+package "Docker Environment" {
+    package "Docker Compose Services" {
+        package "Flask App Container" as APP_CONTAINER {
+            [Flask Web App] as APP
+            [API Routes] as API
+            [RAG Service] as RAG
+            [Embedding Service] as EMBED
+            [Config] as CONFIG
+        }
+        
+        package "ChromaDB Container" as CHROMA_CONTAINER {
+            [ChromaDB Vector Database] as CHROMA
+            [Persistent Storage] as STORAGE
+        }
+        
+        package "Ollama Container" as OLLAMA_CONTAINER {
+            [Ollama LLM Service] as OLLAMA
+            [Model Storage] as MODEL_STORAGE
+        }
+    }
+}
+
+package "External Access" {
+    [Web Browser] as BROWSER
+    [API Client] as CLIENT
+}
+
+package "Development Tools" {
+    [Content Loader] as LOADER
+    [Test Suite] as TESTS
+    [CI/CD Pipeline] as CI
+}
+
+' Container connections
+APP_CONTAINER --> CHROMA_CONTAINER : "Database queries"
+APP_CONTAINER --> OLLAMA_CONTAINER : "LLM requests"
+CHROMA_CONTAINER --> STORAGE : "Persistent data"
+OLLAMA_CONTAINER --> MODEL_STORAGE : "Model files"
+
+' External access
+BROWSER --> APP_CONTAINER : "HTTP requests"
+CLIENT --> APP_CONTAINER : "API calls"
+
+' Development
+LOADER --> APP_CONTAINER : "Content ingestion"
+TESTS --> APP_CONTAINER : "Test execution"
+CI --> TESTS : "Automated testing"
+
+@enduml 
