@@ -181,5 +181,19 @@ class RAGService:
             return {"error": str(e)}
 
 
-# Global service instance
-rag_service = RAGService()
+# Global service instance - lazy initialization
+_rag_service_instance = None
+
+def get_rag_service():
+    """Get the global RAG service instance with lazy initialization."""
+    global _rag_service_instance
+    if _rag_service_instance is None:
+        _rag_service_instance = RAGService()
+    return _rag_service_instance
+
+# For backward compatibility, create a property that calls get_rag_service
+class RAGServiceProxy:
+    def __getattr__(self, name):
+        return getattr(get_rag_service(), name)
+
+rag_service = RAGServiceProxy()
