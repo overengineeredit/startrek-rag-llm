@@ -10,6 +10,7 @@ on:
 env:
   PYTHON_VERSION: '3.11'
   DOCKER_BUILDKIT: 1
+  CHROMA_VERSION: '0.4.24'
 
 jobs:
   # Lint and format check

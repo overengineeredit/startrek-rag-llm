@@ -9,6 +9,7 @@ on:
 
 env:
   PYTHON_VERSION: '3.11'
+  CHROMA_VERSION: '0.4.24'
 
 jobs:
   test:
@@ -17,14 +18,15 @@ jobs:
     
     services:
       chroma:
-        image: chromadb/chroma:latest
+        image: chromadb/chroma:${{ env.CHROMA_VERSION }}
         ports:
           - 8000:8000
         options: >-
-          --health-cmd "curl -f http://localhost:8000/api/v1/heartbeat"
+          --health-cmd "wget --no-verbose --tries=1 --spider http://localhost:8000/api/v1/heartbeat || exit 1"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+          --health-start-period 30s
           
     steps:
     - name: Checkout code

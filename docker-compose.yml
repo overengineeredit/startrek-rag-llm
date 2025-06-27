@@ -21,7 +21,7 @@ services:
       - app-network
 
   chroma:
-    image: chromadb/chroma:0.4.24
+    image: chromadb/chroma:${CHROMA_VERSION:-0.4.24}
     volumes:
       - ./chroma-data:/chroma/chroma
     ports:

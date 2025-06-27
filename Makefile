@@ -1,4 +1,4 @@
-.PHONY: setup run clean process-content process-html process-urls process-all help test-quick test-ci test-format test-lint test-security test-docker test-unit
+.PHONY: setup run clean process-content process-html process-urls process-all help test-quick test-ci test-format test-lint test-security test-docker test-unit versions update-versions
 
 VENV = venv
 PYTHON = $(VENV)/bin/python
@@ -7,6 +7,31 @@ PIP = $(VENV)/bin/pip
 # Default paths - can be overridden with environment variables
 CONTENT_FOLDER ?= $(PWD)/test_content
 URLS_FILE ?= $(CONTENT_FOLDER)/star_trek_urls.txt
+
+# Version management
+versions:
+	@echo "Current versions:"
+	@echo "  ChromaDB: 0.4.24"
+	@echo "  Python: 3.11"
+	@echo "  Docker BuildKit: 1"
+	@echo ""
+	@echo "To update versions, edit the following files:"
+	@echo "  - .github/workflows/build-and-test.yml (env.CHROMA_VERSION)"
+	@echo "  - .github/workflows/test-only.yml (env.CHROMA_VERSION)"
+	@echo "  - .github/workflows/release.yml (env.CHROMA_VERSION)"
+	@echo "  - docker-compose.yml (CHROMA_VERSION environment variable)"
+	@echo "  - config/versions.env (reference file)"
+
+update-versions:
+	@echo "Version update helper:"
+	@echo "1. Update CHROMA_VERSION in all workflow files"
+	@echo "2. Update docker-compose.yml if needed"
+	@echo "3. Update config/versions.env as reference"
+	@echo "4. Test with: make test-docker"
+	@echo ""
+	@echo "Current ChromaDB version locations:"
+	@grep -r "CHROMA_VERSION" .github/workflows/ || true
+	@grep -r "chromadb/chroma" docker-compose.yml || true
 
 setup:
 	@echo "Setting up virtual environment..."
@@ -126,6 +151,10 @@ help:
 	@echo "  make setup         - Create virtual environment and install dependencies"
 	@echo "  make run           - Start the application"
 	@echo "  make clean         - Remove virtual environment and temporary files"
+	@echo ""
+	@echo "Version Management:"
+	@echo "  make versions      - Show current versions and where they're defined"
+	@echo "  make update-versions - Show instructions for updating versions"
 	@echo ""
 	@echo "Testing (Local CI Simulation):"
 	@echo "  make test-quick    - Quick tests for fast feedback during development"

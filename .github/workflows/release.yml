@@ -13,6 +13,7 @@ on:
 env:
   PYTHON_VERSION: '3.11'
   DOCKER_BUILDKIT: 1
+  CHROMA_VERSION: '0.4.24'
 
 jobs:
   build-and-push:
@@ -89,7 +90,7 @@ jobs:
               - startrek-network
               
           chroma:
-            image: chromadb/chroma:latest
+            image: chromadb/chroma:${{ env.CHROMA_VERSION }}
             ports:
               - "8000:8000"
             volumes:
@@ -184,7 +185,7 @@ jobs:
             depends_on:
               - chroma
           chroma:
-            image: chromadb/chroma:latest
+            image: chromadb/chroma:${{ env.CHROMA_VERSION }}
             ports:
               - "8000:8000"
         EOF
