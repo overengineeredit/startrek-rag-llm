@@ -210,9 +210,7 @@ class HTMLProcessor:
         extraction_start = time.time()
 
         try:
-            logger.info(
-                "   Processing HTML content using multiple extraction methods..."
-            )
+            logger.info("   Processing HTML content using multiple extraction methods...")
 
             # Use unstructured to partition HTML
             logger.info(f"   Attempting extraction with unstructured library...")
@@ -229,15 +227,11 @@ class HTMLProcessor:
                     for i, element in enumerate(elements):
                         if hasattr(element, "text") and element.text:
                             cleaned_text = self.clean_text(element.text)
-                            if (
-                                cleaned_text and len(cleaned_text) > 50
-                            ):  # Filter out very short content
+                            if cleaned_text and len(cleaned_text) > 50:  # Filter out very short content
                                 text_content.append(cleaned_text)
                                 logger.debug(f"   Element {i+1}: {len(cleaned_text)} chars")
 
-                    logger.info(
-                        f"   Unstructured extracted {len(text_content)} text segments"
-                    )
+                    logger.info(f"   Unstructured extracted {len(text_content)} text segments")
                     self.stats["extraction_methods"]["unstructured"] += 1
                 else:
                     logger.warning("   Unstructured library not available")

@@ -61,7 +61,8 @@ class ContentProcessor:
         print(f"Total Chunks Processed: {self.stats['total_chunks_processed']}")
         print(f"Total Text Length: {self.stats['total_text_length']:,} characters")
         print(f"Total Embeddings Generated: {self.stats['total_embeddings_generated']}")
-        print(f"Total Documents Added: {self.stats['total_documents_added']}")
+        print(f"Total Documents Added to ChromaDB: {self.stats['total_documents_added']}")
+        print(f"Total Text Length: {self.stats['total_text_length']:,} characters")
         print(f"Errors Encountered: {self.stats['errors']}")
         print(f"Total Processing Time: {self.stats['processing_time']:.2f} seconds")
 
