@@ -1,0 +1,4273 @@
+
+
++===========================================================================================================================================================================================+
+
+
+DEPRECATED: this command (`check`) has been DEPRECATED, and will be unsupported beyond 01 June 2024.
+
+
+We highly encourage switching to the new `scan` command which is easier to use, more powerful, and can be set up to mimic the deprecated command if required.
+
+
++===========================================================================================================================================================================================+
+
+
+{
+    "report_meta": {
+        "scan_target": "environment",
+        "scanned": [
+            "/home/peenaki/.pyenv/versions/3.10.18/lib/python3.10",
+            "/home/peenaki/.pyenv/versions/3.10.18/lib/python310.zip",
+            "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages/setuptools/_vendor",
+            "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages",
+            "/home/peenaki/Develop/startrek-rag-llm/venv/bin",
+            "/home/peenaki/.pyenv/versions/3.10.18/lib/python3.10/lib-dynload"
+        ],
+        "scanned_full_path": [
+            "/home/peenaki/Develop/startrek-rag-llm/venv/bin",
+            "/home/peenaki/.pyenv/versions/3.10.18/lib/python310.zip",
+            "/home/peenaki/.pyenv/versions/3.10.18/lib/python3.10",
+            "/home/peenaki/.pyenv/versions/3.10.18/lib/python3.10/lib-dynload",
+            "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages",
+            "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages/setuptools/_vendor"
+        ],
+        "target_languages": [
+            "python"
+        ],
+        "policy_file": null,
+        "policy_file_source": "local",
+        "audit_and_monitor": false,
+        "api_key": false,
+        "account": "",
+        "local_database_path": null,
+        "safety_version": "3.5.2",
+        "timestamp": "2025-06-26 21:57:26",
+        "packages_found": 199,
+        "vulnerabilities_found": 11,
+        "vulnerabilities_ignored": 0,
+        "remediations_recommended": 0,
+        "telemetry": {
+            "safety_options": {
+                "output": {
+                    "--output": 1
+                }
+            },
+            "safety_version": "3.5.2",
+            "safety_source": "cli",
+            "os_type": "Linux",
+            "os_release": "6.8.0-62-generic",
+            "os_description": "Linux-6.8.0-62-generic-x86_64-with-glibc2.39",
+            "python_version": "3.10.18",
+            "safety_command": "check"
+        },
+        "git": {
+            "branch": "feature/unittests_ci_cd",
+            "tag": "",
+            "commit": "b12a0a9dba66ed7e3ed21a50bd294fe0c85bcf41",
+            "dirty": "True",
+            "origin": "git@github.com:overengineeredit/startrek-rag-llm.git"
+        },
+        "project": null,
+        "json_version": "1.1",
+        "remediations_attempted": 0,
+        "remediations_completed": 0,
+        "remediation_mode": "NON_INTERACTIVE"
+    },
+    "scanned_packages": {
+        "markupsafe": {
+            "name": "markupsafe",
+            "version": "3.0.2",
+            "requirements": [
+                {
+                    "raw": "markupsafe==3.0.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "markupsafe",
+                    "specifier": "==3.0.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pyyaml": {
+            "name": "pyyaml",
+            "version": "6.0.2",
+            "requirements": [
+                {
+                    "raw": "pyyaml==6.0.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pyyaml",
+                    "specifier": "==6.0.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "aiohappyeyeballs": {
+            "name": "aiohappyeyeballs",
+            "version": "2.6.1",
+            "requirements": [
+                {
+                    "raw": "aiohappyeyeballs==2.6.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "aiohappyeyeballs",
+                    "specifier": "==2.6.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "aiohttp": {
+            "name": "aiohttp",
+            "version": "3.12.13",
+            "requirements": [
+                {
+                    "raw": "aiohttp==3.12.13",
+                    "extras": [],
+                    "marker": null,
+                    "name": "aiohttp",
+                    "specifier": "==3.12.13",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "aiosignal": {
+            "name": "aiosignal",
+            "version": "1.3.2",
+            "requirements": [
+                {
+                    "raw": "aiosignal==1.3.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "aiosignal",
+                    "specifier": "==1.3.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "aniso8601": {
+            "name": "aniso8601",
+            "version": "10.0.1",
+            "requirements": [
+                {
+                    "raw": "aniso8601==10.0.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "aniso8601",
+                    "specifier": "==10.0.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "annotated-types": {
+            "name": "annotated-types",
+            "version": "0.7.0",
+            "requirements": [
+                {
+                    "raw": "annotated-types==0.7.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "annotated-types",
+                    "specifier": "==0.7.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "anyio": {
+            "name": "anyio",
+            "version": "4.9.0",
+            "requirements": [
+                {
+                    "raw": "anyio==4.9.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "anyio",
+                    "specifier": "==4.9.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "asgiref": {
+            "name": "asgiref",
+            "version": "3.8.1",
+            "requirements": [
+                {
+                    "raw": "asgiref==3.8.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "asgiref",
+                    "specifier": "==3.8.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "async-timeout": {
+            "name": "async-timeout",
+            "version": "4.0.3",
+            "requirements": [
+                {
+                    "raw": "async-timeout==4.0.3",
+                    "extras": [],
+                    "marker": null,
+                    "name": "async-timeout",
+                    "specifier": "==4.0.3",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "attrs": {
+            "name": "attrs",
+            "version": "25.3.0",
+            "requirements": [
+                {
+                    "raw": "attrs==25.3.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "attrs",
+                    "specifier": "==25.3.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "authlib": {
+            "name": "authlib",
+            "version": "1.6.0",
+            "requirements": [
+                {
+                    "raw": "authlib==1.6.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "authlib",
+                    "specifier": "==1.6.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "backoff": {
+            "name": "backoff",
+            "version": "2.2.1",
+            "requirements": [
+                {
+                    "raw": "backoff==2.2.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "backoff",
+                    "specifier": "==2.2.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "bandit": {
+            "name": "bandit",
+            "version": "1.8.5",
+            "requirements": [
+                {
+                    "raw": "bandit==1.8.5",
+                    "extras": [],
+                    "marker": null,
+                    "name": "bandit",
+                    "specifier": "==1.8.5",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "bcrypt": {
+            "name": "bcrypt",
+            "version": "4.3.0",
+            "requirements": [
+                {
+                    "raw": "bcrypt==4.3.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "bcrypt",
+                    "specifier": "==4.3.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "beautifulsoup4": {
+            "name": "beautifulsoup4",
+            "version": "4.13.4",
+            "requirements": [
+                {
+                    "raw": "beautifulsoup4==4.13.4",
+                    "extras": [],
+                    "marker": null,
+                    "name": "beautifulsoup4",
+                    "specifier": "==4.13.4",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "black": {
+            "name": "black",
+            "version": "25.1.0",
+            "requirements": [
+                {
+                    "raw": "black==25.1.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "black",
+                    "specifier": "==25.1.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "blinker": {
+            "name": "blinker",
+            "version": "1.9.0",
+            "requirements": [
+                {
+                    "raw": "blinker==1.9.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "blinker",
+                    "specifier": "==1.9.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "build": {
+            "name": "build",
+            "version": "1.2.2.post1",
+            "requirements": [
+                {
+                    "raw": "build==1.2.2.post1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "build",
+                    "specifier": "==1.2.2.post1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "cachetools": {
+            "name": "cachetools",
+            "version": "5.5.2",
+            "requirements": [
+                {
+                    "raw": "cachetools==5.5.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "cachetools",
+                    "specifier": "==5.5.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "certifi": {
+            "name": "certifi",
+            "version": "2025.6.15",
+            "requirements": [
+                {
+                    "raw": "certifi==2025.6.15",
+                    "extras": [],
+                    "marker": null,
+                    "name": "certifi",
+                    "specifier": "==2025.6.15",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "cffi": {
+            "name": "cffi",
+            "version": "1.17.1",
+            "requirements": [
+                {
+                    "raw": "cffi==1.17.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "cffi",
+                    "specifier": "==1.17.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "chardet": {
+            "name": "chardet",
+            "version": "5.2.0",
+            "requirements": [
+                {
+                    "raw": "chardet==5.2.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "chardet",
+                    "specifier": "==5.2.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "charset-normalizer": {
+            "name": "charset-normalizer",
+            "version": "3.4.2",
+            "requirements": [
+                {
+                    "raw": "charset-normalizer==3.4.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "charset-normalizer",
+                    "specifier": "==3.4.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "chroma-hnswlib": {
+            "name": "chroma-hnswlib",
+            "version": "0.7.3",
+            "requirements": [
+                {
+                    "raw": "chroma-hnswlib==0.7.3",
+                    "extras": [],
+                    "marker": null,
+                    "name": "chroma-hnswlib",
+                    "specifier": "==0.7.3",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "chromadb": {
+            "name": "chromadb",
+            "version": "0.4.24",
+            "requirements": [
+                {
+                    "raw": "chromadb==0.4.24",
+                    "extras": [],
+                    "marker": null,
+                    "name": "chromadb",
+                    "specifier": "==0.4.24",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "click": {
+            "name": "click",
+            "version": "8.1.8",
+            "requirements": [
+                {
+                    "raw": "click==8.1.8",
+                    "extras": [],
+                    "marker": null,
+                    "name": "click",
+                    "specifier": "==8.1.8",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "codecov": {
+            "name": "codecov",
+            "version": "2.1.13",
+            "requirements": [
+                {
+                    "raw": "codecov==2.1.13",
+                    "extras": [],
+                    "marker": null,
+                    "name": "codecov",
+                    "specifier": "==2.1.13",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "coloredlogs": {
+            "name": "coloredlogs",
+            "version": "15.0.1",
+            "requirements": [
+                {
+                    "raw": "coloredlogs==15.0.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "coloredlogs",
+                    "specifier": "==15.0.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "coverage": {
+            "name": "coverage",
+            "version": "7.9.1",
+            "requirements": [
+                {
+                    "raw": "coverage==7.9.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "coverage",
+                    "specifier": "==7.9.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "cryptography": {
+            "name": "cryptography",
+            "version": "45.0.4",
+            "requirements": [
+                {
+                    "raw": "cryptography==45.0.4",
+                    "extras": [],
+                    "marker": null,
+                    "name": "cryptography",
+                    "specifier": "==45.0.4",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "dataclasses-json": {
+            "name": "dataclasses-json",
+            "version": "0.6.7",
+            "requirements": [
+                {
+                    "raw": "dataclasses-json==0.6.7",
+                    "extras": [],
+                    "marker": null,
+                    "name": "dataclasses-json",
+                    "specifier": "==0.6.7",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "deepdiff": {
+            "name": "deepdiff",
+            "version": "8.5.0",
+            "requirements": [
+                {
+                    "raw": "deepdiff==8.5.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "deepdiff",
+                    "specifier": "==8.5.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "distro": {
+            "name": "distro",
+            "version": "1.9.0",
+            "requirements": [
+                {
+                    "raw": "distro==1.9.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "distro",
+                    "specifier": "==1.9.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "dparse": {
+            "name": "dparse",
+            "version": "0.6.4",
+            "requirements": [
+                {
+                    "raw": "dparse==0.6.4",
+                    "extras": [],
+                    "marker": null,
+                    "name": "dparse",
+                    "specifier": "==0.6.4",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "durationpy": {
+            "name": "durationpy",
+            "version": "0.10",
+            "requirements": [
+                {
+                    "raw": "durationpy==0.10",
+                    "extras": [],
+                    "marker": null,
+                    "name": "durationpy",
+                    "specifier": "==0.10",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "emoji": {
+            "name": "emoji",
+            "version": "2.14.1",
+            "requirements": [
+                {
+                    "raw": "emoji==2.14.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "emoji",
+                    "specifier": "==2.14.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "exceptiongroup": {
+            "name": "exceptiongroup",
+            "version": "1.3.0",
+            "requirements": [
+                {
+                    "raw": "exceptiongroup==1.3.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "exceptiongroup",
+                    "specifier": "==1.3.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "execnet": {
+            "name": "execnet",
+            "version": "2.1.1",
+            "requirements": [
+                {
+                    "raw": "execnet==2.1.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "execnet",
+                    "specifier": "==2.1.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "factory-boy": {
+            "name": "factory-boy",
+            "version": "3.3.3",
+            "requirements": [
+                {
+                    "raw": "factory-boy==3.3.3",
+                    "extras": [],
+                    "marker": null,
+                    "name": "factory-boy",
+                    "specifier": "==3.3.3",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "faker": {
+            "name": "faker",
+            "version": "37.4.0",
+            "requirements": [
+                {
+                    "raw": "faker==37.4.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "faker",
+                    "specifier": "==37.4.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "fastapi": {
+            "name": "fastapi",
+            "version": "0.115.13",
+            "requirements": [
+                {
+                    "raw": "fastapi==0.115.13",
+                    "extras": [],
+                    "marker": null,
+                    "name": "fastapi",
+                    "specifier": "==0.115.13",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "filelock": {
+            "name": "filelock",
+            "version": "3.16.1",
+            "requirements": [
+                {
+                    "raw": "filelock==3.16.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "filelock",
+                    "specifier": "==3.16.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "filetype": {
+            "name": "filetype",
+            "version": "1.2.0",
+            "requirements": [
+                {
+                    "raw": "filetype==1.2.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "filetype",
+                    "specifier": "==1.2.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "flake8": {
+            "name": "flake8",
+            "version": "7.3.0",
+            "requirements": [
+                {
+                    "raw": "flake8==7.3.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "flake8",
+                    "specifier": "==7.3.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "flask": {
+            "name": "flask",
+            "version": "3.0.2",
+            "requirements": [
+                {
+                    "raw": "flask==3.0.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "flask",
+                    "specifier": "==3.0.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "flask-restx": {
+            "name": "flask-restx",
+            "version": "1.3.0",
+            "requirements": [
+                {
+                    "raw": "flask-restx==1.3.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "flask-restx",
+                    "specifier": "==1.3.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "flatbuffers": {
+            "name": "flatbuffers",
+            "version": "25.2.10",
+            "requirements": [
+                {
+                    "raw": "flatbuffers==25.2.10",
+                    "extras": [],
+                    "marker": null,
+                    "name": "flatbuffers",
+                    "specifier": "==25.2.10",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "freezegun": {
+            "name": "freezegun",
+            "version": "1.5.2",
+            "requirements": [
+                {
+                    "raw": "freezegun==1.5.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "freezegun",
+                    "specifier": "==1.5.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "frozenlist": {
+            "name": "frozenlist",
+            "version": "1.7.0",
+            "requirements": [
+                {
+                    "raw": "frozenlist==1.7.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "frozenlist",
+                    "specifier": "==1.7.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "fsspec": {
+            "name": "fsspec",
+            "version": "2025.5.1",
+            "requirements": [
+                {
+                    "raw": "fsspec==2025.5.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "fsspec",
+                    "specifier": "==2025.5.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "google-auth": {
+            "name": "google-auth",
+            "version": "2.40.3",
+            "requirements": [
+                {
+                    "raw": "google-auth==2.40.3",
+                    "extras": [],
+                    "marker": null,
+                    "name": "google-auth",
+                    "specifier": "==2.40.3",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "googleapis-common-protos": {
+            "name": "googleapis-common-protos",
+            "version": "1.70.0",
+            "requirements": [
+                {
+                    "raw": "googleapis-common-protos==1.70.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "googleapis-common-protos",
+                    "specifier": "==1.70.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "greenlet": {
+            "name": "greenlet",
+            "version": "3.2.3",
+            "requirements": [
+                {
+                    "raw": "greenlet==3.2.3",
+                    "extras": [],
+                    "marker": null,
+                    "name": "greenlet",
+                    "specifier": "==3.2.3",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "grpcio": {
+            "name": "grpcio",
+            "version": "1.73.0",
+            "requirements": [
+                {
+                    "raw": "grpcio==1.73.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "grpcio",
+                    "specifier": "==1.73.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "h11": {
+            "name": "h11",
+            "version": "0.16.0",
+            "requirements": [
+                {
+                    "raw": "h11==0.16.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "h11",
+                    "specifier": "==0.16.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "hf-xet": {
+            "name": "hf-xet",
+            "version": "1.1.5",
+            "requirements": [
+                {
+                    "raw": "hf-xet==1.1.5",
+                    "extras": [],
+                    "marker": null,
+                    "name": "hf-xet",
+                    "specifier": "==1.1.5",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "httpcore": {
+            "name": "httpcore",
+            "version": "1.0.9",
+            "requirements": [
+                {
+                    "raw": "httpcore==1.0.9",
+                    "extras": [],
+                    "marker": null,
+                    "name": "httpcore",
+                    "specifier": "==1.0.9",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "httptools": {
+            "name": "httptools",
+            "version": "0.6.4",
+            "requirements": [
+                {
+                    "raw": "httptools==0.6.4",
+                    "extras": [],
+                    "marker": null,
+                    "name": "httptools",
+                    "specifier": "==0.6.4",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "httpx": {
+            "name": "httpx",
+            "version": "0.25.2",
+            "requirements": [
+                {
+                    "raw": "httpx==0.25.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "httpx",
+                    "specifier": "==0.25.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "huggingface-hub": {
+            "name": "huggingface-hub",
+            "version": "0.33.0",
+            "requirements": [
+                {
+                    "raw": "huggingface-hub==0.33.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "huggingface-hub",
+                    "specifier": "==0.33.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "humanfriendly": {
+            "name": "humanfriendly",
+            "version": "10.0",
+            "requirements": [
+                {
+                    "raw": "humanfriendly==10.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "humanfriendly",
+                    "specifier": "==10.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "idna": {
+            "name": "idna",
+            "version": "3.10",
+            "requirements": [
+                {
+                    "raw": "idna==3.10",
+                    "extras": [],
+                    "marker": null,
+                    "name": "idna",
+                    "specifier": "==3.10",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "importlib-metadata": {
+            "name": "importlib-metadata",
+            "version": "8.7.0",
+            "requirements": [
+                {
+                    "raw": "importlib-metadata==8.7.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "importlib-metadata",
+                    "specifier": "==8.7.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "importlib-resources": {
+            "name": "importlib-resources",
+            "version": "6.5.2",
+            "requirements": [
+                {
+                    "raw": "importlib-resources==6.5.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "importlib-resources",
+                    "specifier": "==6.5.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "iniconfig": {
+            "name": "iniconfig",
+            "version": "2.1.0",
+            "requirements": [
+                {
+                    "raw": "iniconfig==2.1.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "iniconfig",
+                    "specifier": "==2.1.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "isort": {
+            "name": "isort",
+            "version": "6.0.1",
+            "requirements": [
+                {
+                    "raw": "isort==6.0.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "isort",
+                    "specifier": "==6.0.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "itsdangerous": {
+            "name": "itsdangerous",
+            "version": "2.2.0",
+            "requirements": [
+                {
+                    "raw": "itsdangerous==2.2.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "itsdangerous",
+                    "specifier": "==2.2.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "jinja2": {
+            "name": "jinja2",
+            "version": "3.1.6",
+            "requirements": [
+                {
+                    "raw": "jinja2==3.1.6",
+                    "extras": [],
+                    "marker": null,
+                    "name": "jinja2",
+                    "specifier": "==3.1.6",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "joblib": {
+            "name": "joblib",
+            "version": "1.5.1",
+            "requirements": [
+                {
+                    "raw": "joblib==1.5.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "joblib",
+                    "specifier": "==1.5.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "jsonpatch": {
+            "name": "jsonpatch",
+            "version": "1.33",
+            "requirements": [
+                {
+                    "raw": "jsonpatch==1.33",
+                    "extras": [],
+                    "marker": null,
+                    "name": "jsonpatch",
+                    "specifier": "==1.33",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "jsonpath-python": {
+            "name": "jsonpath-python",
+            "version": "1.0.6",
+            "requirements": [
+                {
+                    "raw": "jsonpath-python==1.0.6",
+                    "extras": [],
+                    "marker": null,
+                    "name": "jsonpath-python",
+                    "specifier": "==1.0.6",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "jsonpointer": {
+            "name": "jsonpointer",
+            "version": "3.0.0",
+            "requirements": [
+                {
+                    "raw": "jsonpointer==3.0.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "jsonpointer",
+                    "specifier": "==3.0.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "jsonschema": {
+            "name": "jsonschema",
+            "version": "4.24.0",
+            "requirements": [
+                {
+                    "raw": "jsonschema==4.24.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "jsonschema",
+                    "specifier": "==4.24.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "jsonschema-specifications": {
+            "name": "jsonschema-specifications",
+            "version": "2025.4.1",
+            "requirements": [
+                {
+                    "raw": "jsonschema-specifications==2025.4.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "jsonschema-specifications",
+                    "specifier": "==2025.4.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "kubernetes": {
+            "name": "kubernetes",
+            "version": "33.1.0",
+            "requirements": [
+                {
+                    "raw": "kubernetes==33.1.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "kubernetes",
+                    "specifier": "==33.1.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "langchain": {
+            "name": "langchain",
+            "version": "0.1.12",
+            "requirements": [
+                {
+                    "raw": "langchain==0.1.12",
+                    "extras": [],
+                    "marker": null,
+                    "name": "langchain",
+                    "specifier": "==0.1.12",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "langchain-community": {
+            "name": "langchain-community",
+            "version": "0.0.38",
+            "requirements": [
+                {
+                    "raw": "langchain-community==0.0.38",
+                    "extras": [],
+                    "marker": null,
+                    "name": "langchain-community",
+                    "specifier": "==0.0.38",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "langchain-core": {
+            "name": "langchain-core",
+            "version": "0.1.53",
+            "requirements": [
+                {
+                    "raw": "langchain-core==0.1.53",
+                    "extras": [],
+                    "marker": null,
+                    "name": "langchain-core",
+                    "specifier": "==0.1.53",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "langchain-text-splitters": {
+            "name": "langchain-text-splitters",
+            "version": "0.0.2",
+            "requirements": [
+                {
+                    "raw": "langchain-text-splitters==0.0.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "langchain-text-splitters",
+                    "specifier": "==0.0.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "langdetect": {
+            "name": "langdetect",
+            "version": "1.0.9",
+            "requirements": [
+                {
+                    "raw": "langdetect==1.0.9",
+                    "extras": [],
+                    "marker": null,
+                    "name": "langdetect",
+                    "specifier": "==1.0.9",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "langsmith": {
+            "name": "langsmith",
+            "version": "0.1.147",
+            "requirements": [
+                {
+                    "raw": "langsmith==0.1.147",
+                    "extras": [],
+                    "marker": null,
+                    "name": "langsmith",
+                    "specifier": "==0.1.147",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "lxml": {
+            "name": "lxml",
+            "version": "5.4.0",
+            "requirements": [
+                {
+                    "raw": "lxml==5.4.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "lxml",
+                    "specifier": "==5.4.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "markdown-it-py": {
+            "name": "markdown-it-py",
+            "version": "3.0.0",
+            "requirements": [
+                {
+                    "raw": "markdown-it-py==3.0.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "markdown-it-py",
+                    "specifier": "==3.0.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "marshmallow": {
+            "name": "marshmallow",
+            "version": "3.20.2",
+            "requirements": [
+                {
+                    "raw": "marshmallow==3.20.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "marshmallow",
+                    "specifier": "==3.20.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "mccabe": {
+            "name": "mccabe",
+            "version": "0.7.0",
+            "requirements": [
+                {
+                    "raw": "mccabe==0.7.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "mccabe",
+                    "specifier": "==0.7.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "mdurl": {
+            "name": "mdurl",
+            "version": "0.1.2",
+            "requirements": [
+                {
+                    "raw": "mdurl==0.1.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "mdurl",
+                    "specifier": "==0.1.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "mmh3": {
+            "name": "mmh3",
+            "version": "5.1.0",
+            "requirements": [
+                {
+                    "raw": "mmh3==5.1.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "mmh3",
+                    "specifier": "==5.1.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "mpmath": {
+            "name": "mpmath",
+            "version": "1.3.0",
+            "requirements": [
+                {
+                    "raw": "mpmath==1.3.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "mpmath",
+                    "specifier": "==1.3.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "multidict": {
+            "name": "multidict",
+            "version": "6.4.4",
+            "requirements": [
+                {
+                    "raw": "multidict==6.4.4",
+                    "extras": [],
+                    "marker": null,
+                    "name": "multidict",
+                    "specifier": "==6.4.4",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "mypy": {
+            "name": "mypy",
+            "version": "1.16.1",
+            "requirements": [
+                {
+                    "raw": "mypy==1.16.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "mypy",
+                    "specifier": "==1.16.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "mypy-extensions": {
+            "name": "mypy-extensions",
+            "version": "1.1.0",
+            "requirements": [
+                {
+                    "raw": "mypy-extensions==1.1.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "mypy-extensions",
+                    "specifier": "==1.1.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "nltk": {
+            "name": "nltk",
+            "version": "3.9.1",
+            "requirements": [
+                {
+                    "raw": "nltk==3.9.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "nltk",
+                    "specifier": "==3.9.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "numpy": {
+            "name": "numpy",
+            "version": "1.26.4",
+            "requirements": [
+                {
+                    "raw": "numpy==1.26.4",
+                    "extras": [],
+                    "marker": null,
+                    "name": "numpy",
+                    "specifier": "==1.26.4",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "oauthlib": {
+            "name": "oauthlib",
+            "version": "3.3.1",
+            "requirements": [
+                {
+                    "raw": "oauthlib==3.3.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "oauthlib",
+                    "specifier": "==3.3.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "ollama": {
+            "name": "ollama",
+            "version": "0.1.6",
+            "requirements": [
+                {
+                    "raw": "ollama==0.1.6",
+                    "extras": [],
+                    "marker": null,
+                    "name": "ollama",
+                    "specifier": "==0.1.6",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "onnxruntime": {
+            "name": "onnxruntime",
+            "version": "1.22.0",
+            "requirements": [
+                {
+                    "raw": "onnxruntime==1.22.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "onnxruntime",
+                    "specifier": "==1.22.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "opentelemetry-api": {
+            "name": "opentelemetry-api",
+            "version": "1.34.1",
+            "requirements": [
+                {
+                    "raw": "opentelemetry-api==1.34.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "opentelemetry-api",
+                    "specifier": "==1.34.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "opentelemetry-exporter-otlp-proto-common": {
+            "name": "opentelemetry-exporter-otlp-proto-common",
+            "version": "1.34.1",
+            "requirements": [
+                {
+                    "raw": "opentelemetry-exporter-otlp-proto-common==1.34.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "opentelemetry-exporter-otlp-proto-common",
+                    "specifier": "==1.34.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "opentelemetry-exporter-otlp-proto-grpc": {
+            "name": "opentelemetry-exporter-otlp-proto-grpc",
+            "version": "1.34.1",
+            "requirements": [
+                {
+                    "raw": "opentelemetry-exporter-otlp-proto-grpc==1.34.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "opentelemetry-exporter-otlp-proto-grpc",
+                    "specifier": "==1.34.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "opentelemetry-instrumentation": {
+            "name": "opentelemetry-instrumentation",
+            "version": "0.55b1",
+            "requirements": [
+                {
+                    "raw": "opentelemetry-instrumentation==0.55b1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "opentelemetry-instrumentation",
+                    "specifier": "==0.55b1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "opentelemetry-instrumentation-asgi": {
+            "name": "opentelemetry-instrumentation-asgi",
+            "version": "0.55b1",
+            "requirements": [
+                {
+                    "raw": "opentelemetry-instrumentation-asgi==0.55b1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "opentelemetry-instrumentation-asgi",
+                    "specifier": "==0.55b1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "opentelemetry-instrumentation-fastapi": {
+            "name": "opentelemetry-instrumentation-fastapi",
+            "version": "0.55b1",
+            "requirements": [
+                {
+                    "raw": "opentelemetry-instrumentation-fastapi==0.55b1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "opentelemetry-instrumentation-fastapi",
+                    "specifier": "==0.55b1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "opentelemetry-proto": {
+            "name": "opentelemetry-proto",
+            "version": "1.34.1",
+            "requirements": [
+                {
+                    "raw": "opentelemetry-proto==1.34.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "opentelemetry-proto",
+                    "specifier": "==1.34.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "opentelemetry-sdk": {
+            "name": "opentelemetry-sdk",
+            "version": "1.34.1",
+            "requirements": [
+                {
+                    "raw": "opentelemetry-sdk==1.34.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "opentelemetry-sdk",
+                    "specifier": "==1.34.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "opentelemetry-semantic-conventions": {
+            "name": "opentelemetry-semantic-conventions",
+            "version": "0.55b1",
+            "requirements": [
+                {
+                    "raw": "opentelemetry-semantic-conventions==0.55b1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "opentelemetry-semantic-conventions",
+                    "specifier": "==0.55b1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "opentelemetry-util-http": {
+            "name": "opentelemetry-util-http",
+            "version": "0.55b1",
+            "requirements": [
+                {
+                    "raw": "opentelemetry-util-http==0.55b1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "opentelemetry-util-http",
+                    "specifier": "==0.55b1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "orderly-set": {
+            "name": "orderly-set",
+            "version": "5.4.1",
+            "requirements": [
+                {
+                    "raw": "orderly-set==5.4.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "orderly-set",
+                    "specifier": "==5.4.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "orjson": {
+            "name": "orjson",
+            "version": "3.10.18",
+            "requirements": [
+                {
+                    "raw": "orjson==3.10.18",
+                    "extras": [],
+                    "marker": null,
+                    "name": "orjson",
+                    "specifier": "==3.10.18",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "overrides": {
+            "name": "overrides",
+            "version": "7.7.0",
+            "requirements": [
+                {
+                    "raw": "overrides==7.7.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "overrides",
+                    "specifier": "==7.7.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "packaging": {
+            "name": "packaging",
+            "version": "23.2",
+            "requirements": [
+                {
+                    "raw": "packaging==23.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "packaging",
+                    "specifier": "==23.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pathspec": {
+            "name": "pathspec",
+            "version": "0.12.1",
+            "requirements": [
+                {
+                    "raw": "pathspec==0.12.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pathspec",
+                    "specifier": "==0.12.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pbr": {
+            "name": "pbr",
+            "version": "6.1.1",
+            "requirements": [
+                {
+                    "raw": "pbr==6.1.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pbr",
+                    "specifier": "==6.1.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pip": {
+            "name": "pip",
+            "version": "25.1.1",
+            "requirements": [
+                {
+                    "raw": "pip==25.1.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pip",
+                    "specifier": "==25.1.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "platformdirs": {
+            "name": "platformdirs",
+            "version": "4.3.8",
+            "requirements": [
+                {
+                    "raw": "platformdirs==4.3.8",
+                    "extras": [],
+                    "marker": null,
+                    "name": "platformdirs",
+                    "specifier": "==4.3.8",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pluggy": {
+            "name": "pluggy",
+            "version": "1.6.0",
+            "requirements": [
+                {
+                    "raw": "pluggy==1.6.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pluggy",
+                    "specifier": "==1.6.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "posthog": {
+            "name": "posthog",
+            "version": "5.4.0",
+            "requirements": [
+                {
+                    "raw": "posthog==5.4.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "posthog",
+                    "specifier": "==5.4.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "propcache": {
+            "name": "propcache",
+            "version": "0.3.2",
+            "requirements": [
+                {
+                    "raw": "propcache==0.3.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "propcache",
+                    "specifier": "==0.3.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "protobuf": {
+            "name": "protobuf",
+            "version": "5.29.5",
+            "requirements": [
+                {
+                    "raw": "protobuf==5.29.5",
+                    "extras": [],
+                    "marker": null,
+                    "name": "protobuf",
+                    "specifier": "==5.29.5",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "psutil": {
+            "name": "psutil",
+            "version": "6.1.1",
+            "requirements": [
+                {
+                    "raw": "psutil==6.1.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "psutil",
+                    "specifier": "==6.1.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pulsar-client": {
+            "name": "pulsar-client",
+            "version": "3.7.0",
+            "requirements": [
+                {
+                    "raw": "pulsar-client==3.7.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pulsar-client",
+                    "specifier": "==3.7.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pyasn1": {
+            "name": "pyasn1",
+            "version": "0.6.1",
+            "requirements": [
+                {
+                    "raw": "pyasn1==0.6.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pyasn1",
+                    "specifier": "==0.6.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pyasn1-modules": {
+            "name": "pyasn1-modules",
+            "version": "0.4.2",
+            "requirements": [
+                {
+                    "raw": "pyasn1-modules==0.4.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pyasn1-modules",
+                    "specifier": "==0.4.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pycodestyle": {
+            "name": "pycodestyle",
+            "version": "2.14.0",
+            "requirements": [
+                {
+                    "raw": "pycodestyle==2.14.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pycodestyle",
+                    "specifier": "==2.14.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pycparser": {
+            "name": "pycparser",
+            "version": "2.22",
+            "requirements": [
+                {
+                    "raw": "pycparser==2.22",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pycparser",
+                    "specifier": "==2.22",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pydantic": {
+            "name": "pydantic",
+            "version": "2.9.2",
+            "requirements": [
+                {
+                    "raw": "pydantic==2.9.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pydantic",
+                    "specifier": "==2.9.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pydantic-core": {
+            "name": "pydantic-core",
+            "version": "2.23.4",
+            "requirements": [
+                {
+                    "raw": "pydantic-core==2.23.4",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pydantic-core",
+                    "specifier": "==2.23.4",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pyflakes": {
+            "name": "pyflakes",
+            "version": "3.4.0",
+            "requirements": [
+                {
+                    "raw": "pyflakes==3.4.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pyflakes",
+                    "specifier": "==3.4.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pygments": {
+            "name": "pygments",
+            "version": "2.19.2",
+            "requirements": [
+                {
+                    "raw": "pygments==2.19.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pygments",
+                    "specifier": "==2.19.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pypdf": {
+            "name": "pypdf",
+            "version": "5.6.1",
+            "requirements": [
+                {
+                    "raw": "pypdf==5.6.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pypdf",
+                    "specifier": "==5.6.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pypika": {
+            "name": "pypika",
+            "version": "0.48.9",
+            "requirements": [
+                {
+                    "raw": "pypika==0.48.9",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pypika",
+                    "specifier": "==0.48.9",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pyproject-hooks": {
+            "name": "pyproject-hooks",
+            "version": "1.2.0",
+            "requirements": [
+                {
+                    "raw": "pyproject-hooks==1.2.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pyproject-hooks",
+                    "specifier": "==1.2.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pytest": {
+            "name": "pytest",
+            "version": "8.4.1",
+            "requirements": [
+                {
+                    "raw": "pytest==8.4.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pytest",
+                    "specifier": "==8.4.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pytest-cov": {
+            "name": "pytest-cov",
+            "version": "6.2.1",
+            "requirements": [
+                {
+                    "raw": "pytest-cov==6.2.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pytest-cov",
+                    "specifier": "==6.2.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pytest-mock": {
+            "name": "pytest-mock",
+            "version": "3.14.1",
+            "requirements": [
+                {
+                    "raw": "pytest-mock==3.14.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pytest-mock",
+                    "specifier": "==3.14.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pytest-timeout": {
+            "name": "pytest-timeout",
+            "version": "2.4.0",
+            "requirements": [
+                {
+                    "raw": "pytest-timeout==2.4.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pytest-timeout",
+                    "specifier": "==2.4.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pytest-xdist": {
+            "name": "pytest-xdist",
+            "version": "3.7.0",
+            "requirements": [
+                {
+                    "raw": "pytest-xdist==3.7.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pytest-xdist",
+                    "specifier": "==3.7.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "python-dateutil": {
+            "name": "python-dateutil",
+            "version": "2.9.0.post0",
+            "requirements": [
+                {
+                    "raw": "python-dateutil==2.9.0.post0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "python-dateutil",
+                    "specifier": "==2.9.0.post0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "python-dotenv": {
+            "name": "python-dotenv",
+            "version": "1.0.1",
+            "requirements": [
+                {
+                    "raw": "python-dotenv==1.0.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "python-dotenv",
+                    "specifier": "==1.0.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "python-iso639": {
+            "name": "python-iso639",
+            "version": "2025.2.18",
+            "requirements": [
+                {
+                    "raw": "python-iso639==2025.2.18",
+                    "extras": [],
+                    "marker": null,
+                    "name": "python-iso639",
+                    "specifier": "==2025.2.18",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "python-magic": {
+            "name": "python-magic",
+            "version": "0.4.27",
+            "requirements": [
+                {
+                    "raw": "python-magic==0.4.27",
+                    "extras": [],
+                    "marker": null,
+                    "name": "python-magic",
+                    "specifier": "==0.4.27",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "pytz": {
+            "name": "pytz",
+            "version": "2025.2",
+            "requirements": [
+                {
+                    "raw": "pytz==2025.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pytz",
+                    "specifier": "==2025.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "rapidfuzz": {
+            "name": "rapidfuzz",
+            "version": "3.13.0",
+            "requirements": [
+                {
+                    "raw": "rapidfuzz==3.13.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "rapidfuzz",
+                    "specifier": "==3.13.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "referencing": {
+            "name": "referencing",
+            "version": "0.36.2",
+            "requirements": [
+                {
+                    "raw": "referencing==0.36.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "referencing",
+                    "specifier": "==0.36.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "regex": {
+            "name": "regex",
+            "version": "2024.11.6",
+            "requirements": [
+                {
+                    "raw": "regex==2024.11.6",
+                    "extras": [],
+                    "marker": null,
+                    "name": "regex",
+                    "specifier": "==2024.11.6",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "requests": {
+            "name": "requests",
+            "version": "2.31.0",
+            "requirements": [
+                {
+                    "raw": "requests==2.31.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "requests",
+                    "specifier": "==2.31.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "requests-oauthlib": {
+            "name": "requests-oauthlib",
+            "version": "2.0.0",
+            "requirements": [
+                {
+                    "raw": "requests-oauthlib==2.0.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "requests-oauthlib",
+                    "specifier": "==2.0.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "requests-toolbelt": {
+            "name": "requests-toolbelt",
+            "version": "1.0.0",
+            "requirements": [
+                {
+                    "raw": "requests-toolbelt==1.0.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "requests-toolbelt",
+                    "specifier": "==1.0.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "responses": {
+            "name": "responses",
+            "version": "0.25.7",
+            "requirements": [
+                {
+                    "raw": "responses==0.25.7",
+                    "extras": [],
+                    "marker": null,
+                    "name": "responses",
+                    "specifier": "==0.25.7",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "rich": {
+            "name": "rich",
+            "version": "14.0.0",
+            "requirements": [
+                {
+                    "raw": "rich==14.0.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "rich",
+                    "specifier": "==14.0.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "rpds-py": {
+            "name": "rpds-py",
+            "version": "0.25.1",
+            "requirements": [
+                {
+                    "raw": "rpds-py==0.25.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "rpds-py",
+                    "specifier": "==0.25.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "rsa": {
+            "name": "rsa",
+            "version": "4.9.1",
+            "requirements": [
+                {
+                    "raw": "rsa==4.9.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "rsa",
+                    "specifier": "==4.9.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "ruamel.yaml": {
+            "name": "ruamel.yaml",
+            "version": "0.18.14",
+            "requirements": [
+                {
+                    "raw": "ruamel.yaml==0.18.14",
+                    "extras": [],
+                    "marker": null,
+                    "name": "ruamel.yaml",
+                    "specifier": "==0.18.14",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "ruamel.yaml.clib": {
+            "name": "ruamel.yaml.clib",
+            "version": "0.2.12",
+            "requirements": [
+                {
+                    "raw": "ruamel.yaml.clib==0.2.12",
+                    "extras": [],
+                    "marker": null,
+                    "name": "ruamel.yaml.clib",
+                    "specifier": "==0.2.12",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "safety": {
+            "name": "safety",
+            "version": "3.5.2",
+            "requirements": [
+                {
+                    "raw": "safety==3.5.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "safety",
+                    "specifier": "==3.5.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "safety-schemas": {
+            "name": "safety-schemas",
+            "version": "0.0.14",
+            "requirements": [
+                {
+                    "raw": "safety-schemas==0.0.14",
+                    "extras": [],
+                    "marker": null,
+                    "name": "safety-schemas",
+                    "specifier": "==0.0.14",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "setuptools": {
+            "name": "setuptools",
+            "version": "80.9.0",
+            "requirements": [
+                {
+                    "raw": "setuptools==80.9.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "setuptools",
+                    "specifier": "==80.9.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "shellingham": {
+            "name": "shellingham",
+            "version": "1.5.4",
+            "requirements": [
+                {
+                    "raw": "shellingham==1.5.4",
+                    "extras": [],
+                    "marker": null,
+                    "name": "shellingham",
+                    "specifier": "==1.5.4",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "six": {
+            "name": "six",
+            "version": "1.17.0",
+            "requirements": [
+                {
+                    "raw": "six==1.17.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "six",
+                    "specifier": "==1.17.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "sniffio": {
+            "name": "sniffio",
+            "version": "1.3.1",
+            "requirements": [
+                {
+                    "raw": "sniffio==1.3.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "sniffio",
+                    "specifier": "==1.3.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "soupsieve": {
+            "name": "soupsieve",
+            "version": "2.7",
+            "requirements": [
+                {
+                    "raw": "soupsieve==2.7",
+                    "extras": [],
+                    "marker": null,
+                    "name": "soupsieve",
+                    "specifier": "==2.7",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "sqlalchemy": {
+            "name": "sqlalchemy",
+            "version": "2.0.41",
+            "requirements": [
+                {
+                    "raw": "sqlalchemy==2.0.41",
+                    "extras": [],
+                    "marker": null,
+                    "name": "sqlalchemy",
+                    "specifier": "==2.0.41",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "starlette": {
+            "name": "starlette",
+            "version": "0.46.2",
+            "requirements": [
+                {
+                    "raw": "starlette==0.46.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "starlette",
+                    "specifier": "==0.46.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "stevedore": {
+            "name": "stevedore",
+            "version": "5.4.1",
+            "requirements": [
+                {
+                    "raw": "stevedore==5.4.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "stevedore",
+                    "specifier": "==5.4.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "sympy": {
+            "name": "sympy",
+            "version": "1.14.0",
+            "requirements": [
+                {
+                    "raw": "sympy==1.14.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "sympy",
+                    "specifier": "==1.14.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "tabulate": {
+            "name": "tabulate",
+            "version": "0.9.0",
+            "requirements": [
+                {
+                    "raw": "tabulate==0.9.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "tabulate",
+                    "specifier": "==0.9.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "tenacity": {
+            "name": "tenacity",
+            "version": "8.5.0",
+            "requirements": [
+                {
+                    "raw": "tenacity==8.5.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "tenacity",
+                    "specifier": "==8.5.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "tokenizers": {
+            "name": "tokenizers",
+            "version": "0.21.2",
+            "requirements": [
+                {
+                    "raw": "tokenizers==0.21.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "tokenizers",
+                    "specifier": "==0.21.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "tomli": {
+            "name": "tomli",
+            "version": "2.2.1",
+            "requirements": [
+                {
+                    "raw": "tomli==2.2.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "tomli",
+                    "specifier": "==2.2.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "tomlkit": {
+            "name": "tomlkit",
+            "version": "0.13.3",
+            "requirements": [
+                {
+                    "raw": "tomlkit==0.13.3",
+                    "extras": [],
+                    "marker": null,
+                    "name": "tomlkit",
+                    "specifier": "==0.13.3",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "tqdm": {
+            "name": "tqdm",
+            "version": "4.67.1",
+            "requirements": [
+                {
+                    "raw": "tqdm==4.67.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "tqdm",
+                    "specifier": "==4.67.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "typer": {
+            "name": "typer",
+            "version": "0.16.0",
+            "requirements": [
+                {
+                    "raw": "typer==0.16.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "typer",
+                    "specifier": "==0.16.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "types-requests": {
+            "name": "types-requests",
+            "version": "2.32.4.20250611",
+            "requirements": [
+                {
+                    "raw": "types-requests==2.32.4.20250611",
+                    "extras": [],
+                    "marker": null,
+                    "name": "types-requests",
+                    "specifier": "==2.32.4.20250611",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "typing-extensions": {
+            "name": "typing-extensions",
+            "version": "4.14.0",
+            "requirements": [
+                {
+                    "raw": "typing-extensions==4.14.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "typing-extensions",
+                    "specifier": "==4.14.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "typing-inspect": {
+            "name": "typing-inspect",
+            "version": "0.9.0",
+            "requirements": [
+                {
+                    "raw": "typing-inspect==0.9.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "typing-inspect",
+                    "specifier": "==0.9.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "typing-inspection": {
+            "name": "typing-inspection",
+            "version": "0.4.1",
+            "requirements": [
+                {
+                    "raw": "typing-inspection==0.4.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "typing-inspection",
+                    "specifier": "==0.4.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "tzdata": {
+            "name": "tzdata",
+            "version": "2025.2",
+            "requirements": [
+                {
+                    "raw": "tzdata==2025.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "tzdata",
+                    "specifier": "==2025.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "unstructured": {
+            "name": "unstructured",
+            "version": "0.12.5",
+            "requirements": [
+                {
+                    "raw": "unstructured==0.12.5",
+                    "extras": [],
+                    "marker": null,
+                    "name": "unstructured",
+                    "specifier": "==0.12.5",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "unstructured-client": {
+            "name": "unstructured-client",
+            "version": "0.22.0",
+            "requirements": [
+                {
+                    "raw": "unstructured-client==0.22.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "unstructured-client",
+                    "specifier": "==0.22.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "urllib3": {
+            "name": "urllib3",
+            "version": "2.5.0",
+            "requirements": [
+                {
+                    "raw": "urllib3==2.5.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "urllib3",
+                    "specifier": "==2.5.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "uvicorn": {
+            "name": "uvicorn",
+            "version": "0.34.3",
+            "requirements": [
+                {
+                    "raw": "uvicorn==0.34.3",
+                    "extras": [],
+                    "marker": null,
+                    "name": "uvicorn",
+                    "specifier": "==0.34.3",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "uvloop": {
+            "name": "uvloop",
+            "version": "0.21.0",
+            "requirements": [
+                {
+                    "raw": "uvloop==0.21.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "uvloop",
+                    "specifier": "==0.21.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "watchfiles": {
+            "name": "watchfiles",
+            "version": "1.1.0",
+            "requirements": [
+                {
+                    "raw": "watchfiles==1.1.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "watchfiles",
+                    "specifier": "==1.1.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "websocket-client": {
+            "name": "websocket-client",
+            "version": "1.8.0",
+            "requirements": [
+                {
+                    "raw": "websocket-client==1.8.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "websocket-client",
+                    "specifier": "==1.8.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "websockets": {
+            "name": "websockets",
+            "version": "15.0.1",
+            "requirements": [
+                {
+                    "raw": "websockets==15.0.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "websockets",
+                    "specifier": "==15.0.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "werkzeug": {
+            "name": "werkzeug",
+            "version": "3.0.1",
+            "requirements": [
+                {
+                    "raw": "werkzeug==3.0.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "werkzeug",
+                    "specifier": "==3.0.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "wrapt": {
+            "name": "wrapt",
+            "version": "1.17.2",
+            "requirements": [
+                {
+                    "raw": "wrapt==1.17.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "wrapt",
+                    "specifier": "==1.17.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "yarl": {
+            "name": "yarl",
+            "version": "1.20.1",
+            "requirements": [
+                {
+                    "raw": "yarl==1.20.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "yarl",
+                    "specifier": "==1.20.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "zipp": {
+            "name": "zipp",
+            "version": "3.23.0",
+            "requirements": [
+                {
+                    "raw": "zipp==3.23.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "zipp",
+                    "specifier": "==3.23.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ]
+        },
+        "autocommand": {
+            "name": "autocommand",
+            "version": "2.2.2",
+            "requirements": [
+                {
+                    "raw": "autocommand==2.2.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "autocommand",
+                    "specifier": "==2.2.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages/setuptools/_vendor"
+                }
+            ]
+        },
+        "backports.tarfile": {
+            "name": "backports.tarfile",
+            "version": "1.2.0",
+            "requirements": [
+                {
+                    "raw": "backports.tarfile==1.2.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "backports.tarfile",
+                    "specifier": "==1.2.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages/setuptools/_vendor"
+                }
+            ]
+        },
+        "inflect": {
+            "name": "inflect",
+            "version": "7.3.1",
+            "requirements": [
+                {
+                    "raw": "inflect==7.3.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "inflect",
+                    "specifier": "==7.3.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages/setuptools/_vendor"
+                }
+            ]
+        },
+        "jaraco.collections": {
+            "name": "jaraco.collections",
+            "version": "5.1.0",
+            "requirements": [
+                {
+                    "raw": "jaraco.collections==5.1.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "jaraco.collections",
+                    "specifier": "==5.1.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages/setuptools/_vendor"
+                }
+            ]
+        },
+        "jaraco.context": {
+            "name": "jaraco.context",
+            "version": "5.3.0",
+            "requirements": [
+                {
+                    "raw": "jaraco.context==5.3.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "jaraco.context",
+                    "specifier": "==5.3.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages/setuptools/_vendor"
+                }
+            ]
+        },
+        "jaraco.functools": {
+            "name": "jaraco.functools",
+            "version": "4.0.1",
+            "requirements": [
+                {
+                    "raw": "jaraco.functools==4.0.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "jaraco.functools",
+                    "specifier": "==4.0.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages/setuptools/_vendor"
+                }
+            ]
+        },
+        "jaraco.text": {
+            "name": "jaraco.text",
+            "version": "3.12.1",
+            "requirements": [
+                {
+                    "raw": "jaraco.text==3.12.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "jaraco.text",
+                    "specifier": "==3.12.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages/setuptools/_vendor"
+                }
+            ]
+        },
+        "more-itertools": {
+            "name": "more-itertools",
+            "version": "10.3.0",
+            "requirements": [
+                {
+                    "raw": "more-itertools==10.3.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "more-itertools",
+                    "specifier": "==10.3.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages/setuptools/_vendor"
+                }
+            ]
+        },
+        "typeguard": {
+            "name": "typeguard",
+            "version": "4.3.0",
+            "requirements": [
+                {
+                    "raw": "typeguard==4.3.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "typeguard",
+                    "specifier": "==4.3.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages/setuptools/_vendor"
+                }
+            ]
+        },
+        "wheel": {
+            "name": "wheel",
+            "version": "0.45.1",
+            "requirements": [
+                {
+                    "raw": "wheel==0.45.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "wheel",
+                    "specifier": "==0.45.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages/setuptools/_vendor"
+                }
+            ]
+        }
+    },
+    "affected_packages": {
+        "werkzeug": {
+            "name": "werkzeug",
+            "version": "3.0.1",
+            "requirements": [
+                {
+                    "raw": "werkzeug==3.0.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "werkzeug",
+                    "specifier": "==3.0.1",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ],
+            "found": null,
+            "insecure_versions": [
+                "0.1",
+                "0.10",
+                "0.10.1",
+                "0.10.2",
+                "0.10.3",
+                "0.10.4",
+                "0.11",
+                "0.11.1",
+                "0.11.10",
+                "0.11.11",
+                "0.11.12",
+                "0.11.13",
+                "0.11.14",
+                "0.11.15",
+                "0.11.2",
+                "0.11.3",
+                "0.11.4",
+                "0.11.5",
+                "0.11.6",
+                "0.11.7",
+                "0.11.8",
+                "0.11.9",
+                "0.12",
+                "0.12.1",
+                "0.12.2",
+                "0.13",
+                "0.14",
+                "0.14.1",
+                "0.15.0",
+                "0.15.1",
+                "0.15.2",
+                "0.15.3",
+                "0.15.4",
+                "0.15.5",
+                "0.15.6",
+                "0.16.0",
+                "0.16.1",
+                "0.2",
+                "0.3",
+                "0.3.1",
+                "0.4",
+                "0.4.1",
+                "0.5",
+                "0.5.1",
+                "0.6",
+                "0.6.1",
+                "0.6.2",
+                "0.7",
+                "0.7.1",
+                "0.7.2",
+                "0.8",
+                "0.8.1",
+                "0.8.2",
+                "0.8.3",
+                "0.9",
+                "0.9.1",
+                "0.9.2",
+                "0.9.3",
+                "0.9.4",
+                "0.9.5",
+                "0.9.6",
+                "1.0.0",
+                "1.0.0rc1",
+                "1.0.1",
+                "2.0.0",
+                "2.0.0rc1",
+                "2.0.0rc2",
+                "2.0.0rc3",
+                "2.0.0rc4",
+                "2.0.0rc5",
+                "2.0.1",
+                "2.0.2",
+                "2.0.3",
+                "2.1.0",
+                "2.1.1",
+                "2.1.2",
+                "2.2.0",
+                "2.2.0a1",
+                "2.2.1",
+                "2.2.2",
+                "2.2.3",
+                "2.3.0",
+                "2.3.1",
+                "2.3.2",
+                "2.3.3",
+                "2.3.4",
+                "2.3.5",
+                "2.3.6",
+                "2.3.7",
+                "2.3.8",
+                "3.0.0",
+                "3.0.1",
+                "3.0.2",
+                "3.0.3",
+                "3.0.4",
+                "3.0.5"
+            ],
+            "secure_versions": [
+                "3.1.3",
+                "3.1.2",
+                "3.1.1",
+                "3.1.0",
+                "3.0.6"
+            ],
+            "latest_version_without_known_vulnerabilities": "3.1.3",
+            "latest_version": "3.1.3",
+            "more_info_url": "https://data.safetycli.com/p/pypi/werkzeug/97c/"
+        },
+        "unstructured": {
+            "name": "unstructured",
+            "version": "0.12.5",
+            "requirements": [
+                {
+                    "raw": "unstructured==0.12.5",
+                    "extras": [],
+                    "marker": null,
+                    "name": "unstructured",
+                    "specifier": "==0.12.5",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ],
+            "found": null,
+            "insecure_versions": [
+                "0.0.1.dev0",
+                "0.10.0",
+                "0.10.1",
+                "0.10.10",
+                "0.10.11",
+                "0.10.12",
+                "0.10.13",
+                "0.10.14",
+                "0.10.15",
+                "0.10.16",
+                "0.10.18",
+                "0.10.19",
+                "0.10.19.dev18",
+                "0.10.2",
+                "0.10.20",
+                "0.10.21",
+                "0.10.22",
+                "0.10.23",
+                "0.10.24",
+                "0.10.25",
+                "0.10.26",
+                "0.10.27",
+                "0.10.28",
+                "0.10.29",
+                "0.10.30",
+                "0.10.4",
+                "0.10.5",
+                "0.10.6",
+                "0.10.7",
+                "0.10.8",
+                "0.10.9",
+                "0.11.0",
+                "0.11.1",
+                "0.11.2",
+                "0.11.4",
+                "0.11.5",
+                "0.11.6",
+                "0.11.7",
+                "0.11.8",
+                "0.12.0",
+                "0.12.2",
+                "0.12.3",
+                "0.12.4",
+                "0.12.5",
+                "0.12.6",
+                "0.13.0",
+                "0.13.1",
+                "0.13.2",
+                "0.13.3",
+                "0.13.4",
+                "0.13.5",
+                "0.13.6",
+                "0.13.7",
+                "0.14.0",
+                "0.14.10",
+                "0.14.2",
+                "0.14.2.dev1",
+                "0.14.3",
+                "0.14.4",
+                "0.14.5",
+                "0.14.6",
+                "0.14.7",
+                "0.14.8",
+                "0.14.9",
+                "0.15.0",
+                "0.15.1",
+                "0.15.10",
+                "0.15.12",
+                "0.15.13",
+                "0.15.14",
+                "0.15.3",
+                "0.15.5",
+                "0.15.6",
+                "0.15.7",
+                "0.15.8",
+                "0.15.9",
+                "0.16.0",
+                "0.16.1",
+                "0.16.10",
+                "0.16.11",
+                "0.16.12",
+                "0.16.13",
+                "0.16.14",
+                "0.16.15",
+                "0.16.16",
+                "0.16.17",
+                "0.16.19",
+                "0.16.2",
+                "0.16.3",
+                "0.16.4",
+                "0.16.5",
+                "0.16.6",
+                "0.16.7",
+                "0.16.8",
+                "0.16.9",
+                "0.2.0",
+                "0.2.1",
+                "0.2.2",
+                "0.2.3",
+                "0.2.4",
+                "0.2.5",
+                "0.2.6.dev1",
+                "0.3.0",
+                "0.3.1",
+                "0.3.2",
+                "0.3.3",
+                "0.3.4",
+                "0.3.5",
+                "0.4.0",
+                "0.4.1",
+                "0.4.10",
+                "0.4.11",
+                "0.4.12",
+                "0.4.13",
+                "0.4.14",
+                "0.4.15",
+                "0.4.16",
+                "0.4.2",
+                "0.4.3",
+                "0.4.4",
+                "0.4.6",
+                "0.4.7",
+                "0.4.8",
+                "0.4.9",
+                "0.5.0",
+                "0.5.1",
+                "0.5.10",
+                "0.5.11",
+                "0.5.12",
+                "0.5.13",
+                "0.5.2",
+                "0.5.3",
+                "0.5.4",
+                "0.5.6",
+                "0.5.7",
+                "0.5.8",
+                "0.5.9",
+                "0.6.0",
+                "0.6.1",
+                "0.6.10",
+                "0.6.11",
+                "0.6.2",
+                "0.6.3",
+                "0.6.4",
+                "0.6.5",
+                "0.6.6",
+                "0.6.7",
+                "0.6.8",
+                "0.6.9",
+                "0.7.0",
+                "0.7.1",
+                "0.7.10",
+                "0.7.11",
+                "0.7.12",
+                "0.7.2",
+                "0.7.3",
+                "0.7.4",
+                "0.7.5",
+                "0.7.6",
+                "0.7.7",
+                "0.7.8",
+                "0.7.9",
+                "0.8.0",
+                "0.8.1",
+                "0.8.3",
+                "0.8.4",
+                "0.8.5",
+                "0.8.6",
+                "0.8.7",
+                "0.8.8",
+                "0.9.0",
+                "0.9.1",
+                "0.9.2",
+                "0.9.3"
+            ],
+            "secure_versions": [
+                "0.17.2",
+                "0.17.0",
+                "0.16.25",
+                "0.16.24",
+                "0.16.23",
+                "0.16.22",
+                "0.16.21",
+                "0.16.20"
+            ],
+            "latest_version_without_known_vulnerabilities": "0.17.2",
+            "latest_version": "0.17.2",
+            "more_info_url": "https://data.safetycli.com/p/pypi/unstructured/97c/"
+        },
+        "requests": {
+            "name": "requests",
+            "version": "2.31.0",
+            "requirements": [
+                {
+                    "raw": "requests==2.31.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "requests",
+                    "specifier": "==2.31.0",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ],
+            "found": null,
+            "insecure_versions": [
+                "0.0.1",
+                "0.10.0",
+                "0.10.1",
+                "0.10.2",
+                "0.10.3",
+                "0.10.4",
+                "0.10.6",
+                "0.10.7",
+                "0.10.8",
+                "0.11.1",
+                "0.11.2",
+                "0.12.0",
+                "0.12.1",
+                "0.13.0",
+                "0.13.1",
+                "0.13.2",
+                "0.13.3",
+                "0.13.4",
+                "0.13.5",
+                "0.13.6",
+                "0.13.7",
+                "0.13.8",
+                "0.13.9",
+                "0.14.0",
+                "0.14.1",
+                "0.14.2",
+                "0.2.0",
+                "0.2.1",
+                "0.2.2",
+                "0.2.3",
+                "0.2.4",
+                "0.3.0",
+                "0.3.1",
+                "0.3.2",
+                "0.3.3",
+                "0.3.4",
+                "0.4.0",
+                "0.4.1",
+                "0.5.0",
+                "0.5.1",
+                "0.6.0",
+                "0.6.1",
+                "0.6.2",
+                "0.6.3",
+                "0.6.4",
+                "0.6.5",
+                "0.6.6",
+                "0.7.0",
+                "0.7.1",
+                "0.7.2",
+                "0.7.3",
+                "0.7.4",
+                "0.7.5",
+                "0.7.6",
+                "0.8.0",
+                "0.8.1",
+                "0.8.2",
+                "0.8.3",
+                "0.8.4",
+                "0.8.5",
+                "0.8.6",
+                "0.8.7",
+                "0.8.8",
+                "0.8.9",
+                "0.9.0",
+                "0.9.1",
+                "0.9.2",
+                "0.9.3",
+                "1.0.0",
+                "1.0.1",
+                "1.0.2",
+                "1.0.3",
+                "1.0.4",
+                "1.1.0",
+                "1.2.0",
+                "1.2.1",
+                "1.2.2",
+                "1.2.3",
+                "2.0.0",
+                "2.0.1",
+                "2.1.0",
+                "2.10.0",
+                "2.11.0",
+                "2.11.1",
+                "2.12.0",
+                "2.12.1",
+                "2.12.2",
+                "2.12.3",
+                "2.12.4",
+                "2.12.5",
+                "2.13.0",
+                "2.14.0",
+                "2.14.1",
+                "2.14.2",
+                "2.15.0",
+                "2.15.1",
+                "2.16.0",
+                "2.16.1",
+                "2.16.2",
+                "2.16.3",
+                "2.16.4",
+                "2.16.5",
+                "2.17.0",
+                "2.17.1",
+                "2.17.2",
+                "2.17.3",
+                "2.18.0",
+                "2.18.1",
+                "2.18.2",
+                "2.18.3",
+                "2.18.4",
+                "2.19.0",
+                "2.19.1",
+                "2.2.0",
+                "2.20.0",
+                "2.20.1",
+                "2.2.1",
+                "2.21.0",
+                "2.22.0",
+                "2.23.0",
+                "2.24.0",
+                "2.25.0",
+                "2.25.1",
+                "2.26.0",
+                "2.27.0",
+                "2.27.1",
+                "2.28.0",
+                "2.28.1",
+                "2.28.2",
+                "2.29.0",
+                "2.3.0",
+                "2.30.0",
+                "2.31.0",
+                "2.32.0",
+                "2.32.1",
+                "2.32.2",
+                "2.32.3",
+                "2.4.0",
+                "2.4.1",
+                "2.4.2",
+                "2.4.3",
+                "2.5.0",
+                "2.5.1",
+                "2.5.2",
+                "2.5.3",
+                "2.6.0",
+                "2.6.1",
+                "2.6.2",
+                "2.7.0",
+                "2.8.0",
+                "2.8.1",
+                "2.9.0",
+                "2.9.1",
+                "2.9.2"
+            ],
+            "secure_versions": [
+                "2.32.4"
+            ],
+            "latest_version_without_known_vulnerabilities": "2.32.4",
+            "latest_version": "2.32.4",
+            "more_info_url": "https://data.safetycli.com/p/pypi/requests/97c/"
+        },
+        "langchain-community": {
+            "name": "langchain-community",
+            "version": "0.0.38",
+            "requirements": [
+                {
+                    "raw": "langchain-community==0.0.38",
+                    "extras": [],
+                    "marker": null,
+                    "name": "langchain-community",
+                    "specifier": "==0.0.38",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ],
+            "found": null,
+            "insecure_versions": [
+                "0.0.1",
+                "0.0.10",
+                "0.0.11",
+                "0.0.12",
+                "0.0.13",
+                "0.0.14",
+                "0.0.15",
+                "0.0.16",
+                "0.0.17",
+                "0.0.18",
+                "0.0.19",
+                "0.0.1rc1",
+                "0.0.1rc2",
+                "0.0.2",
+                "0.0.20",
+                "0.0.21",
+                "0.0.22",
+                "0.0.23",
+                "0.0.24",
+                "0.0.25",
+                "0.0.26",
+                "0.0.27",
+                "0.0.28",
+                "0.0.29",
+                "0.0.3",
+                "0.0.30",
+                "0.0.31",
+                "0.0.32",
+                "0.0.33",
+                "0.0.34",
+                "0.0.35",
+                "0.0.36",
+                "0.0.37",
+                "0.0.38",
+                "0.0.4",
+                "0.0.5",
+                "0.0.6",
+                "0.0.7",
+                "0.0.8",
+                "0.0.9",
+                "0.2.0",
+                "0.2.0rc1",
+                "0.2.1",
+                "0.2.10",
+                "0.2.11",
+                "0.2.12",
+                "0.2.13",
+                "0.2.14",
+                "0.2.15",
+                "0.2.16",
+                "0.2.17",
+                "0.2.18",
+                "0.2.19",
+                "0.2.2",
+                "0.2.3",
+                "0.2.4",
+                "0.2.5",
+                "0.2.6",
+                "0.2.7",
+                "0.2.9",
+                "0.3.0.dev1",
+                "0.3.0.dev2"
+            ],
+            "secure_versions": [
+                "0.3.26",
+                "0.3.25",
+                "0.3.24",
+                "0.3.23",
+                "0.3.22",
+                "0.3.21",
+                "0.3.20",
+                "0.3.19",
+                "0.3.18",
+                "0.3.17",
+                "0.3.17rc1",
+                "0.3.16",
+                "0.3.15",
+                "0.3.14",
+                "0.3.13",
+                "0.3.12",
+                "0.3.11",
+                "0.3.10",
+                "0.3.9",
+                "0.3.8",
+                "0.3.7",
+                "0.3.6",
+                "0.3.5",
+                "0.3.4",
+                "0.3.3",
+                "0.3.2",
+                "0.3.1",
+                "0.3.0"
+            ],
+            "latest_version_without_known_vulnerabilities": "0.3.26",
+            "latest_version": "0.3.26",
+            "more_info_url": "https://data.safetycli.com/p/pypi/langchain-community/97c/"
+        },
+        "flask": {
+            "name": "flask",
+            "version": "3.0.2",
+            "requirements": [
+                {
+                    "raw": "flask==3.0.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "flask",
+                    "specifier": "==3.0.2",
+                    "url": null,
+                    "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                }
+            ],
+            "found": null,
+            "insecure_versions": [
+                "0.1",
+                "0.10",
+                "0.10.1",
+                "0.11",
+                "0.11.1",
+                "0.12",
+                "0.12.1",
+                "0.12.2",
+                "0.12.3",
+                "0.12.4",
+                "0.12.5",
+                "0.2",
+                "0.3",
+                "0.3.1",
+                "0.4",
+                "0.5",
+                "0.5.1",
+                "0.5.2",
+                "0.6",
+                "0.6.1",
+                "0.7",
+                "0.7.1",
+                "0.7.2",
+                "0.8",
+                "0.8.1",
+                "0.9",
+                "1.0",
+                "1.0.1",
+                "1.0.2",
+                "1.0.3",
+                "1.0.4",
+                "1.1.0",
+                "1.1.1",
+                "1.1.2",
+                "1.1.3",
+                "1.1.4",
+                "2.0.0",
+                "2.0.0rc1",
+                "2.0.0rc2",
+                "2.0.1",
+                "2.0.2",
+                "2.0.3",
+                "2.1.0",
+                "2.1.1",
+                "2.1.2",
+                "2.1.3",
+                "2.2.0",
+                "2.2.1",
+                "2.2.2",
+                "2.2.3",
+                "2.2.4",
+                "2.2.5",
+                "2.3.0",
+                "2.3.1",
+                "2.3.2",
+                "2.3.3",
+                "3.0.0",
+                "3.0.1",
+                "3.0.2",
+                "3.0.3",
+                "3.1.0"
+            ],
+            "secure_versions": [
+                "3.1.1"
+            ],
+            "latest_version_without_known_vulnerabilities": "3.1.1",
+            "latest_version": "3.1.1",
+            "more_info_url": "https://data.safetycli.com/p/pypi/flask/97c/"
+        }
+    },
+    "announcements": [],
+    "vulnerabilities": [
+        {
+            "vulnerability_id": "71594",
+            "package_name": "werkzeug",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<3.0.3"
+            ],
+            "all_vulnerable_specs": [
+                "<3.0.3"
+            ],
+            "analyzed_version": "3.0.1",
+            "analyzed_requirement": {
+                "raw": "werkzeug==3.0.1",
+                "extras": [],
+                "marker": null,
+                "name": "werkzeug",
+                "specifier": "==3.0.1",
+                "url": null,
+                "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+            },
+            "advisory": "Werkzeug is a comprehensive WSGI web application library. The debugger in affected versions of Werkzeug can allow an attacker to execute code on a developer's machine under some circumstances. This requires the attacker to get the developer to interact with a domain and subdomain they control, and enter the debugger PIN, but if they are successful it allows access to the debugger even if it is only running on localhost. This also requires the attacker to guess a URL in the developer's application that will trigger the debugger.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2024-34069",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/71594/97c"
+        },
+        {
+            "vulnerability_id": "73969",
+            "package_name": "werkzeug",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<3.0.6"
+            ],
+            "all_vulnerable_specs": [
+                "<3.0.6"
+            ],
+            "analyzed_version": "3.0.1",
+            "analyzed_requirement": {
+                "raw": "werkzeug==3.0.1",
+                "extras": [],
+                "marker": null,
+                "name": "werkzeug",
+                "specifier": "==3.0.1",
+                "url": null,
+                "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+            },
+            "advisory": "Affected versions of Werkzeug are vulnerable to Path Traversal (CWE-22) on Windows systems running Python versions below 3.11. The safe_join() function failed to properly detect certain absolute paths on Windows, allowing attackers to potentially access files outside the intended directory. An attacker could craft special paths starting with \"/\" that bypass the directory restrictions on Windows systems. The vulnerability exists in the safe_join() function which relied solely on os.path.isabs() for path validation. This is exploitable on Windows systems by passing paths starting with \"/\" to safe_join(). To remediate, upgrade to the latest version which includes additional path validation checks. \r\nNOTE: This vulnerability specifically affects Windows systems running Python versions below 3.11 where ntpath.isabs() behavior differs.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2024-49766",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/73969/97c"
+        },
+        {
+            "vulnerability_id": "73889",
+            "package_name": "werkzeug",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<3.0.6"
+            ],
+            "all_vulnerable_specs": [
+                "<3.0.6"
+            ],
+            "analyzed_version": "3.0.1",
+            "analyzed_requirement": {
+                "raw": "werkzeug==3.0.1",
+                "extras": [],
+                "marker": null,
+                "name": "werkzeug",
+                "specifier": "==3.0.1",
+                "url": null,
+                "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+            },
+            "advisory": "Affected versions of Werkzeug are potentially vulnerable to resource exhaustion when parsing file data in forms. Applications using 'werkzeug.formparser.MultiPartParser' to parse 'multipart/form-data' requests (e.g. all flask applications) are vulnerable to a relatively simple but effective resource exhaustion (denial of service) attack. A specifically crafted form submission request can cause the parser to allocate and block 3 to 8 times the upload size in main memory. There is no upper limit; a single upload at 1 Gbit/s can exhaust 32 GB of RAM in less than 60 seconds.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2024-49767",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/73889/97c"
+        },
+        {
+            "vulnerability_id": "75338",
+            "package_name": "unstructured",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<0.16.20"
+            ],
+            "all_vulnerable_specs": [
+                "<0.16.20"
+            ],
+            "analyzed_version": "0.12.5",
+            "analyzed_requirement": {
+                "raw": "unstructured==0.12.5",
+                "extras": [],
+                "marker": null,
+                "name": "unstructured",
+                "specifier": "==0.12.5",
+                "url": null,
+                "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+            },
+            "advisory": "Unstructured fixes a security issue where rst and org files could read files in the local filesystem**. Certain filetypes could 'include' or 'import' local files into their content, allowing partitioning of arbitrary files from the local filesystem. Partitioning of these files is now sandboxed.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": null,
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/75338/97c"
+        },
+        {
+            "vulnerability_id": "76387",
+            "package_name": "unstructured",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<0.14.3"
+            ],
+            "all_vulnerable_specs": [
+                "<0.14.3"
+            ],
+            "analyzed_version": "0.12.5",
+            "analyzed_requirement": {
+                "raw": "unstructured==0.12.5",
+                "extras": [],
+                "marker": null,
+                "name": "unstructured",
+                "specifier": "==0.12.5",
+                "url": null,
+                "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+            },
+            "advisory": "Unstructured v.0.14.2 and before is vulnerable to XML External Entity (XXE) via the XMLParser.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2024-46455",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/76387/97c"
+        },
+        {
+            "vulnerability_id": "71064",
+            "package_name": "requests",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<2.32.2"
+            ],
+            "all_vulnerable_specs": [
+                "<2.32.2"
+            ],
+            "analyzed_version": "2.31.0",
+            "analyzed_requirement": {
+                "raw": "requests==2.31.0",
+                "extras": [],
+                "marker": null,
+                "name": "requests",
+                "specifier": "==2.31.0",
+                "url": null,
+                "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+            },
+            "advisory": "Affected versions of Requests, when making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same host will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool. Requests 2.32.0 fixes the issue, but versions 2.32.0 and 2.32.1 were yanked due to conflicts with CVE-2024-35195 mitigation.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2024-35195",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/71064/97c"
+        },
+        {
+            "vulnerability_id": "73959",
+            "package_name": "langchain-community",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<0.3.0"
+            ],
+            "all_vulnerable_specs": [
+                "<0.3.0"
+            ],
+            "analyzed_version": "0.0.38",
+            "analyzed_requirement": {
+                "raw": "langchain-community==0.0.38",
+                "extras": [],
+                "marker": null,
+                "name": "langchain-community",
+                "specifier": "==0.0.38",
+                "url": null,
+                "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+            },
+            "advisory": "Affected versions of langchain-ai/langchain are vulnerable to SQL injection through GraphCypherQAChain class. This vulnerability allows attackers to manipulate database queries via malicious input in prompts, potentially leading to unauthorized data access, manipulation, and cross-tenant data breaches. The vulnerability exists in the query processing logic of GraphCypherQAChain where user input is not properly sanitized. Successfully exploiting this requires access to the API endpoint.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2024-8309",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/73959/97c"
+        },
+        {
+            "vulnerability_id": "71614",
+            "package_name": "langchain-community",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<0.2.5"
+            ],
+            "all_vulnerable_specs": [
+                "<0.2.5"
+            ],
+            "analyzed_version": "0.0.38",
+            "analyzed_requirement": {
+                "raw": "langchain-community==0.0.38",
+                "extras": [],
+                "marker": null,
+                "name": "langchain-community",
+                "specifier": "==0.0.38",
+                "url": null,
+                "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+            },
+            "advisory": "Affected versions of Langchain-community are vulnerable to Denial of service in SitemapLoader Document Loader. The parse_sitemap method, responsible for parsing sitemaps and extracting URLs, lacks a mechanism to prevent infinite recursion when a sitemap URL refers to the current sitemap itself. This oversight allows for the possibility of an infinite loop, leading to a crash by exceeding the maximum recursion depth in Python. This vulnerability can be exploited to occupy server socket/port resources and crash the Python process, impacting the availability of services relying on this functionality.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2024-2965",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/71614/97c"
+        },
+        {
+            "vulnerability_id": "71924",
+            "package_name": "langchain-community",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<0.2.9"
+            ],
+            "all_vulnerable_specs": [
+                "<0.2.9"
+            ],
+            "analyzed_version": "0.0.38",
+            "analyzed_requirement": {
+                "raw": "langchain-community==0.0.38",
+                "extras": [],
+                "marker": null,
+                "name": "langchain-community",
+                "specifier": "==0.0.38",
+                "url": null,
+                "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+            },
+            "advisory": "A Server-Side Request Forgery (SSRF) vulnerability exists in the Web Research Retriever component of affected versions of langchain-ai/langchain. The vulnerability arises because the Web Research Retriever does not restrict requests to remote internet addresses, allowing it to reach local addresses. This flaw enables attackers to execute port scans, access local services, and in some scenarios, read instance metadata from cloud environments. The vulnerability is particularly concerning as it can be exploited to abuse the Web Explorer server as a proxy for web attacks on third parties and interact with servers in the local network, including reading their response data. This could potentially lead to arbitrary code execution, depending on the nature of the local services. The vulnerability is limited to GET requests, as POST requests are not possible, but the impact on confidentiality, integrity, and availability is significant due to the potential for stolen credentials and state-changing interactions with internal APIs.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2024-3095",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/71924/97c"
+        },
+        {
+            "vulnerability_id": "73298",
+            "package_name": "langchain-community",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<0.2.4"
+            ],
+            "all_vulnerable_specs": [
+                "<0.2.4"
+            ],
+            "analyzed_version": "0.0.38",
+            "analyzed_requirement": {
+                "raw": "langchain-community==0.0.38",
+                "extras": [],
+                "marker": null,
+                "name": "langchain-community",
+                "specifier": "==0.0.38",
+                "url": null,
+                "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+            },
+            "advisory": "A critical security vulnerability affects the FAISS class in the langchain-ai/langchain library. The deserialize_from_bytes method deserializes data using Python's pickle module without proper security checks, potentially allowing attackers to execute arbitrary code, including system commands via os.system. Users must update to the latest version, which introduces an allow_dangerous_deserialization parameter. Users must explicitly set this parameter to True to allow deserialization, acknowledging the risk. Never deserialize data from untrusted sources.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2024-5998",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/73298/97c"
+        },
+        {
+            "vulnerability_id": "77323",
+            "package_name": "flask",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<3.1.1"
+            ],
+            "all_vulnerable_specs": [
+                "<3.1.1"
+            ],
+            "analyzed_version": "3.0.2",
+            "analyzed_requirement": {
+                "raw": "flask==3.0.2",
+                "extras": [],
+                "marker": null,
+                "name": "flask",
+                "specifier": "==3.0.2",
+                "url": null,
+                "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+            },
+            "advisory": "Affected versions of Flask (\u2264 3.1.0) are vulnerable to incorrect fallback key configuration in session signing, leading to stale key usage instead of the intended current key. This flaw undermines session integrity, enabling remote attackers to forge or tamper with cookies via manipulated SECRET_KEY_FALLBACKS parameters. The vulnerability exists in the itsdangerous-based signing routines within flask.sessions (fallback key list ordering).",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2025-47278",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/77323/97c"
+        }
+    ],
+    "ignored_vulnerabilities": [],
+    "remediations": {
+        "werkzeug": {
+            "requirements": {
+                "==3.0.1": {
+                    "vulnerabilities_found": 3,
+                    "version": "3.0.1",
+                    "requirement": {
+                        "raw": "werkzeug==3.0.1",
+                        "extras": [],
+                        "marker": null,
+                        "name": "werkzeug",
+                        "specifier": "==3.0.1",
+                        "url": null,
+                        "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                    },
+                    "more_info_url": "https://data.safetycli.com/p/pypi/werkzeug/97c/"
+                }
+            },
+            "current_version": null,
+            "vulnerabilities_found": null,
+            "recommended_version": null,
+            "other_recommended_versions": [],
+            "more_info_url": null
+        },
+        "unstructured": {
+            "requirements": {
+                "==0.12.5": {
+                    "vulnerabilities_found": 2,
+                    "version": "0.12.5",
+                    "requirement": {
+                        "raw": "unstructured==0.12.5",
+                        "extras": [],
+                        "marker": null,
+                        "name": "unstructured",
+                        "specifier": "==0.12.5",
+                        "url": null,
+                        "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                    },
+                    "more_info_url": "https://data.safetycli.com/p/pypi/unstructured/97c/"
+                }
+            },
+            "current_version": null,
+            "vulnerabilities_found": null,
+            "recommended_version": null,
+            "other_recommended_versions": [],
+            "more_info_url": null
+        },
+        "requests": {
+            "requirements": {
+                "==2.31.0": {
+                    "vulnerabilities_found": 1,
+                    "version": "2.31.0",
+                    "requirement": {
+                        "raw": "requests==2.31.0",
+                        "extras": [],
+                        "marker": null,
+                        "name": "requests",
+                        "specifier": "==2.31.0",
+                        "url": null,
+                        "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                    },
+                    "more_info_url": "https://data.safetycli.com/p/pypi/requests/97c/"
+                }
+            },
+            "current_version": null,
+            "vulnerabilities_found": null,
+            "recommended_version": null,
+            "other_recommended_versions": [],
+            "more_info_url": null
+        },
+        "langchain-community": {
+            "requirements": {
+                "==0.0.38": {
+                    "vulnerabilities_found": 4,
+                    "version": "0.0.38",
+                    "requirement": {
+                        "raw": "langchain-community==0.0.38",
+                        "extras": [],
+                        "marker": null,
+                        "name": "langchain-community",
+                        "specifier": "==0.0.38",
+                        "url": null,
+                        "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                    },
+                    "more_info_url": "https://data.safetycli.com/p/pypi/langchain-community/97c/"
+                }
+            },
+            "current_version": null,
+            "vulnerabilities_found": null,
+            "recommended_version": null,
+            "other_recommended_versions": [],
+            "more_info_url": null
+        },
+        "flask": {
+            "requirements": {
+                "==3.0.2": {
+                    "vulnerabilities_found": 1,
+                    "version": "3.0.2",
+                    "requirement": {
+                        "raw": "flask==3.0.2",
+                        "extras": [],
+                        "marker": null,
+                        "name": "flask",
+                        "specifier": "==3.0.2",
+                        "url": null,
+                        "found": "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages"
+                    },
+                    "more_info_url": "https://data.safetycli.com/p/pypi/flask/97c/"
+                }
+            },
+            "current_version": null,
+            "vulnerabilities_found": null,
+            "recommended_version": null,
+            "other_recommended_versions": [],
+            "more_info_url": null
+        }
+    },
+    "remediations_results": {
+        "vulnerabilities_fixed": [],
+        "remediations_applied": {},
+        "remediations_skipped": {}
+    }
+}
+
+
++===========================================================================================================================================================================================+
+
+
+DEPRECATED: this command (`check`) has been DEPRECATED, and will be unsupported beyond 01 June 2024.
+
+
+We highly encourage switching to the new `scan` command which is easier to use, more powerful, and can be set up to mimic the deprecated command if required.
+
+
++===========================================================================================================================================================================================+
+
+

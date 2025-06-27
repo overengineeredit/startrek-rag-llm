@@ -1,10 +1,10 @@
 import logging
-from typing import Any, Dict, List
 
-from config import config
 from flask import Blueprint, jsonify, request
 from marshmallow import Schema, fields
 from services.rag_service import rag_service
+
+from config import config
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ class ValidationError(Exception):
 # Add request validation
 class QuerySchema(Schema):
     query = fields.Str(required=True)
-    num_results = fields.Int(missing=5, validate=lambda x: 1 <= x <= 20)
+    num_results = fields.Int(load_default=5, validate=lambda x: 1 <= x <= 20)
 
 
 @api_bp.route("/query", methods=["POST"])
@@ -74,16 +74,12 @@ def add_document():
     if not all(field in data for field in required_fields):
         logger.error("Missing required fields in add request")
         return (
-            jsonify(
-                {"error": f"Missing required fields: {', '.join(required_fields)}"}
-            ),
+            jsonify({"error": f"Missing required fields: {', '.join(required_fields)}"}),
             400,
         )
 
     try:
-        success = rag_service.add_document(
-            document=data["document"], metadata=data["metadata"], doc_id=data["id"]
-        )
+        success = rag_service.add_document(document=data["document"], metadata=data["metadata"], doc_id=data["id"])
 
         if success:
             logger.info("Document added to ChromaDB successfully")

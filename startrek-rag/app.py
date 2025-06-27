@@ -1,14 +1,10 @@
 import logging
 import os
 
-from config import config
-from dotenv import load_dotenv
-from embed import embed, get_embedding
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 from routes.api import api_bp
 
-# Load environment variables
-load_dotenv()
+from config import config
 
 # Configure logging
 logging.basicConfig(

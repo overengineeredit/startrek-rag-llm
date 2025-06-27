@@ -4,6 +4,7 @@ import os
 import sys
 import time
 from datetime import datetime
+from typing import Any, Dict, List, Union
 
 import requests
 from dotenv import load_dotenv
@@ -28,14 +29,14 @@ class ContentProcessor:
             app_url: URL of the app service
         """
         self.app_url = app_url
-        self.stats = {
+        self.stats: Dict[str, Union[int, float]] = {
             "total_files_processed": 0,
             "total_chunks_processed": 0,
+            "total_text_length": 0,
             "total_embeddings_generated": 0,
             "total_documents_added": 0,
             "errors": 0,
             "processing_time": 0.0,
-            "total_text_length": 0,
         }
         logger.info(f"Initialized ContentProcessor with app_url={app_url}")
 
@@ -44,11 +45,11 @@ class ContentProcessor:
         self.stats = {
             "total_files_processed": 0,
             "total_chunks_processed": 0,
+            "total_text_length": 0,
             "total_embeddings_generated": 0,
             "total_documents_added": 0,
             "errors": 0,
             "processing_time": 0.0,
-            "total_text_length": 0,
         }
 
     def print_stats(self):
@@ -58,30 +59,24 @@ class ContentProcessor:
         print("=" * 60)
         print(f"Total Files Processed: {self.stats['total_files_processed']}")
         print(f"Total Chunks Processed: {self.stats['total_chunks_processed']}")
-        print(f"Total Embeddings Generated: {self.stats['total_embeddings_generated']}")
-        print(
-            f"Total Documents Added to ChromaDB: {self.stats['total_documents_added']}"
-        )
         print(f"Total Text Length: {self.stats['total_text_length']:,} characters")
+        print(f"Total Embeddings Generated: {self.stats['total_embeddings_generated']}")
+        print(f"Total Documents Added: {self.stats['total_documents_added']}")
         print(f"Errors Encountered: {self.stats['errors']}")
         print(f"Total Processing Time: {self.stats['processing_time']:.2f} seconds")
+
+        # Calculate averages if we have data
         if self.stats["total_chunks_processed"] > 0:
-            print(
-                f"Average Time per Chunk: {self.stats['processing_time']/self.stats['total_chunks_processed']:.3f} seconds"
-            )
-            print(
-                f"Average Chunk Size: {self.stats['total_text_length']/self.stats['total_chunks_processed']:.0f} characters"
-            )
+            print(f"Average Time per Chunk: {self.stats['processing_time']/self.stats['total_chunks_processed']:.3f} seconds")
+            print(f"Average Chunk Size: {self.stats['total_text_length']/self.stats['total_chunks_processed']:.0f} characters")
 
         if self.stats["errors"] > 0:
-            print(
-                f"\n⚠️  WARNING: {self.stats['errors']} errors occurred during processing"
-            )
+            print(f"\n⚠️  WARNING: {self.stats['errors']} errors occurred during processing")
         else:
-            print(f"\n✅ SUCCESS: All content processed without errors")
+            print("\n✅ SUCCESS: All content processed without errors")
         print("=" * 60)
 
-    def get_embedding(self, text: str) -> list:
+    def get_embedding(self, text: str) -> List[float]:
         """Get embedding from the app's embed endpoint."""
         try:
             start_time = time.time()
@@ -93,18 +88,17 @@ class ContentProcessor:
             response.raise_for_status()
             embedding = response.json()["embedding"]
             self.stats["total_embeddings_generated"] += 1
-            logger.debug(
-                f"Generated embedding in {time.time() - start_time:.3f}s (text length: {len(text)})"
-            )
-            return embedding
+            logger.debug(f"Generated embedding in {time.time() - start_time:.3f}s (text length: {len(text)})")
+            if isinstance(embedding, list):
+                return embedding
+            else:
+                raise ValueError("Embedding is not a list")
         except Exception as e:
             logger.error(f"Error getting embedding: {str(e)}")
             self.stats["errors"] += 1
             raise
 
-    def add_to_chroma(
-        self, embedding: list, document: str, metadata: dict, doc_id: str
-    ) -> bool:
+    def add_to_chroma(self, embedding: List[float], document: str, metadata: Dict[str, Any], doc_id: str) -> bool:
         """Add document to ChromaDB through app's API."""
         try:
             start_time = time.time()
@@ -120,9 +114,7 @@ class ContentProcessor:
             )
             response.raise_for_status()
             self.stats["total_documents_added"] += 1
-            logger.debug(
-                f"Added document to ChromaDB in {time.time() - start_time:.3f}s (doc_id: {doc_id})"
-            )
+            logger.debug(f"Added document to ChromaDB in {time.time() - start_time:.3f}s (doc_id: {doc_id})")
             return True
         except Exception as e:
             logger.error(f"Error adding to ChromaDB: {str(e)}")
@@ -167,9 +159,7 @@ class ContentProcessor:
             # Process each chunk
             for i, chunk in enumerate(valid_chunks):
                 chunk_start = time.time()
-                logger.info(
-                    f"   Processing chunk {i+1}/{len(valid_chunks)} (length: {len(chunk):,} chars)"
-                )
+                logger.info(f"   Processing chunk {i+1}/{len(valid_chunks)} (length: {len(chunk):,} chars)")
 
                 try:
                     # Get embedding from app
@@ -193,9 +183,7 @@ class ContentProcessor:
                         processed_count += 1
                         self.stats["total_chunks_processed"] += 1
                         self.stats["total_text_length"] += len(chunk)
-                        logger.info(
-                            f"   ✅ Chunk {i+1} processed successfully in {time.time() - chunk_start:.3f}s"
-                        )
+                        logger.info(f"   ✅ Chunk {i+1} processed successfully in {time.time() - chunk_start:.3f}s")
                     else:
                         logger.error(f"   ❌ Failed to add chunk {i+1} to ChromaDB")
 
@@ -259,9 +247,7 @@ class ContentProcessor:
                 continue
 
         self.stats["processing_time"] = time.time() - start_time
-        logger.info(
-            f"\n📁 Folder processing complete in {self.stats['processing_time']:.2f} seconds"
-        )
+        logger.info(f"\n📁 Folder processing complete in {self.stats['processing_time']:.2f} seconds")
         self.print_stats()
         return self.stats
 
@@ -270,30 +256,22 @@ def main():
     """Main function for command-line usage."""
     load_dotenv()
 
-    parser = argparse.ArgumentParser(
-        description="Process files in a folder and add to ChromaDB."
-    )
-    parser.add_argument(
-        "folder_path", type=str, help="Path to the folder containing files to process."
-    )
+    parser = argparse.ArgumentParser(description="Process files in a folder and add to ChromaDB.")
+    parser.add_argument("folder_path", type=str, help="Path to the folder containing files to process.")
     parser.add_argument(
         "--app-url",
         type=str,
         default="http://app:8080",
         help="URL of the app service (default: http://app:8080)",
     )
-    parser.add_argument(
-        "--verbose", "-v", action="store_true", help="Enable verbose logging"
-    )
+    parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose logging")
 
     args = parser.parse_args()
 
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    print(
-        f"🚀 Starting Content Processor at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-    )
+    print(f"🚀 Starting Content Processor at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"   App URL: {args.app_url}")
     print(f"   Folder: {args.folder_path}")
 
@@ -301,9 +279,7 @@ def main():
         processor = ContentProcessor(app_url=args.app_url)
         stats = processor.process_folder(args.folder_path)
 
-        print(
-            f"\n🎉 Processing completed at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-        )
+        print(f"\n🎉 Processing completed at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
     except Exception as e:
         logger.error(f"❌ Fatal error: {str(e)}")

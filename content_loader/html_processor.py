@@ -2,14 +2,16 @@ import logging
 import os
 import re
 import time
-from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple, Union
-from urllib.parse import urljoin, urlparse
+from typing import Any, Dict, List, Union
 
 import nltk
 import requests
 from bs4 import BeautifulSoup
-from unstructured.partition.html import partition_html
+
+try:
+    from unstructured.partition.html import partition_html
+except ImportError:
+    partition_html = None
 
 # Configure logging with more detailed format
 logging.basicConfig(
@@ -54,9 +56,7 @@ class HTMLProcessor:
                 "fallback": 0,
             },
         }
-        logger.info(
-            f"Initialized HTMLProcessor with chunk_size={chunk_size}, overlap={overlap}"
-        )
+        logger.info(f"Initialized HTMLProcessor with chunk_size={chunk_size}, overlap={overlap}")
 
     def reset_stats(self):
         """Reset processing statistics."""
@@ -86,12 +86,8 @@ class HTMLProcessor:
         print(f"Errors Encountered: {self.stats['errors']}")
         print(f"Total Processing Time: {self.stats['processing_time']:.2f} seconds")
         if self.stats["total_chunks_extracted"] > 0:
-            print(
-                f"Average Time per Chunk: {self.stats['processing_time']/self.stats['total_chunks_extracted']:.3f} seconds"
-            )
-            print(
-                f"Average Chunk Size: {self.stats['total_text_length']/self.stats['total_chunks_extracted']:.0f} characters"
-            )
+            print(f"Average Time per Chunk: {self.stats['processing_time']/self.stats['total_chunks_extracted']:.3f} seconds")
+            print(f"Average Chunk Size: {self.stats['total_text_length']/self.stats['total_chunks_extracted']:.0f} characters")
 
         print("\nExtraction Method Breakdown:")
         print(f"  Unstructured: {self.stats['extraction_methods']['unstructured']}")
@@ -99,11 +95,9 @@ class HTMLProcessor:
         print(f"  Fallback: {self.stats['extraction_methods']['fallback']}")
 
         if self.stats["errors"] > 0:
-            print(
-                f"\n⚠️  WARNING: {self.stats['errors']} errors occurred during processing"
-            )
+            print(f"\n⚠️  WARNING: {self.stats['errors']} errors occurred during processing")
         else:
-            print(f"\n✅ SUCCESS: All content processed without errors")
+            print("\n✅ SUCCESS: All content processed without errors")
         print("=" * 60)
 
     def clean_text(self, text: str) -> str:
@@ -122,9 +116,7 @@ class HTMLProcessor:
 
         return text
 
-    def extract_text_from_html_file(
-        self, file_path: str
-    ) -> List[Dict[str, Union[str, Dict[str, Any]]]]:
+    def extract_text_from_html_file(self, file_path: str) -> List[Dict[str, Union[str, Dict[str, Any]]]]:
         """
         Extract text content from an HTML file.
 
@@ -147,14 +139,10 @@ class HTMLProcessor:
 
             logger.info(f"   HTML content length: {len(html_content):,} characters")
 
-            chunks = self._process_html_content(
-                html_content, source=f"file:{file_path}"
-            )
+            chunks = self._process_html_content(html_content, source=f"file:{file_path}")
 
             processing_time = time.time() - start_time
-            logger.info(
-                f"📄 Completed extracting from {os.path.basename(file_path)}: {len(chunks)} chunks in {processing_time:.2f}s"
-            )
+            logger.info(f"📄 Completed extracting from {os.path.basename(file_path)}: {len(chunks)} chunks in {processing_time:.2f}s")
 
             return chunks
 
@@ -163,9 +151,7 @@ class HTMLProcessor:
             self.stats["errors"] += 1
             raise
 
-    def extract_text_from_url(
-        self, url: str
-    ) -> List[Dict[str, Union[str, Dict[str, Any]]]]:
+    def extract_text_from_url(self, url: str) -> List[Dict[str, Union[str, Dict[str, Any]]]]:
         """
         Extract text content from a web URL.
 
@@ -193,9 +179,7 @@ class HTMLProcessor:
             chunks = self._process_html_content(html_content, source=f"url:{url}")
 
             processing_time = time.time() - start_time
-            logger.info(
-                f"🔗 Completed extracting from URL: {len(chunks)} chunks in {processing_time:.2f}s"
-            )
+            logger.info(f"🔗 Completed extracting from URL: {len(chunks)} chunks in {processing_time:.2f}s")
 
             return chunks
 
@@ -204,9 +188,7 @@ class HTMLProcessor:
             self.stats["errors"] += 1
             raise
 
-    def _process_html_content(
-        self, html_content: str, source: str
-    ) -> List[Dict[str, Union[str, Dict[str, Any]]]]:
+    def _process_html_content(self, html_content: str, source: str) -> List[Dict[str, Union[str, Dict[str, Any]]]]:
         """
         Process HTML content and extract meaningful text chunks.
 
@@ -221,31 +203,29 @@ class HTMLProcessor:
         extraction_start = time.time()
 
         try:
-            logger.info(
-                f"   Processing HTML content using multiple extraction methods..."
-            )
+            logger.info("   Processing HTML content using multiple extraction methods...")
 
             # Use unstructured to partition HTML
             logger.info(f"   Attempting extraction with unstructured library...")
             try:
-                elements = partition_html(text=html_content)
-                logger.info(f"   Unstructured extracted {len(elements)} elements")
+                if partition_html is not None:
+                    elements = partition_html(text=html_content)
+                    logger.info(f"   Unstructured extracted {len(elements)} elements")
 
-                # Extract text from elements
-                text_content = []
-                for i, element in enumerate(elements):
-                    if hasattr(element, "text") and element.text:
-                        cleaned_text = self.clean_text(element.text)
-                        if (
-                            cleaned_text and len(cleaned_text) > 50
-                        ):  # Filter out very short content
-                            text_content.append(cleaned_text)
-                            logger.debug(f"   Element {i+1}: {len(cleaned_text)} chars")
+                    # Extract text from elements
+                    text_content = []
+                    for i, element in enumerate(elements):
+                        if hasattr(element, "text") and element.text:
+                            cleaned_text = self.clean_text(element.text)
+                            if cleaned_text and len(cleaned_text) > 50:  # Filter out very short content
+                                text_content.append(cleaned_text)
+                                logger.debug(f"   Element {i+1}: {len(cleaned_text)} chars")
 
-                logger.info(
-                    f"   Unstructured extracted {len(text_content)} text segments"
-                )
-                self.stats["extraction_methods"]["unstructured"] += 1
+                    logger.info(f"   Unstructured extracted {len(text_content)} text segments")
+                    self.stats["extraction_methods"]["unstructured"] += 1
+                else:
+                    logger.warning("   Unstructured library not available")
+                    text_content = []
 
             except Exception as e:
                 logger.warning(f"   Unstructured extraction failed: {str(e)}")
@@ -266,9 +246,7 @@ class HTMLProcessor:
                     cleaned_body = self.clean_text(body_text)
                     if cleaned_body and len(cleaned_body) > 100:
                         text_content.append(cleaned_body)
-                        logger.info(
-                            f"   BeautifulSoup extracted {len(cleaned_body):,} chars from body"
-                        )
+                        logger.info(f"   BeautifulSoup extracted {len(cleaned_body):,} chars from body")
 
                 # Extract title
                 title = soup.find("title")
@@ -319,17 +297,13 @@ class HTMLProcessor:
                 self.stats["total_text_length"] += len(full_text)
 
             else:
-                logger.warning(
-                    f"   No text content extracted, trying fallback method..."
-                )
+                logger.warning(f"   No text content extracted, trying fallback method...")
                 # Fallback to simple text extraction
                 fallback_chunks = self._fallback_text_extraction(html_content, source)
                 chunks.extend(fallback_chunks)
 
             extraction_time = time.time() - extraction_start
-            logger.info(
-                f"   HTML processing completed in {extraction_time:.2f}s: {len(chunks)} chunks extracted"
-            )
+            logger.info(f"   HTML processing completed in {extraction_time:.2f}s: {len(chunks)} chunks extracted")
             return chunks
 
         except Exception as e:
@@ -338,9 +312,7 @@ class HTMLProcessor:
             # Fallback to simple text extraction
             return self._fallback_text_extraction(html_content, source)
 
-    def _fallback_text_extraction(
-        self, html_content: str, source: str
-    ) -> List[Dict[str, Union[str, Dict[str, Any]]]]:
+    def _fallback_text_extraction(self, html_content: str, source: str) -> List[Dict[str, Union[str, Dict[str, Any]]]]:
         """Fallback method for text extraction if structured parsing fails."""
         logger.info(f"   Using fallback text extraction method...")
         fallback_start = time.time()
@@ -382,9 +354,7 @@ class HTMLProcessor:
                 )
 
             fallback_time = time.time() - fallback_start
-            logger.info(
-                f"   Fallback extraction completed in {fallback_time:.2f}s: {len(chunks)} chunks"
-            )
+            logger.info(f"   Fallback extraction completed in {fallback_time:.2f}s: {len(chunks)} chunks")
 
             self.stats["extraction_methods"]["fallback"] += 1
             self.stats["total_chunks_extracted"] += len(chunks)
@@ -422,9 +392,7 @@ class HTMLProcessor:
                 sentence_endings = [". ", "! ", "? ", "\n\n"]
                 for ending in sentence_endings:
                     last_ending = text.rfind(ending, start, end)
-                    if (
-                        last_ending > start + self.chunk_size * 0.7
-                    ):  # Only break if we're at least 70% through
+                    if last_ending > start + self.chunk_size * 0.7:  # Only break if we're at least 70% through
                         end = last_ending + 1
                         break
 
@@ -438,9 +406,7 @@ class HTMLProcessor:
 
         return chunks
 
-    def process_html_folder(
-        self, folder_path: str
-    ) -> List[Dict[str, Union[str, Dict[str, Any]]]]:
+    def process_html_folder(self, folder_path: str) -> List[Dict[str, Union[str, Dict[str, Any]]]]:
         """
         Process all HTML files in a folder.
 
@@ -475,9 +441,7 @@ class HTMLProcessor:
         logger.info(f"📁 Found {len(html_files)} HTML files to process")
 
         for i, (filename, file_path) in enumerate(html_files):
-            logger.info(
-                f"\n📄 Processing HTML file {i+1}/{len(html_files)}: {filename}"
-            )
+            logger.info(f"\n📄 Processing HTML file {i+1}/{len(html_files)}: {filename}")
 
             try:
                 chunks = self.extract_text_from_html_file(file_path)
@@ -490,16 +454,12 @@ class HTMLProcessor:
                 continue
 
         self.stats["processing_time"] = time.time() - start_time
-        logger.info(
-            f"\n📁 HTML folder processing complete in {self.stats['processing_time']:.2f} seconds"
-        )
+        logger.info(f"\n📁 HTML folder processing complete in {self.stats['processing_time']:.2f} seconds")
         logger.info(f"📁 Total chunks extracted from HTML folder: {len(all_chunks)}")
         self.print_stats()
         return all_chunks
 
-    def process_urls(
-        self, urls: List[str]
-    ) -> List[Dict[str, Union[str, Dict[str, Any]]]]:
+    def process_urls(self, urls: List[str]) -> List[Dict[str, Union[str, Dict[str, Any]]]]:
         """
         Process multiple URLs.
 
@@ -531,9 +491,7 @@ class HTMLProcessor:
                 continue
 
         self.stats["processing_time"] = time.time() - start_time
-        logger.info(
-            f"\n🔗 URL processing complete in {self.stats['processing_time']:.2f} seconds"
-        )
+        logger.info(f"\n🔗 URL processing complete in {self.stats['processing_time']:.2f} seconds")
         logger.info(f"🔗 Total chunks extracted from URLs: {len(all_chunks)}")
         self.print_stats()
         return all_chunks

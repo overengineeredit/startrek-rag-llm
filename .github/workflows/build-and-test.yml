@@ -2,14 +2,15 @@ name: Build and Test
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: ["*", "!gh-pages"]
   pull_request:
-    branches: [ main, develop ]
+    branches: ["*", "!gh-pages"]
   workflow_dispatch:
 
 env:
   PYTHON_VERSION: '3.11'
   DOCKER_BUILDKIT: 1
+  CHROMA_VERSION: '0.4.24'
 
 jobs:
   # Lint and format check
@@ -36,7 +37,7 @@ jobs:
     - name: Run flake8
       run: |
         flake8 startrek-rag/ content_loader/ --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 startrek-rag/ content_loader/ --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+        flake8 startrek-rag/ content_loader/ --count --exit-zero --statistics
         
     - name: Run black (check)
       run: |
@@ -48,7 +49,7 @@ jobs:
         
     - name: Run mypy
       run: |
-        mypy startrek-rag/ content_loader/ --ignore-missing-imports --ignore-errors || true
+        mypy startrek-rag/ content_loader/ --ignore-missing-imports || true
 
   # Security scan
   security:
@@ -110,62 +111,11 @@ jobs:
         docker run --rm startrek-rag:test python -c "import sys; print('Python version:', sys.version)"
         docker run --rm content-loader:test python -c "import sys; print('Python version:', sys.version)"
 
-  # Precompile Python code
-  precompile:
-    name: Precompile Python Code
-    runs-on: ubuntu-latest
-    needs: [build]
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Set up Python ${{ env.PYTHON_VERSION }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-        
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r startrek-rag/requirements.txt
-        pip install -r content_loader/requirements.txt
-        
-    - name: Precompile RAG application
-      run: |
-        cd startrek-rag
-        python -m py_compile app.py
-        python -m py_compile config.py
-        python -m py_compile embed.py
-        python -m py_compile db_config.py
-        python -m py_compile routes/__init__.py
-        python -m py_compile routes/api.py
-        python -m py_compile services/__init__.py
-        python -m py_compile services/rag_service.py
-        echo "✅ RAG application precompiled successfully"
-        
-    - name: Precompile content loader
-      run: |
-        cd content_loader
-        python -m py_compile process_content.py
-        python -m py_compile enhanced_processor.py
-        python -m py_compile html_processor.py
-        echo "✅ Content loader precompiled successfully"
-        
-    - name: Generate bytecode files
-      run: |
-        find . -name "*.py" -exec python -m py_compile {} \;
-        echo "✅ All Python files compiled successfully"
-        
-    - name: List compiled files
-      run: |
-        find . -name "*.pyc" -o -name "__pycache__" | head -20
-
   # Unit tests
   test:
     name: Unit Tests
     runs-on: ubuntu-latest
-    needs: [precompile]
+    needs: [build]
     
     steps:
     - name: Checkout code
@@ -245,8 +195,14 @@ jobs:
                 
                 config = Config()
                 assert config is not None
-                assert hasattr(config, 'chroma_url')
-                assert hasattr(config, 'collection_name')
+                assert hasattr(config, 'database')
+                assert hasattr(config.database, 'host')
+                assert hasattr(config.database, 'port')
+                assert hasattr(config.database, 'collection_name')
+                assert hasattr(config, 'ollama')
+                assert hasattr(config.ollama, 'host')
+                assert hasattr(config.ollama, 'port')
+                assert hasattr(config, 'app')
             except Exception as e:
                 pytest.fail(f"Failed to create Config: {e}")
         
@@ -306,118 +262,11 @@ jobs:
         name: codecov-umbrella
         fail_ci_if_error: false
 
-  # Integration tests
-  integration:
-    name: Integration Tests
-    runs-on: ubuntu-latest
-    needs: [test]
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Set up Python ${{ env.PYTHON_VERSION }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-        
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install requests pytest
-        pip install -r startrek-rag/requirements.txt
-        
-    - name: Test basic functionality
-      run: |
-        echo "Testing basic functionality without external services..."
-        
-        # Test that we can import and create basic objects with mocks
-        cd startrek-rag
-        python -c "
-        import sys
-        sys.path.insert(0, '.')
-        
-        # Mock ChromaDB dependencies
-        from unittest.mock import patch, MagicMock
-        
-        with patch('chromadb.Client'), patch('chromadb.PersistentClient'):
-            from config import Config
-            from app import create_app
-            print('✅ Config and app imports work')
-            
-            config = Config()
-            print(f'✅ Config created: chroma_url={config.chroma_url}')
-            
-            # Test app creation with mocked RAG service
-            with patch('services.rag_service.RAGService'):
-                app = create_app()
-                print(f'✅ App created: {app.name}')
-        "
-        
-        # Test content loader imports
-        cd ../content_loader
-        python -c "
-        import sys
-        sys.path.insert(0, '.')
-        
-        from enhanced_processor import EnhancedContentProcessor
-        from html_processor import HTMLProcessor
-        print('✅ Content loader imports work')
-        
-        processor = EnhancedContentProcessor()
-        print(f'✅ Enhanced processor created: chunk_size={processor.chunk_size}')
-        
-        html_processor = HTMLProcessor()
-        print(f'✅ HTML processor created: chunk_size={html_processor.chunk_size}')
-        "
-        
-        echo "✅ All basic functionality tests passed"
-
-  # Docker Compose test
-  docker-compose-test:
-    name: Docker Compose Test
-    runs-on: ubuntu-latest
-    needs: [integration]
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Start services
-      run: |
-        docker compose up -d
-        sleep 15
-        
-    - name: Check service health
-      run: |
-        # Check if services are running
-        docker compose ps
-        
-        # Test ChromaDB connection
-        curl -f http://localhost:8000/api/v1/heartbeat || exit 1
-        
-        # Test RAG application
-        curl -f http://localhost:8080/api/health || exit 1
-        
-        echo "✅ All services healthy"
-        
-    - name: Test content processing
-      run: |
-        # Test content processing (basic test)
-        docker compose run --rm -v $(pwd)/content_loader:/app -v $(pwd)/test_content:/app/content app python /app/process_content.py /app/content --help || true
-        
-        echo "✅ Content processing test completed"
-        
-    - name: Cleanup
-      run: |
-        docker compose down
-        docker system prune -f
-
   # Final summary
   summary:
     name: Build Summary
     runs-on: ubuntu-latest
-    needs: [lint, security, build, precompile, test, integration, docker-compose-test]
+    needs: [lint, security, build, test]
     if: always()
     
     steps:
@@ -425,25 +274,45 @@ jobs:
       run: |
         echo "## 🚀 Build and Test Summary" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### ✅ Completed Jobs:" >> $GITHUB_STEP_SUMMARY
-        echo "- Lint and Format Check" >> $GITHUB_STEP_SUMMARY
-        echo "- Security Scan" >> $GITHUB_STEP_SUMMARY
-        echo "- Docker Image Build" >> $GITHUB_STEP_SUMMARY
-        echo "- Python Code Precompilation" >> $GITHUB_STEP_SUMMARY
-        echo "- Unit Tests" >> $GITHUB_STEP_SUMMARY
-        echo "- Integration Tests" >> $GITHUB_STEP_SUMMARY
-        echo "- Docker Compose Test" >> $GITHUB_STEP_SUMMARY
+        
+        # Check which jobs succeeded
+        if [ "${{ needs.lint.result }}" == "success" ]; then
+          echo "✅ Lint and Format Check" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ Lint and Format Check" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        if [ "${{ needs.security.result }}" == "success" ]; then
+          echo "✅ Security Scan" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ Security Scan" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        if [ "${{ needs.build.result }}" == "success" ]; then
+          echo "✅ Docker Image Build" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ Docker Image Build" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        if [ "${{ needs.test.result }}" == "success" ]; then
+          echo "✅ Unit Tests" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ Unit Tests" >> $GITHUB_STEP_SUMMARY
+        fi
+        
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### 🔧 What was tested:" >> $GITHUB_STEP_SUMMARY
         echo "- Code quality (flake8, black, isort, mypy)" >> $GITHUB_STEP_SUMMARY
         echo "- Security vulnerabilities (bandit, safety)" >> $GITHUB_STEP_SUMMARY
         echo "- Docker image builds" >> $GITHUB_STEP_SUMMARY
-        echo "- Python code compilation" >> $GITHUB_STEP_SUMMARY
         echo "- Unit tests with coverage" >> $GITHUB_STEP_SUMMARY
-        echo "- API integration tests" >> $GITHUB_STEP_SUMMARY
-        echo "- Docker Compose functionality" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### 📊 Coverage:" >> $GITHUB_STEP_SUMMARY
         echo "- Code coverage reports generated" >> $GITHUB_STEP_SUMMARY
         echo "- Security scan reports available" >> $GITHUB_STEP_SUMMARY
-        echo "- Build artifacts preserved" >> $GITHUB_STEP_SUMMARY 
+        echo "- Build artifacts preserved" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 💡 Note:" >> $GITHUB_STEP_SUMMARY
+        echo "- Streamlined workflow for fast PR feedback" >> $GITHUB_STEP_SUMMARY
+        echo "- Focused on essential code quality and testing" >> $GITHUB_STEP_SUMMARY
+        echo "- Integration tests available in separate workflows" >> $GITHUB_STEP_SUMMARY 

@@ -25,9 +25,7 @@ def get_chroma_client():
             port=CHROMA_PORT,
             settings=Settings(anonymized_telemetry=False, allow_reset=True),
         )
-        logger.info(
-            f"Successfully initialized ChromaDB client at {CHROMA_HOST}:{CHROMA_PORT}"
-        )
+        logger.info(f"Successfully initialized ChromaDB client at {CHROMA_HOST}:{CHROMA_PORT}")
         return client
     except Exception as e:
         logger.error(f"Error initializing ChromaDB client: {str(e)}")

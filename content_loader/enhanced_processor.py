@@ -1,5 +1,4 @@
 import argparse
-import json
 import logging
 import os
 import sys
@@ -57,9 +56,7 @@ class EnhancedContentProcessor:
             },
         }
 
-        logger.info(
-            f"Initialized EnhancedContentProcessor with app_url={app_url}, chunk_size={chunk_size}, overlap={overlap}"
-        )
+        logger.info(f"Initialized EnhancedContentProcessor with app_url={app_url}, chunk_size={chunk_size}, overlap={overlap}")
 
     def reset_stats(self):
         """Reset processing statistics."""
@@ -102,9 +99,7 @@ class EnhancedContentProcessor:
         if isinstance(total_chunks, int) and total_chunks > 0:
             processing_time = self.stats.get("processing_time", 0.0)
             if isinstance(processing_time, (int, float)):
-                print(
-                    f"Average Time per Chunk: {processing_time/total_chunks:.3f} seconds"
-                )
+                print(f"Average Time per Chunk: {processing_time/total_chunks:.3f} seconds")
 
             total_length = self.stats.get("total_text_length", 0)
             if isinstance(total_length, int):
@@ -114,7 +109,7 @@ class EnhancedContentProcessor:
         if isinstance(errors, int) and errors > 0:
             print(f"\n⚠️  WARNING: {errors} errors occurred during processing")
         else:
-            print(f"\n✅ SUCCESS: All content processed without errors")
+            print("\n✅ SUCCESS: All content processed without errors")
         print("=" * 60)
 
     def get_embedding(self, text: str) -> List[float]:
@@ -128,14 +123,19 @@ class EnhancedContentProcessor:
             )
             response.raise_for_status()
             embedding = response.json()["embedding"]
-            self.stats["total_text_length"] += len(text)
-            logger.debug(
-                f"Generated embedding in {time.time() - start_time:.3f}s (text length: {len(text)})"
-            )
-            return embedding
+            # Type-safe increment of total_text_length
+            if isinstance(self.stats["total_text_length"], (int, float)):
+                self.stats["total_text_length"] += len(text)
+            logger.debug(f"Generated embedding in {time.time() - start_time:.3f}s (text length: {len(text)})")
+            if isinstance(embedding, list):
+                return embedding
+            else:
+                raise ValueError("Embedding is not a list")
         except Exception as e:
             logger.error(f"Error getting embedding: {str(e)}")
-            self.stats["errors"] += 1
+            # Type-safe increment of errors
+            if isinstance(self.stats["errors"], int):
+                self.stats["errors"] += 1
             raise
 
     def add_to_chroma(
@@ -160,9 +160,7 @@ class EnhancedContentProcessor:
             )
             response.raise_for_status()
             self.stats["total_files_processed"] += 1
-            logger.debug(
-                f"Added document to ChromaDB in {time.time() - start_time:.3f}s (doc_id: {doc_id})"
-            )
+            logger.debug(f"Added document to ChromaDB in {time.time() - start_time:.3f}s (doc_id: {doc_id})")
             return True
         except Exception as e:
             logger.error(f"Error adding to ChromaDB: {str(e)}")
@@ -203,9 +201,7 @@ class EnhancedContentProcessor:
 
             for i, chunk in enumerate(valid_chunks):
                 chunk_start = time.time()
-                logger.info(
-                    f"   Processing chunk {i+1}/{len(valid_chunks)} (length: {len(chunk):,} chars)"
-                )
+                logger.info(f"   Processing chunk {i+1}/{len(valid_chunks)} (length: {len(chunk):,} chars)")
 
                 try:
                     # Get embedding
@@ -228,9 +224,7 @@ class EnhancedContentProcessor:
                     if success:
                         processed_count += 1
                         self.stats["total_chunks_processed"] += 1
-                        logger.info(
-                            f"   ✅ Chunk {i+1} processed successfully in {time.time() - chunk_start:.3f}s"
-                        )
+                        logger.info(f"   ✅ Chunk {i+1} processed successfully in {time.time() - chunk_start:.3f}s")
                     else:
                         logger.error(f"   ❌ Failed to add chunk {i+1} to ChromaDB")
 
@@ -281,17 +275,13 @@ class EnhancedContentProcessor:
                 # Access the chunk data properly with type checking
                 if isinstance(chunk_data, dict):
                     chunk_text = cast(str, chunk_data.get("text", ""))
-                    chunk_metadata = cast(
-                        Dict[str, Any], chunk_data.get("metadata", {})
-                    )
+                    chunk_metadata = cast(Dict[str, Any], chunk_data.get("metadata", {}))
                 else:
                     # Fallback if chunk_data is not a dict
                     chunk_text = str(chunk_data)
                     chunk_metadata = {"source": source_name, "chunk_id": i}
 
-                logger.info(
-                    f"   Processing HTML chunk {i+1}/{len(chunks)} (length: {len(chunk_text):,} chars)"
-                )
+                logger.info(f"   Processing HTML chunk {i+1}/{len(chunks)} (length: {len(chunk_text):,} chars)")
 
                 try:
                     # Get embedding
@@ -308,13 +298,9 @@ class EnhancedContentProcessor:
                     if success:
                         processed_count += 1
                         self.stats["total_chunks_processed"] += 1
-                        logger.info(
-                            f"   ✅ HTML chunk {i+1} processed successfully in {time.time() - chunk_start:.3f}s"
-                        )
+                        logger.info(f"   ✅ HTML chunk {i+1} processed successfully in {time.time() - chunk_start:.3f}s")
                     else:
-                        logger.error(
-                            f"   ❌ Failed to add HTML chunk {i+1} to ChromaDB"
-                        )
+                        logger.error(f"   ❌ Failed to add HTML chunk {i+1} to ChromaDB")
 
                 except Exception as e:
                     logger.error(f"   ❌ Error processing HTML chunk {i+1}: {str(e)}")
@@ -359,17 +345,13 @@ class EnhancedContentProcessor:
                 # Access the chunk data properly with type checking
                 if isinstance(chunk_data, dict):
                     chunk_text = cast(str, chunk_data.get("text", ""))
-                    chunk_metadata = cast(
-                        Dict[str, Any], chunk_data.get("metadata", {})
-                    )
+                    chunk_metadata = cast(Dict[str, Any], chunk_data.get("metadata", {}))
                 else:
                     # Fallback if chunk_data is not a dict
                     chunk_text = str(chunk_data)
                     chunk_metadata = {"source": source_name, "chunk_id": i}
 
-                logger.info(
-                    f"   Processing URL chunk {i+1}/{len(chunks)} (length: {len(chunk_text):,} chars)"
-                )
+                logger.info(f"   Processing URL chunk {i+1}/{len(chunks)} (length: {len(chunk_text):,} chars)")
 
                 try:
                     # Get embedding
@@ -386,9 +368,7 @@ class EnhancedContentProcessor:
                     if success:
                         processed_count += 1
                         self.stats["total_chunks_processed"] += 1
-                        logger.info(
-                            f"   ✅ URL chunk {i+1} processed successfully in {time.time() - chunk_start:.3f}s"
-                        )
+                        logger.info(f"   ✅ URL chunk {i+1} processed successfully in {time.time() - chunk_start:.3f}s")
                     else:
                         logger.error(f"   ❌ Failed to add URL chunk {i+1} to ChromaDB")
 
@@ -398,9 +378,7 @@ class EnhancedContentProcessor:
                     continue
 
             processing_time = time.time() - start_time
-            logger.info(
-                f"🔗 Completed processing URL: {processed_count}/{len(chunks)} chunks in {processing_time:.2f}s"
-            )
+            logger.info(f"🔗 Completed processing URL: {processed_count}/{len(chunks)} chunks in {processing_time:.2f}s")
             return processed_count
 
         except Exception as e:
@@ -448,9 +426,7 @@ class EnhancedContentProcessor:
 
         # Process text files
         for i, (filename, file_path) in enumerate(files_by_type["text"]):
-            logger.info(
-                f"\n📄 Processing text file {i+1}/{len(files_by_type['text'])}: {filename}"
-            )
+            logger.info(f"\n📄 Processing text file {i+1}/{len(files_by_type['text'])}: {filename}")
             source_name = os.path.splitext(filename)[0]
 
             try:
@@ -465,9 +441,7 @@ class EnhancedContentProcessor:
 
         # Process HTML files
         for i, (filename, file_path) in enumerate(files_by_type["html"]):
-            logger.info(
-                f"\n🌐 Processing HTML file {i+1}/{len(files_by_type['html'])}: {filename}"
-            )
+            logger.info(f"\n🌐 Processing HTML file {i+1}/{len(files_by_type['html'])}: {filename}")
             source_name = os.path.splitext(filename)[0]
 
             try:
@@ -481,9 +455,7 @@ class EnhancedContentProcessor:
                 continue
 
         self.stats["processing_time"] = time.time() - start_time
-        logger.info(
-            f"\n📁 Folder processing complete in {self.stats['processing_time']:.2f} seconds"
-        )
+        logger.info(f"\n📁 Folder processing complete in {self.stats['processing_time']:.2f} seconds")
         self.print_stats()
         return self.stats
 
@@ -525,9 +497,7 @@ class EnhancedContentProcessor:
                 continue
 
         self.stats["processing_time"] = time.time() - start_time
-        logger.info(
-            f"\n🔗 URL processing complete in {self.stats['processing_time']:.2f} seconds"
-        )
+        logger.info(f"\n🔗 URL processing complete in {self.stats['processing_time']:.2f} seconds")
         self.print_stats()
         return self.stats
 
@@ -536,12 +506,8 @@ def main():
     """Main function for command-line usage."""
     load_dotenv()
 
-    parser = argparse.ArgumentParser(
-        description="Enhanced content processor supporting text and HTML files."
-    )
-    parser.add_argument(
-        "--folder", type=str, help="Path to folder containing files to process"
-    )
+    parser = argparse.ArgumentParser(description="Enhanced content processor supporting text and HTML files.")
+    parser.add_argument("--folder", type=str, help="Path to folder containing files to process")
     parser.add_argument(
         "--urls-file",
         type=str,
@@ -559,12 +525,8 @@ def main():
         default=1000,
         help="Maximum size of text chunks (default: 1000)",
     )
-    parser.add_argument(
-        "--overlap", type=int, default=200, help="Overlap between chunks (default: 200)"
-    )
-    parser.add_argument(
-        "--verbose", "-v", action="store_true", help="Enable verbose logging"
-    )
+    parser.add_argument("--overlap", type=int, default=200, help="Overlap between chunks (default: 200)")
+    parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose logging")
 
     args = parser.parse_args()
 
@@ -574,17 +536,13 @@ def main():
     if not args.folder and not args.urls_file:
         parser.error("Either --folder or --urls-file must be specified")
 
-    print(
-        f"🚀 Starting Enhanced Content Processor at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-    )
+    print(f"🚀 Starting Enhanced Content Processor at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"   App URL: {args.app_url}")
     print(f"   Chunk Size: {args.chunk_size}")
     print(f"   Overlap: {args.overlap}")
 
     try:
-        processor = EnhancedContentProcessor(
-            app_url=args.app_url, chunk_size=args.chunk_size, overlap=args.overlap
-        )
+        processor = EnhancedContentProcessor(app_url=args.app_url, chunk_size=args.chunk_size, overlap=args.overlap)
 
         if args.folder:
             stats = processor.process_folder(args.folder)
@@ -592,9 +550,7 @@ def main():
         if args.urls_file:
             stats = processor.process_urls_from_file(args.urls_file)
 
-        print(
-            f"\n🎉 Processing completed at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-        )
+        print(f"\n🎉 Processing completed at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
     except Exception as e:
         logger.error(f"❌ Fatal error: {str(e)}")

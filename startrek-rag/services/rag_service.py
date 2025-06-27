@@ -1,12 +1,13 @@
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
-from config import config
 from db_config import get_collection
 from langchain.prompts import ChatPromptTemplate, PromptTemplate
 from langchain_community.chat_models.ollama import ChatOllama
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
+
+from config import config
 
 logger = logging.getLogger(__name__)
 
@@ -78,9 +79,7 @@ class RAGService:
                 logger.error("Collection not initialized")
                 return None
 
-            results = self.collection.query(
-                query_texts=[question], n_results=num_results
-            )
+            results = self.collection.query(query_texts=[question], n_results=num_results)
 
             if not results or "documents" not in results:
                 logger.warning("No results returned from query")
@@ -109,25 +108,22 @@ class RAGService:
 
             _, answer_prompt = self._get_prompt_templates()
 
-            chain = (
-                {"context": lambda _: context, "question": RunnablePassthrough()}
-                | answer_prompt
-                | self.llm
-                | StrOutputParser()
-            )
+            chain = {"context": lambda _: context, "question": RunnablePassthrough()} | answer_prompt | self.llm | StrOutputParser()
 
             response = chain.invoke(question)
             logger.info("Query processed successfully")
 
-            return response
+            # Ensure response is a string
+            if isinstance(response, str):
+                return response
+            else:
+                return str(response) if response is not None else None
 
         except Exception as e:
             logger.exception(f"Error processing query: {e}")
             return None
 
-    def add_document(
-        self, document: str, metadata: Dict[str, Any], doc_id: str
-    ) -> bool:
+    def add_document(self, document: str, metadata: Dict[str, Any], doc_id: str) -> bool:
         """
         Add a document to the vector database.
 
@@ -181,5 +177,22 @@ class RAGService:
             return {"error": str(e)}
 
 
-# Global service instance
-rag_service = RAGService()
+# Global service instance - lazy initialization
+_rag_service_instance = None
+
+
+def get_rag_service():
+    """Get the global RAG service instance with lazy initialization."""
+    global _rag_service_instance
+    if _rag_service_instance is None:
+        _rag_service_instance = RAGService()
+    return _rag_service_instance
+
+
+# For backward compatibility, create a property that calls get_rag_service
+class RAGServiceProxy:
+    def __getattr__(self, name):
+        return getattr(get_rag_service(), name)
+
+
+rag_service = RAGServiceProxy()
