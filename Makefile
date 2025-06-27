@@ -1,4 +1,4 @@
-.PHONY: setup run clean process-content process-html process-urls process-all help
+.PHONY: setup run clean process-content process-html process-urls process-all help test-quick test-ci test-format test-lint test-security test-docker test-unit
 
 VENV = venv
 PYTHON = $(VENV)/bin/python
@@ -24,7 +24,61 @@ clean:
 	rm -rf startrek-rag/_temp/*
 	rm -rf startrek-rag/__pycache__
 	rm -rf startrek-rag/*.pyc
+	rm -rf content_loader/__pycache__
+	rm -rf content_loader/*.pyc
+	rm -rf tests/__pycache__
+	rm -rf tests/*.pyc
+	rm -f bandit-report.json safety-report.json coverage.xml
+	rm -rf htmlcov/
 
+# Test targets
+test-quick:
+	@echo "Running quick tests for fast feedback..."
+	./test-quick.sh
+
+test-ci:
+	@echo "Running full CI simulation locally..."
+	./test-ci-local.sh
+
+test-format:
+	@echo "Running format checks..."
+	@if [ ! -d "$(VENV)" ]; then echo "Virtual environment not found. Run 'make setup' first."; exit 1; fi
+	. $(VENV)/bin/activate && black --check startrek-rag/ content_loader/
+	. $(VENV)/bin/activate && isort --check-only startrek-rag/ content_loader/
+	@echo "✅ Format checks passed"
+
+test-lint:
+	@echo "Running linting checks..."
+	@if [ ! -d "$(VENV)" ]; then echo "Virtual environment not found. Run 'make setup' first."; exit 1; fi
+	. $(VENV)/bin/activate && pip install flake8
+	. $(VENV)/bin/activate && flake8 startrek-rag/ content_loader/ --count --select=E9,F63,F7,F82 --show-source --statistics
+	. $(VENV)/bin/activate && flake8 startrek-rag/ content_loader/ --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+	@echo "✅ Linting checks passed"
+
+test-security:
+	@echo "Running security scans..."
+	@if [ ! -d "$(VENV)" ]; then echo "Virtual environment not found. Run 'make setup' first."; exit 1; fi
+	. $(VENV)/bin/activate && pip install bandit safety
+	. $(VENV)/bin/activate && bandit -r startrek-rag/ content_loader/ -f json -o bandit-report.json || true
+	. $(VENV)/bin/activate && safety check --output json > safety-report.json || true
+	@echo "✅ Security scans completed"
+
+test-docker:
+	@echo "Testing Docker builds..."
+	@if ! command -v docker &> /dev/null; then echo "Docker not found, skipping Docker tests"; exit 0; fi
+	docker build -t startrek-rag:test startrek-rag/
+	docker build -t content-loader:test content_loader/
+	docker compose build
+	@echo "✅ Docker builds passed"
+
+test-unit:
+	@echo "Running unit tests..."
+	@if [ ! -d "$(VENV)" ]; then echo "Virtual environment not found. Run 'make setup' first."; exit 1; fi
+	. $(VENV)/bin/activate && pip install pytest pytest-cov pytest-mock
+	. $(VENV)/bin/activate && pytest tests/ -v --cov=startrek-rag --cov=content_loader --cov-report=term-missing --cov-report=html --cov-report=xml
+	@echo "✅ Unit tests completed"
+
+# Content processing targets
 process-content:
 	@echo "Processing content files with detailed output..."
 	@echo "Content folder: $(CONTENT_FOLDER)"
@@ -72,6 +126,15 @@ help:
 	@echo "  make setup         - Create virtual environment and install dependencies"
 	@echo "  make run           - Start the application"
 	@echo "  make clean         - Remove virtual environment and temporary files"
+	@echo ""
+	@echo "Testing (Local CI Simulation):"
+	@echo "  make test-quick    - Quick tests for fast feedback during development"
+	@echo "  make test-ci       - Full CI simulation (lint, security, Docker, tests)"
+	@echo "  make test-format   - Run format checks (black, isort)"
+	@echo "  make test-lint     - Run linting checks (flake8)"
+	@echo "  make test-security - Run security scans (bandit, safety)"
+	@echo "  make test-docker   - Test Docker builds"
+	@echo "  make test-unit     - Run unit tests with coverage"
 	@echo ""
 	@echo "Content Processing (with detailed output):"
 	@echo "  make process-content - Process text content files and add to ChromaDB"

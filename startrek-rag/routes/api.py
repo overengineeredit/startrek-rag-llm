@@ -24,7 +24,7 @@ class ValidationError(Exception):
 # Add request validation
 class QuerySchema(Schema):
     query = fields.Str(required=True)
-    num_results = fields.Int(missing=5, validate=lambda x: 1 <= x <= 20)
+    num_results = fields.Int(load_default=5, validate=lambda x: 1 <= x <= 20)
 
 
 @api_bp.route("/query", methods=["POST"])
