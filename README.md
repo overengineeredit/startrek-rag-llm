@@ -48,6 +48,22 @@ The system follows a clean, modular architecture with clear separation of concer
 - ✅ **Error Handling**: Comprehensive error management
 - ✅ **Validation**: Input validation with Marshmallow schemas
 
+### **📊 Detailed Architecture Documentation**
+
+For comprehensive architecture diagrams and detailed system documentation, see:
+- **[📋 Architecture Diagrams](docs/README.md)** - 14 PlantUML diagrams covering system overview, component interactions, data flows, deployment, API endpoints, and processing workflows
+- **🔧 Diagram Generation** - Automated CI/CD diagram generation with syntax validation
+- **📈 Visual Documentation** - Color-coded component diagrams and workflow visualizations
+
+The architecture documentation includes:
+- System overview with color-coded components
+- Component interaction patterns and dependencies
+- Data flow architecture and information exchange
+- Docker deployment and infrastructure diagrams
+- API endpoint specifications with request/response models
+- Content processing and query workflow diagrams
+- Testing architecture and CI/CD integration
+
 ## 📋 Prerequisites
 
 - **Docker & Docker Compose**

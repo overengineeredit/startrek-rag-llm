@@ -13,53 +13,59 @@ The Star Trek RAG system is a containerized application that combines:
 
 ## 🏗️ Architecture Diagrams
 
-### 1. System Overview
-**File**: `architecture.puml` (first diagram)
-- High-level system architecture
-- Component relationships and dependencies
-- External service integrations
+The system architecture is documented through 14 comprehensive PlantUML diagrams:
 
-### 2. Component Interactions
-**File**: `architecture.puml` (second diagram)
-- Detailed interaction flows between components
-- API request/response patterns
-- Service communication protocols
+### System Architecture
+- **`system_overview_architecture.puml`** - High-level system architecture with color-coded components and external integrations
 
-### 3. Data Flow Architecture
-**File**: `architecture.puml` (third diagram)
-- Content ingestion pipeline
-- Vector database storage structure
-- Query processing flow
+### Component & Interaction Diagrams
+- **`component_interactions.puml`** - Component interaction patterns and dependencies
+- **`component_interaction_flow.puml`** - Detailed interaction flows between components
 
-### 4. Deployment Architecture
-**File**: `architecture.puml` (fourth diagram)
-- Docker container structure
-- Service networking
-- Volume mounts and port mappings
+### Data Flow Diagrams
+- **`data_flow.puml`** - Data flow patterns and information exchange
+- **`data_flow_architecture.puml`** - Comprehensive data flow architecture
 
-### 5. API Endpoints
-**File**: `architecture.puml` (fifth diagram)
-- REST API endpoint definitions
-- Request/response models
-- Data structures
+### Deployment & Infrastructure
+- **`deployment_architecture.puml`** - Docker container structure and service networking
+- **`docker_deployment_architecture.puml`** - Detailed Docker deployment with volume mounts and port mappings
 
-### 6. Content Processing Flow
-**File**: `architecture.puml` (sixth diagram)
-- Step-by-step content ingestion process
-- Text, HTML, and URL processing
-- Error handling and validation
+### API & Endpoints
+- **`api_endpoints.puml`** - API endpoint overview and structure
+- **`rest_api_endpoints.puml`** - Detailed REST API endpoints with request/response models
 
-### 7. Query Processing Flow
-**File**: `architecture.puml` (seventh diagram)
-- RAG query processing steps
-- Document retrieval and context assembly
-- LLM response generation
+### Processing Workflows
+- **`content_processing_flow.puml`** - Content ingestion and processing flow
+- **`content_processing_workflow.puml`** - Comprehensive content processing workflow
+- **`query_processing_flow.puml`** - RAG query processing steps
+- **`query_processing_workflow.puml`** - Detailed query processing workflow
 
-### 8. Testing Architecture
-**File**: `architecture.puml` (eighth diagram)
-- Test framework organization
-- CI/CD pipeline integration
-- Coverage and security testing
+### Testing & Quality
+- **`testing_architecture.puml`** - Test framework organization and CI/CD integration
+
+## 🚀 Diagram Generation System
+
+### Automated Generation
+- **CI/CD Integration**: Diagrams are automatically generated on every PR and push
+- **Required Check**: Diagram generation is a required CI check that blocks PRs if it fails
+- **Artifact Upload**: Generated PNG files are uploaded as GitHub Actions artifacts
+- **Parallel Execution**: Diagram generation runs in parallel with lint and security checks
+
+### Local Generation
+```bash
+# Generate all diagrams
+cd docs
+./generate_diagrams.sh
+
+# Generate specific diagram
+java -jar plantuml-1.2024.0.jar -tpng -o ./images diagram_name.puml
+```
+
+### Generation Script Features
+- **Error Detection**: Properly identifies and reports PlantUML syntax errors
+- **Status Reporting**: Shows success/failure counts and detailed error messages
+- **Clean Output**: Generates diagrams to `docs/images/` directory
+- **Git Integration**: Generated images are gitignored (CI/CD only)
 
 ## 🚀 Key Components
 
@@ -96,6 +102,11 @@ The Star Trek RAG system is a containerized application that combines:
 - **BeautifulSoup** - HTML parsing
 - **Unstructured** - Document processing
 - **Requests** - HTTP client
+
+### Documentation & Diagrams
+- **PlantUML** - Architecture diagram generation
+- **Java 17** - PlantUML runtime
+- **Graphviz** - Diagram rendering
 
 ### Testing & Quality
 - **pytest** - Testing framework
@@ -143,14 +154,22 @@ The Star Trek RAG system is a containerized application that combines:
 - **API Tests**: Endpoint functionality testing
 - **Security Tests**: Vulnerability scanning
 - **Docker Tests**: Container build verification
+- **Diagram Tests**: PlantUML syntax validation
 
 ### CI/CD Pipeline
-1. **Code Quality**: Linting and formatting
-2. **Security**: Bandit and Safety scans
-3. **Testing**: Unit and integration tests
-4. **Coverage**: Code coverage reporting
-5. **Build**: Docker image creation
-6. **Deploy**: Container deployment
+1. **Code Quality**: Linting and formatting (parallel)
+2. **Security**: Bandit and Safety scans (parallel)
+3. **Architecture**: PlantUML diagram generation (parallel)
+4. **Testing**: Unit and integration tests
+5. **Coverage**: Code coverage reporting
+6. **Build**: Docker image creation
+7. **Deploy**: Container deployment
+
+### Architecture Validation
+- **Syntax Checking**: All PlantUML files must generate successfully
+- **Required Check**: Diagram generation failure blocks PRs
+- **Artifact Preservation**: Generated diagrams available for 30 days
+- **Parallel Execution**: Diagram generation doesn't block other checks
 
 ## 📈 Monitoring & Observability
 
@@ -229,6 +248,19 @@ docker-compose up -d
 make test-ci
 ```
 
+### Diagram Development
+```bash
+# Generate diagrams locally
+cd docs
+./generate_diagrams.sh
+
+# Check diagram syntax
+java -jar plantuml-1.2024.0.jar -tpng -o ./images diagram_name.puml
+
+# View generated diagrams
+ls -la images/*.png
+```
+
 ### Custom Content Processing
 ```bash
 # Process custom content folder
@@ -243,13 +275,21 @@ URLS_FILE=/path/to/urls.txt make process-urls
 When contributing to the architecture:
 
 1. **Update Diagrams**: Modify PlantUML files to reflect changes
-2. **Document Changes**: Update this README with new components
-3. **Test Integration**: Ensure new components work with existing architecture
-4. **Update Tests**: Add tests for new functionality
+2. **Test Generation**: Ensure diagrams generate successfully locally
+3. **CI Validation**: Diagrams must pass CI/CD generation check
+4. **Document Changes**: Update this README with new components
+5. **Test Integration**: Ensure new components work with existing architecture
+6. **Update Tests**: Add tests for new functionality
+
+### Diagram Guidelines
+- **Syntax Validation**: All .puml files must generate without errors
+- **Naming Convention**: Use descriptive names for diagram files
+- **Documentation**: Update this README when adding new diagrams
+- **CI Integration**: New diagrams automatically included in CI checks
 
 ## 🔗 Related Documentation
 
-- [Main README](../README.md) - Project overview and setup
+- [Main README](../README.md) - Project overview, setup, and usage
 - [API Documentation](../startrek-rag/routes/api.py) - Detailed API specifications
 - [Configuration Guide](../config/) - Environment and configuration management
 - [Testing Guide](../tests/) - Test suite documentation
