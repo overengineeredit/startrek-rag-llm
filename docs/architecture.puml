@@ -1,0 +1,501 @@
+@startuml "Star Trek RAG System - System Overview"
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+
+title Star Trek RAG System - High-Level Architecture
+
+package "External Services" {
+    [Ollama LLM] as OLLAMA #lightblue
+    [ChromaDB Vector Database] as CHROMA #lightgreen
+}
+
+package "Core Application" {
+    [Flask Web App] as APP #lightyellow
+    [RAG Service] as RAG #orange
+    [Embedding Service] as EMBED #pink
+    [Database Config] as DB_CONFIG #lightgray
+}
+
+package "Content Processing" {
+    [Enhanced Processor] as ENHANCED #lightcyan
+    [HTML Processor] as HTML_PROC #lightcyan
+    [Content Loader] as LOADER #lightcyan
+}
+
+package "API Layer" {
+    [Query API] as QUERY_API #yellow
+    [Add Document API] as ADD_API #yellow
+    [Embed API] as EMBED_API #yellow
+    [Health API] as HEALTH_API #yellow
+    [Stats API] as STATS_API #yellow
+}
+
+package "Configuration & Testing" {
+    [Config Management] as CONFIG #lightgray
+    [Test Suite] as TESTS #lightgray
+    [CI/CD Pipeline] as CI #lightgray
+}
+
+' Core connections
+APP --> RAG
+APP --> EMBED
+RAG --> OLLAMA
+RAG --> CHROMA
+EMBED --> CHROMA
+DB_CONFIG --> CHROMA
+
+' API connections
+QUERY_API --> RAG
+ADD_API --> RAG
+EMBED_API --> EMBED
+HEALTH_API --> RAG
+STATS_API --> RAG
+
+' Content processing
+ENHANCED --> APP
+HTML_PROC --> ENHANCED
+LOADER --> APP
+
+' Configuration
+CONFIG --> APP
+CONFIG --> RAG
+CONFIG --> EMBED
+
+' Testing
+TESTS --> APP
+CI --> TESTS
+
+@enduml
+
+@startuml "Star Trek RAG System - Component Interactions"
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+
+title Star Trek RAG System - Component Interactions
+
+actor "User" as USER
+participant "Flask App" as APP
+participant "API Routes" as API
+participant "RAG Service" as RAG
+participant "Embedding Service" as EMBED
+participant "ChromaDB" as CHROMA
+participant "Ollama LLM" as OLLAMA
+
+== Query Flow ==
+USER -> APP: POST /api/query
+APP -> API: Route to query handler
+API -> RAG: query(question, num_results)
+RAG -> CHROMA: query(query_texts, n_results)
+CHROMA --> RAG: relevant documents
+RAG -> OLLAMA: generate answer with context
+OLLAMA --> RAG: generated response
+RAG --> API: response text
+API --> APP: JSON response
+APP --> USER: Answer
+
+== Document Addition Flow ==
+USER -> APP: POST /api/add
+APP -> API: Route to add handler
+API -> RAG: add_document(doc, metadata, id)
+RAG -> EMBED: get_embedding(document)
+EMBED --> RAG: embedding vector
+RAG -> CHROMA: add(embeddings, documents, metadatas, ids)
+CHROMA --> RAG: success confirmation
+RAG --> API: success status
+API --> APP: JSON response
+APP --> USER: Confirmation
+
+== Embedding Flow ==
+USER -> APP: POST /api/embed
+APP -> API: Route to embed handler
+API -> EMBED: get_embedding(text)
+EMBED -> CHROMA: generate embedding
+CHROMA --> EMBED: embedding vector
+EMBED --> API: embedding
+API --> APP: JSON response
+APP --> USER: Embedding vector
+
+@enduml
+
+@startuml "Star Trek RAG System - Data Flow"
+!theme plain
+skinparam backgroundColor #FFFFFF
+
+title Star Trek RAG System - Data Flow Architecture
+
+package "Content Sources" {
+    [Text Files] as TEXT_FILES #lightblue
+    [HTML Files] as HTML_FILES #lightblue
+    [URLs] as URLS #lightblue
+}
+
+package "Content Processing Pipeline" {
+    [Enhanced Processor] as ENHANCED #orange
+    [HTML Processor] as HTML_PROC #orange
+    [Text Chunker] as CHUNKER #orange
+    [Content Loader] as LOADER #orange
+}
+
+package "Vector Database" {
+    [ChromaDB Collection] as COLLECTION #lightgreen
+    [Embedding Storage] as EMBED_STORE #lightgreen
+    [Document Storage] as DOC_STORE #lightgreen
+    [Metadata Storage] as META_STORE #lightgreen
+}
+
+package "Query Processing" {
+    [Query Input] as QUERY_IN #yellow
+    [Document Retrieval] as RETRIEVAL #yellow
+    [Context Assembly] as CONTEXT #yellow
+    [LLM Generation] as LLM #yellow
+    [Response Output] as RESPONSE #yellow
+}
+
+' Content ingestion flow
+TEXT_FILES --> ENHANCED
+HTML_FILES --> HTML_PROC
+URLS --> ENHANCED
+
+HTML_PROC --> ENHANCED
+ENHANCED --> CHUNKER
+LOADER --> ENHANCED
+
+CHUNKER --> COLLECTION
+COLLECTION --> EMBED_STORE
+COLLECTION --> DOC_STORE
+COLLECTION --> META_STORE
+
+' Query processing flow
+QUERY_IN --> RETRIEVAL
+RETRIEVAL --> COLLECTION
+COLLECTION --> CONTEXT
+CONTEXT --> LLM
+LLM --> RESPONSE
+
+' Data relationships
+EMBED_STORE ||--|| DOC_STORE : "linked by ID"
+DOC_STORE ||--|| META_STORE : "linked by ID"
+META_STORE ||--|| EMBED_STORE : "linked by ID"
+
+@enduml
+
+@startuml "Star Trek RAG System - Deployment Architecture"
+!theme plain
+skinparam backgroundColor #FFFFFF
+
+title Star Trek RAG System - Deployment Architecture
+
+package "Docker Environment" {
+    node "Docker Host" {
+        package "Docker Compose Services" {
+            container "Flask App Container" as APP_CONTAINER {
+                [Flask Web App] as APP #lightyellow
+                [API Routes] as API #yellow
+                [RAG Service] as RAG #orange
+                [Embedding Service] as EMBED #pink
+                [Config] as CONFIG #lightgray
+            }
+            
+            container "ChromaDB Container" as CHROMA_CONTAINER {
+                [ChromaDB Server] as CHROMA #lightgreen
+                [Vector Database] as VECTOR_DB #lightgreen
+                [Persistent Storage] as STORAGE #lightgray
+            }
+        }
+    }
+}
+
+package "External Services" {
+    [Ollama LLM] as OLLAMA #lightblue
+}
+
+package "Content Processing" {
+    container "Content Loader Container" as LOADER_CONTAINER {
+        [Enhanced Processor] as ENHANCED #lightcyan
+        [HTML Processor] as HTML_PROC #lightcyan
+        [Content Loader] as LOADER #lightcyan
+    }
+}
+
+package "CI/CD Pipeline" {
+    [GitHub Actions] as GITHUB #purple
+    [Docker Hub] as DOCKER_HUB #blue
+    [Codecov] as CODECOV #green
+}
+
+' Container connections
+APP_CONTAINER --> CHROMA_CONTAINER : "HTTP API"
+APP_CONTAINER --> OLLAMA : "HTTP API"
+LOADER_CONTAINER --> APP_CONTAINER : "HTTP API"
+
+' Internal connections
+APP --> API
+API --> RAG
+API --> EMBED
+RAG --> EMBED
+RAG --> CONFIG
+EMBED --> CONFIG
+
+CHROMA --> VECTOR_DB
+VECTOR_DB --> STORAGE
+
+ENHANCED --> HTML_PROC
+LOADER --> ENHANCED
+
+' CI/CD connections
+GITHUB --> DOCKER_HUB
+GITHUB --> CODECOV
+
+' Port mappings
+note right of APP_CONTAINER : "Port 8080:8080"
+note right of CHROMA_CONTAINER : "Port 8000:8000"
+
+' Volume mounts
+note bottom of APP_CONTAINER : "Volume: ./chroma-data"
+note bottom of CHROMA_CONTAINER : "Volume: ./chroma-data"
+
+@enduml
+
+@startuml "Star Trek RAG System - API Endpoints"
+!theme plain
+skinparam backgroundColor #FFFFFF
+
+title Star Trek RAG System - API Endpoints
+
+package "REST API Endpoints" {
+    [GET /] as ROOT #lightyellow
+    [POST /api/query] as QUERY #orange
+    [POST /api/add] as ADD #green
+    [POST /api/embed] as EMBED #blue
+    [GET /api/stats] as STATS #purple
+    [GET /api/health] as HEALTH #red
+}
+
+package "Request/Response Models" {
+    class "QueryRequest" {
+        +query: str
+        +num_results: int (default: 5)
+    }
+    
+    class "QueryResponse" {
+        +message: str
+        +error: str (optional)
+    }
+    
+    class "AddRequest" {
+        +document: str
+        +metadata: dict
+        +id: str
+    }
+    
+    class "AddResponse" {
+        +message: str
+        +error: str (optional)
+    }
+    
+    class "EmbedRequest" {
+        +text: str
+    }
+    
+    class "EmbedResponse" {
+        +embedding: List[float]
+        +error: str (optional)
+    }
+    
+    class "StatsResponse" {
+        +document_count: int
+        +collection_name: str
+        +error: str (optional)
+    }
+    
+    class "HealthResponse" {
+        +status: str
+        +database: str
+        +ollama: str
+        +model: str
+        +collection_stats: dict
+        +error: str (optional)
+    }
+}
+
+' Endpoint connections
+QUERY --> QueryRequest
+QUERY --> QueryResponse
+ADD --> AddRequest
+ADD --> AddResponse
+EMBED --> EmbedRequest
+EMBED --> EmbedResponse
+STATS --> StatsResponse
+HEALTH --> HealthResponse
+
+' Root endpoint info
+ROOT --> note : "Returns API information\nand available endpoints"
+
+@enduml
+
+@startuml "Star Trek RAG System - Content Processing Flow"
+!theme plain
+skinparam backgroundColor #FFFFFF
+
+title Star Trek RAG System - Content Processing Flow
+
+start
+
+:Content Source Selection;
+if (Text Files?) then (yes)
+    :Load Text Files;
+    :Split into Chunks;
+elseif (HTML Files?) then (yes)
+    :Load HTML Files;
+    :Parse with BeautifulSoup;
+    :Extract Text Content;
+    :Split into Chunks;
+elseif (URLs?) then (yes)
+    :Load URL List;
+    :Fetch Web Pages;
+    :Parse HTML Content;
+    :Extract Text Content;
+    :Split into Chunks;
+else (other)
+    :Unsupported Format;
+    stop
+endif
+
+:Initialize Processing Stats;
+
+while (More Chunks?) is (yes)
+    :Get Next Chunk;
+    :Validate Chunk;
+    if (Chunk Valid?) then (yes)
+        :Generate Embedding;
+        :Create Metadata;
+        :Add to ChromaDB;
+        :Update Stats;
+    else (no)
+        :Skip Invalid Chunk;
+        :Increment Error Count;
+    endif
+endwhile (no)
+
+:Print Processing Statistics;
+:Display Summary;
+
+stop
+
+@enduml
+
+@startuml "Star Trek RAG System - Query Processing Flow"
+!theme plain
+skinparam backgroundColor #FFFFFF
+
+title Star Trek RAG System - Query Processing Flow
+
+start
+
+:Receive User Query;
+
+:Validate Query Input;
+if (Query Valid?) then (no)
+    :Return Error Response;
+    stop
+endif
+
+:Initialize RAG Service;
+
+:Query ChromaDB Collection;
+if (Documents Found?) then (no)
+    :Return "No Information" Response;
+    stop
+endif
+
+:Retrieve Relevant Documents;
+
+:Assemble Context from Documents;
+
+:Initialize LLM (Ollama);
+
+:Generate Answer with Context;
+if (Generation Successful?) then (no)
+    :Return Error Response;
+    stop
+endif
+
+:Format Response;
+
+:Return Answer to User;
+
+stop
+
+@enduml
+
+@startuml "Star Trek RAG System - Testing Architecture"
+!theme plain
+skinparam backgroundColor #FFFFFF
+
+title Star Trek RAG System - Testing Architecture
+
+package "Test Types" {
+    [Unit Tests] as UNIT #lightgreen
+    [Integration Tests] as INTEGRATION #lightblue
+    [API Tests] as API_TESTS #yellow
+    [Docker Tests] as DOCKER_TESTS #orange
+    [Security Tests] as SECURITY #red
+}
+
+package "Test Components" {
+    [pytest] as PYTEST #purple
+    [pytest-cov] as COVERAGE #green
+    [pytest-mock] as MOCK #blue
+    [bandit] as BANDIT #red
+    [safety] as SAFETY #orange
+}
+
+package "Test Targets" {
+    [RAG Service] as RAG_TEST #lightyellow
+    [API Endpoints] as API_TEST #lightyellow
+    [Content Processing] as CONTENT_TEST #lightyellow
+    [Configuration] as CONFIG_TEST #lightyellow
+    [Database Operations] as DB_TEST #lightyellow
+}
+
+package "CI/CD Integration" {
+    [GitHub Actions] as GITHUB #purple
+    [Codecov] as CODECOV #green
+    [Docker Hub] as DOCKER_HUB #blue
+}
+
+' Test framework connections
+PYTEST --> UNIT
+PYTEST --> INTEGRATION
+PYTEST --> API_TESTS
+COVERAGE --> PYTEST
+MOCK --> PYTEST
+
+' Security testing
+BANDIT --> SECURITY
+SAFETY --> SECURITY
+
+' Test targets
+UNIT --> RAG_TEST
+UNIT --> CONFIG_TEST
+INTEGRATION --> API_TEST
+INTEGRATION --> CONTENT_TEST
+INTEGRATION --> DB_TEST
+API_TESTS --> API_TEST
+
+' CI/CD connections
+GITHUB --> PYTEST
+GITHUB --> BANDIT
+GITHUB --> SAFETY
+GITHUB --> DOCKER_TESTS
+CODECOV --> COVERAGE
+DOCKER_HUB --> DOCKER_TESTS
+
+' Test execution flow
+note right of PYTEST : "1. Run unit tests\n2. Run integration tests\n3. Generate coverage report"
+note right of SECURITY : "1. Run bandit security scan\n2. Run safety dependency check"
+note right of GITHUB : "1. Trigger on push/PR\n2. Run all test suites\n3. Upload coverage\n4. Build Docker images"
+
+@enduml 
