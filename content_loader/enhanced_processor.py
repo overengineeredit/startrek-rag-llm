@@ -123,12 +123,19 @@ class EnhancedContentProcessor:
             )
             response.raise_for_status()
             embedding = response.json()["embedding"]
-            self.stats["total_text_length"] += len(text)
+            # Type-safe increment of total_text_length
+            if isinstance(self.stats["total_text_length"], (int, float)):
+                self.stats["total_text_length"] += len(text)
             logger.debug(f"Generated embedding in {time.time() - start_time:.3f}s (text length: {len(text)})")
-            return embedding
+            if isinstance(embedding, list):
+                return embedding
+            else:
+                raise ValueError("Embedding is not a list")
         except Exception as e:
             logger.error(f"Error getting embedding: {str(e)}")
-            self.stats["errors"] += 1
+            # Type-safe increment of errors
+            if isinstance(self.stats["errors"], int):
+                self.stats["errors"] += 1
             raise
 
     def add_to_chroma(

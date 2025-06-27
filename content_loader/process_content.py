@@ -4,6 +4,7 @@ import os
 import sys
 import time
 from datetime import datetime
+from typing import Any, Dict, List, Union
 
 import requests
 from dotenv import load_dotenv
@@ -28,14 +29,14 @@ class ContentProcessor:
             app_url: URL of the app service
         """
         self.app_url = app_url
-        self.stats = {
+        self.stats: Dict[str, Union[int, float]] = {
             "total_files_processed": 0,
             "total_chunks_processed": 0,
+            "total_text_length": 0,
             "total_embeddings_generated": 0,
             "total_documents_added": 0,
             "errors": 0,
             "processing_time": 0.0,
-            "total_text_length": 0,
         }
         logger.info(f"Initialized ContentProcessor with app_url={app_url}")
 
@@ -44,11 +45,11 @@ class ContentProcessor:
         self.stats = {
             "total_files_processed": 0,
             "total_chunks_processed": 0,
+            "total_text_length": 0,
             "total_embeddings_generated": 0,
             "total_documents_added": 0,
             "errors": 0,
             "processing_time": 0.0,
-            "total_text_length": 0,
         }
 
     def print_stats(self):
@@ -58,11 +59,13 @@ class ContentProcessor:
         print("=" * 60)
         print(f"Total Files Processed: {self.stats['total_files_processed']}")
         print(f"Total Chunks Processed: {self.stats['total_chunks_processed']}")
-        print(f"Total Embeddings Generated: {self.stats['total_embeddings_generated']}")
-        print(f"Total Documents Added to ChromaDB: {self.stats['total_documents_added']}")
         print(f"Total Text Length: {self.stats['total_text_length']:,} characters")
+        print(f"Total Embeddings Generated: {self.stats['total_embeddings_generated']}")
+        print(f"Total Documents Added: {self.stats['total_documents_added']}")
         print(f"Errors Encountered: {self.stats['errors']}")
         print(f"Total Processing Time: {self.stats['processing_time']:.2f} seconds")
+
+        # Calculate averages if we have data
         if self.stats["total_chunks_processed"] > 0:
             print(f"Average Time per Chunk: {self.stats['processing_time']/self.stats['total_chunks_processed']:.3f} seconds")
             print(f"Average Chunk Size: {self.stats['total_text_length']/self.stats['total_chunks_processed']:.0f} characters")
@@ -73,7 +76,7 @@ class ContentProcessor:
             print("\n✅ SUCCESS: All content processed without errors")
         print("=" * 60)
 
-    def get_embedding(self, text: str) -> list:
+    def get_embedding(self, text: str) -> List[float]:
         """Get embedding from the app's embed endpoint."""
         try:
             start_time = time.time()
@@ -86,13 +89,16 @@ class ContentProcessor:
             embedding = response.json()["embedding"]
             self.stats["total_embeddings_generated"] += 1
             logger.debug(f"Generated embedding in {time.time() - start_time:.3f}s (text length: {len(text)})")
-            return embedding
+            if isinstance(embedding, list):
+                return embedding
+            else:
+                raise ValueError("Embedding is not a list")
         except Exception as e:
             logger.error(f"Error getting embedding: {str(e)}")
             self.stats["errors"] += 1
             raise
 
-    def add_to_chroma(self, embedding: list, document: str, metadata: dict, doc_id: str) -> bool:
+    def add_to_chroma(self, embedding: List[float], document: str, metadata: Dict[str, Any], doc_id: str) -> bool:
         """Add document to ChromaDB through app's API."""
         try:
             start_time = time.time()

@@ -1,6 +1,6 @@
 {
   "errors": [],
-  "generated_at": "2025-06-27T00:41:27Z",
+  "generated_at": "2025-06-27T01:57:23Z",
   "metrics": {
     "_totals": {
       "CONFIDENCE.HIGH": 0,
@@ -11,7 +11,7 @@
       "SEVERITY.LOW": 0,
       "SEVERITY.MEDIUM": 5,
       "SEVERITY.UNDEFINED": 0,
-      "loc": 1647,
+      "loc": 1513,
       "nosec": 0,
       "skipped_tests": 0
     },
@@ -24,7 +24,7 @@
       "SEVERITY.LOW": 0,
       "SEVERITY.MEDIUM": 2,
       "SEVERITY.UNDEFINED": 0,
-      "loc": 483,
+      "loc": 432,
       "nosec": 0,
       "skipped_tests": 0
     },
@@ -37,7 +37,7 @@
       "SEVERITY.LOW": 0,
       "SEVERITY.MEDIUM": 0,
       "SEVERITY.UNDEFINED": 0,
-      "loc": 413,
+      "loc": 370,
       "nosec": 0,
       "skipped_tests": 0
     },
@@ -50,7 +50,7 @@
       "SEVERITY.LOW": 0,
       "SEVERITY.MEDIUM": 2,
       "SEVERITY.UNDEFINED": 0,
-      "loc": 253,
+      "loc": 223,
       "nosec": 0,
       "skipped_tests": 0
     },
@@ -63,7 +63,7 @@
       "SEVERITY.LOW": 0,
       "SEVERITY.MEDIUM": 0,
       "SEVERITY.UNDEFINED": 0,
-      "loc": 56,
+      "loc": 53,
       "nosec": 0,
       "skipped_tests": 0
     },
@@ -76,7 +76,7 @@
       "SEVERITY.LOW": 0,
       "SEVERITY.MEDIUM": 1,
       "SEVERITY.UNDEFINED": 0,
-      "loc": 44,
+      "loc": 43,
       "nosec": 0,
       "skipped_tests": 0
     },
@@ -89,7 +89,7 @@
       "SEVERITY.LOW": 0,
       "SEVERITY.MEDIUM": 0,
       "SEVERITY.UNDEFINED": 0,
-      "loc": 59,
+      "loc": 57,
       "nosec": 0,
       "skipped_tests": 0
     },
@@ -128,7 +128,7 @@
       "SEVERITY.LOW": 0,
       "SEVERITY.MEDIUM": 0,
       "SEVERITY.UNDEFINED": 0,
-      "loc": 165,
+      "loc": 160,
       "nosec": 0,
       "skipped_tests": 0
     },
@@ -154,14 +154,14 @@
       "SEVERITY.LOW": 0,
       "SEVERITY.MEDIUM": 0,
       "SEVERITY.UNDEFINED": 0,
-      "loc": 138,
+      "loc": 139,
       "nosec": 0,
       "skipped_tests": 0
     }
   },
   "results": [
     {
-      "code": "123             start_time = time.time()\n124             response = requests.post(\n125                 f\"{self.app_url}/api/embed\",\n126                 json={\"text\": text},\n127                 headers={\"Content-Type\": \"application/json\"},\n128             )\n129             response.raise_for_status()\n",
+      "code": "118             start_time = time.time()\n119             response = requests.post(\n120                 f\"{self.app_url}/api/embed\",\n121                 json={\"text\": text},\n122                 headers={\"Content-Type\": \"application/json\"},\n123             )\n124             response.raise_for_status()\n",
       "col_offset": 23,
       "end_col_offset": 13,
       "filename": "content_loader/enhanced_processor.py",
@@ -172,20 +172,20 @@
       },
       "issue_severity": "MEDIUM",
       "issue_text": "Call to requests without timeout",
-      "line_number": 124,
+      "line_number": 119,
       "line_range": [
-        124,
-        125,
-        126,
-        127,
-        128
+        119,
+        120,
+        121,
+        122,
+        123
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.5/plugins/b113_request_without_timeout.html",
       "test_id": "B113",
       "test_name": "request_without_timeout"
     },
     {
-      "code": "150             start_time = time.time()\n151             response = requests.post(\n152                 f\"{self.app_url}/api/add\",\n153                 json={\n154                     \"embedding\": embedding,\n155                     \"document\": document,\n156                     \"metadata\": metadata,\n157                     \"id\": doc_id,\n158                 },\n159                 headers={\"Content-Type\": \"application/json\"},\n160             )\n161             response.raise_for_status()\n",
+      "code": "143             start_time = time.time()\n144             response = requests.post(\n145                 f\"{self.app_url}/api/add\",\n146                 json={\n147                     \"embedding\": embedding,\n148                     \"document\": document,\n149                     \"metadata\": metadata,\n150                     \"id\": doc_id,\n151                 },\n152                 headers={\"Content-Type\": \"application/json\"},\n153             )\n154             response.raise_for_status()\n",
       "col_offset": 23,
       "end_col_offset": 13,
       "filename": "content_loader/enhanced_processor.py",
@@ -196,25 +196,25 @@
       },
       "issue_severity": "MEDIUM",
       "issue_text": "Call to requests without timeout",
-      "line_number": 151,
+      "line_number": 144,
       "line_range": [
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
         151,
         152,
-        153,
-        154,
-        155,
-        156,
-        157,
-        158,
-        159,
-        160
+        153
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.5/plugins/b113_request_without_timeout.html",
       "test_id": "B113",
       "test_name": "request_without_timeout"
     },
     {
-      "code": "87             start_time = time.time()\n88             response = requests.post(\n89                 f\"{self.app_url}/api/embed\",\n90                 json={\"text\": text},\n91                 headers={\"Content-Type\": \"application/json\"},\n92             )\n93             response.raise_for_status()\n",
+      "code": "79             start_time = time.time()\n80             response = requests.post(\n81                 f\"{self.app_url}/api/embed\",\n82                 json={\"text\": text},\n83                 headers={\"Content-Type\": \"application/json\"},\n84             )\n85             response.raise_for_status()\n",
       "col_offset": 23,
       "end_col_offset": 13,
       "filename": "content_loader/process_content.py",
@@ -225,20 +225,20 @@
       },
       "issue_severity": "MEDIUM",
       "issue_text": "Call to requests without timeout",
-      "line_number": 88,
+      "line_number": 80,
       "line_range": [
-        88,
-        89,
-        90,
-        91,
-        92
+        80,
+        81,
+        82,
+        83,
+        84
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.5/plugins/b113_request_without_timeout.html",
       "test_id": "B113",
       "test_name": "request_without_timeout"
     },
     {
-      "code": "110             start_time = time.time()\n111             response = requests.post(\n112                 f\"{self.app_url}/api/add\",\n113                 json={\n114                     \"embedding\": embedding,\n115                     \"document\": document,\n116                     \"metadata\": metadata,\n117                     \"id\": doc_id,\n118                 },\n119                 headers={\"Content-Type\": \"application/json\"},\n120             )\n121             response.raise_for_status()\n",
+      "code": "98             start_time = time.time()\n99             response = requests.post(\n100                 f\"{self.app_url}/api/add\",\n101                 json={\n102                     \"embedding\": embedding,\n103                     \"document\": document,\n104                     \"metadata\": metadata,\n105                     \"id\": doc_id,\n106                 },\n107                 headers={\"Content-Type\": \"application/json\"},\n108             )\n109             response.raise_for_status()\n",
       "col_offset": 23,
       "end_col_offset": 13,
       "filename": "content_loader/process_content.py",
@@ -249,25 +249,25 @@
       },
       "issue_severity": "MEDIUM",
       "issue_text": "Call to requests without timeout",
-      "line_number": 111,
+      "line_number": 99,
       "line_range": [
-        111,
-        112,
-        113,
-        114,
-        115,
-        116,
-        117,
-        118,
-        119,
-        120
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.5/plugins/b113_request_without_timeout.html",
       "test_id": "B113",
       "test_name": "request_without_timeout"
     },
     {
-      "code": "44             debug=os.getenv(\"FLASK_DEBUG\", \"True\").lower() == \"true\",\n45             host=os.getenv(\"FLASK_HOST\", \"0.0.0.0\"),\n46             port=int(os.getenv(\"FLASK_PORT\", \"8080\")),\n",
+      "code": "43             debug=os.getenv(\"FLASK_DEBUG\", \"True\").lower() == \"true\",\n44             host=os.getenv(\"FLASK_HOST\", \"0.0.0.0\"),\n45             port=int(os.getenv(\"FLASK_PORT\", \"8080\")),\n",
       "col_offset": 41,
       "end_col_offset": 50,
       "filename": "startrek-rag/config.py",
@@ -278,9 +278,9 @@
       },
       "issue_severity": "MEDIUM",
       "issue_text": "Possible binding to all interfaces.",
-      "line_number": 45,
+      "line_number": 44,
       "line_range": [
-        45
+        44
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.5/plugins/b104_hardcoded_bind_all_interfaces.html",
       "test_id": "B104",

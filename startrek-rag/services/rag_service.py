@@ -113,7 +113,11 @@ class RAGService:
             response = chain.invoke(question)
             logger.info("Query processed successfully")
 
-            return response
+            # Ensure response is a string
+            if isinstance(response, str):
+                return response
+            else:
+                return str(response) if response is not None else None
 
         except Exception as e:
             logger.exception(f"Error processing query: {e}")

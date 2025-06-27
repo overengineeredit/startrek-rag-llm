@@ -16,12 +16,12 @@ We highly encourage switching to the new `scan` command which is easier to use, 
     "report_meta": {
         "scan_target": "environment",
         "scanned": [
-            "/home/peenaki/.pyenv/versions/3.10.18/lib/python3.10/lib-dynload",
-            "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages/setuptools/_vendor",
+            "/home/peenaki/.pyenv/versions/3.10.18/lib/python3.10",
             "/home/peenaki/.pyenv/versions/3.10.18/lib/python310.zip",
+            "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages/setuptools/_vendor",
             "/home/peenaki/Develop/startrek-rag-llm/venv/lib/python3.10/site-packages",
             "/home/peenaki/Develop/startrek-rag-llm/venv/bin",
-            "/home/peenaki/.pyenv/versions/3.10.18/lib/python3.10"
+            "/home/peenaki/.pyenv/versions/3.10.18/lib/python3.10/lib-dynload"
         ],
         "scanned_full_path": [
             "/home/peenaki/Develop/startrek-rag-llm/venv/bin",
@@ -41,7 +41,7 @@ We highly encourage switching to the new `scan` command which is easier to use, 
         "account": "",
         "local_database_path": null,
         "safety_version": "3.5.2",
-        "timestamp": "2025-06-26 20:41:30",
+        "timestamp": "2025-06-26 21:57:26",
         "packages_found": 199,
         "vulnerabilities_found": 11,
         "vulnerabilities_ignored": 0,
@@ -61,9 +61,9 @@ We highly encourage switching to the new `scan` command which is easier to use, 
             "safety_command": "check"
         },
         "git": {
-            "branch": "main",
+            "branch": "feature/unittests_ci_cd",
             "tag": "",
-            "commit": "e7731f6d78377490e21db2b40f52ba3bb725324a",
+            "commit": "b12a0a9dba66ed7e3ed21a50bd294fe0c85bcf41",
             "dirty": "True",
             "origin": "git@github.com:overengineeredit/startrek-rag-llm.git"
         },
