@@ -196,8 +196,11 @@ help:
 # Diagram generation targets
 diagrams-setup:
 	@echo "Setting up PlantUML diagram generation..."
-	@if ! command -v java &> /dev/null; then echo "❌ Java not found. Please install Java 17 or later."; exit 1; fi
-	@echo "✅ Java found: $(shell java -version 2>&1 | head -1)"
+	@if ! command -v java >/dev/null 2>&1; then \
+		echo "❌ Java not found. Please install Java 17 or later."; exit 1; \
+	else \
+		echo "✅ Java found: $$(java -version 2>&1 | head -1)"; \
+	fi
 	@if [ ! -f "docs/plantuml-1.2024.0.jar" ]; then \
 		echo "📥 Downloading PlantUML jar..."; \
 		cd docs && wget -q https://github.com/plantuml/plantuml/releases/download/v1.2024.0/plantuml-1.2024.0.jar; \
@@ -209,11 +212,11 @@ diagrams-setup:
 
 diagrams:
 	@echo "Generating PlantUML diagrams..."
+	@if ! command -v java >/dev/null 2>&1; then \
+		echo "❌ Java not found. Please install Java 17 or later."; exit 1; \
+	fi
 	@if [ ! -f "docs/plantuml-1.2024.0.jar" ]; then \
 		echo "❌ PlantUML jar not found. Run 'make diagrams-setup' first."; exit 1; \
-	fi
-	@if ! command -v java &> /dev/null; then \
-		echo "❌ Java not found. Please install Java 17 or later."; exit 1; \
 	fi
 	@cd docs && chmod +x generate_diagrams.sh && ./generate_diagrams.sh
 	@echo "✅ Diagram generation complete"
