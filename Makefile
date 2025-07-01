@@ -201,9 +201,9 @@ diagrams-setup:
 	else \
 		echo "✅ Java found: $$(java -version 2>&1 | head -1)"; \
 	fi
-	@if [ ! -f "docs/plantuml-1.2024.0.jar" ]; then \
+	@if [ ! -f "docs/plantuml.jar" ]; then \
 		echo "📥 Downloading PlantUML jar..."; \
-		cd docs && wget -q https://github.com/plantuml/plantuml/releases/download/v1.2024.0/plantuml-1.2024.0.jar; \
+		cd docs && wget -q https://github.com/plantuml/plantuml/releases/download/v1.2024.0/plantuml-1.2024.0.jar -O plantuml.jar; \
 		echo "✅ PlantUML jar downloaded"; \
 	else \
 		echo "✅ PlantUML jar already exists"; \
@@ -215,10 +215,21 @@ diagrams:
 	@if ! command -v java >/dev/null 2>&1; then \
 		echo "❌ Java not found. Please install Java 17 or later."; exit 1; \
 	fi
-	@if [ ! -f "docs/plantuml-1.2024.0.jar" ]; then \
+	@if [ ! -f "docs/plantuml.jar" ]; then \
 		echo "❌ PlantUML jar not found. Run 'make diagrams-setup' first."; exit 1; \
 	fi
-	@cd docs && chmod +x generate_diagrams.sh && ./generate_diagrams.sh
+	@cd docs && java -jar plantuml.jar -tpng -o ./images *.puml
+	@echo "✅ Diagram generation complete"
+
+diagrams-generate:
+	@echo "Generating PlantUML diagrams..."
+	@if ! command -v java >/dev/null 2>&1; then \
+		echo "❌ Java not found. Please install Java 17 or later."; exit 1; \
+	fi
+	@if [ ! -f "docs/plantuml.jar" ]; then \
+		echo "❌ PlantUML jar not found. Run 'make diagrams-setup' first."; exit 1; \
+	fi
+	@cd docs && java -jar plantuml.jar -tpng -o ./images *.puml
 	@echo "✅ Diagram generation complete"
 
 diagrams-clean:
