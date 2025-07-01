@@ -288,9 +288,9 @@ jobs:
         pytest tests/ -v --cov=startrek-rag --cov=content_loader --cov-report=xml --cov-report=html
         
     - name: Upload coverage reports
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v5
       with:
-        file: ./coverage.xml
+        files: ./coverage.xml
         flags: unittests
         name: codecov-umbrella
         fail_ci_if_error: false
