@@ -22,6 +22,10 @@ coverage.xml
 htmlcov/
 .pytest_cache/
 
+# Security scan reports
+bandit-report.json
+safety-report.json
+
 # Temporary files
 _temp/
 temp/
