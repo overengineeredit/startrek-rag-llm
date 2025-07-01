@@ -1,4 +1,4 @@
-.PHONY: setup run clean process-content process-html process-urls process-all help test-quick test-ci test-format test-lint test-security test-docker test-unit versions update-versions
+.PHONY: setup run clean process-content process-html process-urls process-all help test-quick test-ci test-format test-lint test-security test-docker test-unit versions update-versions diagrams diagrams-setup diagrams-clean
 
 VENV = venv
 PYTHON = $(VENV)/bin/python
@@ -55,6 +55,7 @@ clean:
 	rm -rf tests/*.pyc
 	rm -f bandit-report.json safety-report.json coverage.xml
 	rm -rf htmlcov/
+	$(MAKE) diagrams-clean
 
 # Test targets
 test-quick:
@@ -185,4 +186,39 @@ help:
 	@echo ""
 	@echo "Current defaults:"
 	@echo "  Content folder: $(CONTENT_FOLDER)"
-	@echo "  URLs file: $(URLS_FILE)" 
+	@echo "  URLs file: $(URLS_FILE)"
+	@echo ""
+	@echo "Diagram Generation:"
+	@echo "  make diagrams-setup - Download PlantUML and set up diagram generation"
+	@echo "  make diagrams      - Generate all PlantUML diagrams"
+	@echo "  make diagrams-clean - Clean up generated diagrams"
+
+# Diagram generation targets
+diagrams-setup:
+	@echo "Setting up PlantUML diagram generation..."
+	@if ! command -v java &> /dev/null; then echo "❌ Java not found. Please install Java 17 or later."; exit 1; fi
+	@echo "✅ Java found: $(shell java -version 2>&1 | head -1)"
+	@if [ ! -f "docs/plantuml-1.2024.0.jar" ]; then \
+		echo "📥 Downloading PlantUML jar..."; \
+		cd docs && wget -q https://github.com/plantuml/plantuml/releases/download/v1.2024.0/plantuml-1.2024.0.jar; \
+		echo "✅ PlantUML jar downloaded"; \
+	else \
+		echo "✅ PlantUML jar already exists"; \
+	fi
+	@echo "✅ PlantUML setup complete"
+
+diagrams:
+	@echo "Generating PlantUML diagrams..."
+	@if [ ! -f "docs/plantuml-1.2024.0.jar" ]; then \
+		echo "❌ PlantUML jar not found. Run 'make diagrams-setup' first."; exit 1; \
+	fi
+	@if ! command -v java &> /dev/null; then \
+		echo "❌ Java not found. Please install Java 17 or later."; exit 1; \
+	fi
+	@cd docs && chmod +x generate_diagrams.sh && ./generate_diagrams.sh
+	@echo "✅ Diagram generation complete"
+
+diagrams-clean:
+	@echo "Cleaning up generated diagrams..."
+	@rm -rf docs/images/*.png 2>/dev/null || true
+	@echo "✅ Generated diagrams cleaned" 
