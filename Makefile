@@ -1,4 +1,4 @@
-.PHONY: setup run clean process-content process-html process-urls process-all help test-quick test-ci test-format test-lint test-security test-docker test-unit versions update-versions diagrams diagrams-setup diagrams-clean
+.PHONY: setup run clean process-content process-html process-urls process-all help test-quick test-ci test-format test-lint test-security test-docker test-unit versions update-versions diagrams diagrams-setup diagrams-clean diagrams-generate
 
 VENV = venv
 PYTHON = $(VENV)/bin/python
