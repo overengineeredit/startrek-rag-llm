@@ -98,7 +98,6 @@ class HTMLProcessor:
             print(f"\n⚠️  WARNING: {self.stats['errors']} errors occurred during processing")
         else:
             print("\n✅ SUCCESS: All content processed without errors")
-            print("\n✅ SUCCESS: All content processed without errors")
         print("=" * 60)
 
     def clean_text(self, text: str) -> str:
