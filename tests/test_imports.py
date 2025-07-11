@@ -45,7 +45,6 @@ def test_config_creation():
         config = Config()
         assert config is not None
         assert hasattr(config, 'chroma_url')
-        assert hasattr(config, 'database')
         assert hasattr(config.database, 'collection_name')
     except Exception as e:
         pytest.fail(f"Failed to create Config: {e}")

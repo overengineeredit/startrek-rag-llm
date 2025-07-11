@@ -2,8 +2,6 @@ import logging
 import os
 
 from flask import Flask, jsonify
-
-from flask import Flask, jsonify
 from routes.api import api_bp
 
 from config import config
