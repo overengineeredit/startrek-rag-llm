@@ -211,9 +211,6 @@ class HTMLProcessor:
                 if partition_html is not None:
                     elements = partition_html(text=html_content)
                     logger.info(f"   Unstructured extracted {len(elements)} elements")
-                if partition_html is not None:
-                    elements = partition_html(text=html_content)
-                    logger.info(f"   Unstructured extracted {len(elements)} elements")
 
                     # Extract text from elements
                     text_content = []
