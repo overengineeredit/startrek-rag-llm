@@ -61,3 +61,6 @@ content_loader/__pycache__/
 # Security reports
 bandit-report.json
 safety-report.json
+
+# Test content processing directories
+test_content_processed/
