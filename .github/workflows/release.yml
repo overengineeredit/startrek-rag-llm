@@ -215,9 +215,8 @@ jobs:
 
       - name: Generate diagrams
         run: |
-          cd docs
-          chmod +x generate_diagrams.sh
-          ./generate_diagrams.sh
+          make diagrams-setup
+          make diagrams-generate
 
       - name: Upload architecture diagrams
         uses: actions/upload-artifact@v4

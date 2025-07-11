@@ -54,11 +54,12 @@ The system architecture is documented through 14 comprehensive PlantUML diagrams
 ### Local Generation
 ```bash
 # Generate all diagrams
-cd docs
-./generate_diagrams.sh
+make diagrams-setup
+make diagrams-generate
 
 # Generate specific diagram
-java -jar plantuml-1.2024.0.jar -tpng -o ./images diagram_name.puml
+make diagrams-setup
+java -jar docs/plantuml.jar -tpng -o ./images diagram_name.puml
 ```
 
 ### Generation Script Features
@@ -251,14 +252,15 @@ make test-ci
 ### Diagram Development
 ```bash
 # Generate diagrams locally
-cd docs
-./generate_diagrams.sh
+make diagrams-setup
+make diagrams-generate
 
 # Check diagram syntax
-java -jar plantuml-1.2024.0.jar -tpng -o ./images diagram_name.puml
+make diagrams-setup
+java -jar docs/plantuml.jar -tpng -o ./images diagram_name.puml
 
 # View generated diagrams
-ls -la images/*.png
+ls -la docs/images/*.png
 ```
 
 ### Custom Content Processing

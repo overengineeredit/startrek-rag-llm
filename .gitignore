@@ -22,6 +22,10 @@ coverage.xml
 htmlcov/
 .pytest_cache/
 
+# Security scan reports
+bandit-report.json
+safety-report.json
+
 # Temporary files
 _temp/
 temp/
@@ -64,3 +68,9 @@ safety-report.json
 
 # Test content processing directories
 test_content_processed/
+
+# Ignore logs, env, and jars
+*.log
+nohup.out
+*.env
+*.jar

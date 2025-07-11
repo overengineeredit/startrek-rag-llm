@@ -6,7 +6,6 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./chroma-data:/app/chroma-data
       - ./startrek-rag/_temp:/app/_temp
     environment:
       - CHROMA_HOST=chroma

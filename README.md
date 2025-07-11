@@ -2,21 +2,7 @@
 
 [![codecov](https://codecov.io/gh/overengineeredit/startrek-rag-llm/branch/main/graph/badge.svg)](https://codecov.io/gh/overengineeredit/startrek-rag-llm)
 
-A complete Retrieval-Augmented Generation (RAG) system built with ChromaDB, LangChain, and Ollama, designed to answer questions about Star Trek content using vector embeddings and large language models.
-
-## 🚀 Features
-
-- **Vector Database**: ChromaDB for efficient similarity search
-- **Content Processing**: Automated text chunking and embedding generation
-- **HTML Processing**: Extract text from HTML files and web pages
-- **URL Processing**: Fetch and process content from web URLs
-- **Custom Folder Support**: Process content from any folder or URLs from any file
-- **RAG Pipeline**: Complete retrieval-augmented generation workflow
-- **Docker Support**: Containerized deployment for easy setup
-- **LLM Integration**: Ollama integration for local LLM inference
-- **REST API**: Flask-based API with clean architecture
-- **Service Layer**: Modular, maintainable code structure
-- **Request Validation**: Input validation with Marshmallow schemas
+A Retrieval-Augmented Generation (RAG) system built with ChromaDB, LangChain, and Ollama for answering Star Trek questions using vector embeddings and large language models.
 
 ## 🏗️ Architecture
 
@@ -55,11 +41,10 @@ For comprehensive architecture diagrams and detailed system documentation, see:
 - **🔧 Diagram Generation** - Automated CI/CD diagram generation with syntax validation
 - **📈 Visual Documentation** - Color-coded component diagrams and workflow visualizations
 
-## 📋 Prerequisites
-
+## Prerequisites
 - **Docker & Docker Compose**
-- **Python 3.10+** (for local development)
 - **Ollama** (for LLM functionality)
+
 - **Git**
 
 ## 🛠️ Quick Start
@@ -321,13 +306,14 @@ CONTENT_FOLDER=/path/to/your/content make process-content
 
 # Process URLs from custom file
 URLS_FILE=/path/to/your/urls.txt make process-urls
-
-# Process all with custom paths
-CONTENT_FOLDER=/path/to/content URLS_FILE=/path/to/urls.txt make process-all
-
-# Verbose processing with custom paths
-CONTENT_FOLDER=/path/to/content make process-content-verbose
 ```
+
+- **RAG Application** (`startrek-rag/`): Flask API with service layer architecture
+- **Content Loader** (`content_loader/`): Multi-format content processing (text, HTML, URLs)
+- **Vector Database**: ChromaDB for similarity search
+- **LLM Integration**: Ollama for local inference
+
+For detailed architecture diagrams, see [📋 Architecture Documentation](docs/README.md).
 
 ## 📁 Project Structure
 
@@ -361,257 +347,131 @@ startrek-rag-llm/
 └── README.md               # This file
 ```
 
-## 🔧 Configuration
+## 📋 API Endpoints
 
-### Environment Variables
+All endpoints are under `/api/` prefix:
 
-The system uses the following environment variables:
+```bash
+# Query the RAG system
+curl -X POST http://localhost:8080/api/query \
+  -H "Content-Type: application/json" \
+  -d '{"query": "Your question", "num_results": 5}'
 
-#### **Database Configuration**
-- `CHROMA_HOST`: ChromaDB host (default: `localhost`)
-- `CHROMA_PORT`: ChromaDB port (default: `8000`)
-- `COLLECTION_NAME`: ChromaDB collection name (default: `startrek`)
+# Health check
+curl http://localhost:8080/api/health
 
-#### **Ollama Configuration**
-- `OLLAMA_HOST`: Ollama host (default: `localhost`)
-- `OLLAMA_PORT`: Ollama port (default: `11434`)
-- `LLM_MODEL`: LLM model name (default: `llama3.2`)
+# Get collection stats
+curl http://localhost:8080/api/stats
+```
 
-#### **Application Configuration**
-- `FLASK_HOST`: Flask host (default: `0.0.0.0`)
-- `FLASK_PORT`: Flask port (default: `8080`)
-- `FLASK_DEBUG`: Debug mode (default: `True`)
-- `TEMP_FOLDER`: Temporary files directory (default: `./_temp`)
+## 📁 Content Processing
 
-### Docker Configuration
+### Process Different Content Types
+```bash
+# Text files
+make process-content
 
-The `docker-compose.yml` file configures:
-- **App Service**: RAG application on port 8080
-- **ChromaDB Service**: Vector database on port 8000
-- **Networks**: Internal communication between services
-- **Volumes**: Persistent data storage
+# HTML files
+make process-html
+```
+
+### Local CI Testing
+# All content types
+```
+make process-all
+```
+
+### Custom Content Paths
+```bash
+# Process content from custom folder
+CONTENT_FOLDER=/path/to/your/content make process-content
+
+# Process URLs from custom file
+URLS_FILE=/path/to/your/urls.txt make process-urls
+```
 
 ## 🧪 Testing
 
-### Local CI Testing
-
-The project includes comprehensive local testing capabilities that simulate the GitHub Actions CI environment, providing fast feedback during development.
-
-#### **Quick Test (Fast Feedback)**
-For rapid feedback during development:
+### Quick Development Testing
 ```bash
-# Quick format, syntax, and import checks
+# Fast feedback loop
 make test-quick
 
-# Or run the script directly
-./test-quick.sh
-```
-
-**What it checks:**
-- ✅ Code formatting (Black, isort)
-- ✅ Python syntax validation
-- ✅ Import functionality
-- ✅ Docker build verification (if Docker available)
-
-#### **Full CI Simulation**
-For comprehensive testing that mirrors GitHub Actions:
-```bash
-# Full CI simulation (lint, security, Docker, tests)
+# Full CI simulation
 make test-ci
-
-# Or run the script directly
-./test-ci-local.sh
 ```
 
-**What it includes:**
-- ✅ **Linting**: flake8 with comprehensive rules
-- ✅ **Formatting**: Black and isort checks
-- ✅ **Type Checking**: mypy with proper configuration
-- ✅ **Security Scanning**: Bandit and Safety checks
-- ✅ **Docker Builds**: Image building and compose verification
-- ✅ **Code Compilation**: Python bytecode generation
-- ✅ **Unit Tests**: pytest with coverage reporting
-- ✅ **Integration Tests**: Basic functionality verification
-
-#### **Individual Test Components**
-Run specific test components as needed:
+### Individual Test Components
 ```bash
-# Format checks only
-make test-format
-
-# Linting checks only
-make test-lint
-
-# Security scans only
-make test-security
-
-# Docker builds only
-make test-docker
-
-# Unit tests only
-make test-unit
+make test-format    # Code formatting
+make test-lint      # Linting
+make test-security  # Security scans
+make test-docker    # Docker builds
+make test-unit      # Unit tests
 ```
 
-#### **Development Workflow**
+## 🐳 Docker Services
 
-**Recommended workflow for development:**
+- **app**: Flask RAG application (port 8080)
+- **chroma**: ChromaDB database (port 8000)
+- **content-loader**: Content processing utilities
+
+## 🔧 Configuration
+
+### Environment Variables
 ```bash
-# 1. Make your changes
-# ... edit files ...
+# Database
+CHROMA_HOST=localhost
+CHROMA_PORT=8000
+COLLECTION_NAME=startrek
 
-# 2. Quick test for fast feedback
-make test-quick
+# Ollama
+OLLAMA_HOST=localhost
+OLLAMA_PORT=11434
+LLM_MODEL=llama3.2
 
-# 3. If quick test passes, run full CI simulation
-make test-ci
-
-# 4. If all tests pass, commit and push
-git add .
-git commit -m "Your changes"
-git push
+# Application
+FLASK_HOST=0.0.0.0
+FLASK_PORT=8080
 ```
-
-**Benefits:**
-- 🚀 **Fast Feedback**: Quick tests run in seconds
-- 🔍 **Comprehensive**: Full CI simulation catches all issues
-- 🛡️ **Confidence**: Local testing prevents CI failures
-- ⚡ **Efficiency**: Catch issues before pushing to GitHub
-- 📊 **Coverage**: Detailed coverage reporting
-- 🔧 **Modular**: Run individual test components as needed
-
-### Test the Complete System
-
-1. **Start all services:**
-   ```bash
-   docker compose up -d
-   ```
-
-2. **Process content:**
-   ```bash
-   make process-content
-   ```
-
-3. **Start Ollama:**
-   ```bash
-   OLLAMA_HOST=0.0.0.0:11434 ollama serve
-   ```
-
-4. **Test all endpoints:**
-   ```bash
-   # Test root endpoint
-   curl http://localhost:8080/
-   
-   # Test health check
-   curl http://localhost:8080/api/health
-   
-   # Test stats
-   curl http://localhost:8080/api/stats
-   
-   # Test query
-   curl -X POST http://localhost:8080/api/query \
-     -H "Content-Type: application/json" \
-     -d '{"query": "Who is Captain Kirk?"}'
-   
-   # Test embedding generation
-   curl -X POST http://localhost:8080/api/embed \
-     -H "Content-Type: application/json" \
-     -d '{"text": "Star Trek is a science fiction franchise"}'
-   ```
 
 ## 🐛 Troubleshooting
 
 ### Common Issues
+1. **Ollama Connection**: Ensure `OLLAMA_HOST=0.0.0.0:11434 ollama serve`
+2. **Port Conflicts**: Check ports 8080 and 8000 are available
+3. **Content Processing**: Verify files exist in `test_content/`
 
-1. **Ollama Connection Refused**
-   - Ensure Ollama is running: `sudo systemctl status ollama`
-   - Start Ollama with host binding: `OLLAMA_HOST=0.0.0.0:11434 ollama serve`
-
-2. **ChromaDB Connection Issues**
-   - Check if ChromaDB container is running: `docker compose ps`
-   - Restart services: `docker compose restart`
-
-3. **Content Processing Failures**
-   - Verify content files exist in `test_content/`
-   - Check container logs: `docker compose logs app`
-
-4. **Port Conflicts**
-   - Ensure ports 8080 and 8000 are available
-   - Modify `docker-compose.yml` if needed
-
-5. **Import Errors**
-   - Ensure all dependencies are installed: `pip install -r requirements.txt`
-   - Check Python path and virtual environment activation
-
-### Logs and Debugging
-
+### Debug Commands
 ```bash
-# View application logs
+# View logs
 docker compose logs app
-
-# View ChromaDB logs
-docker compose logs chroma
-
-# Follow logs in real-time
-docker compose logs -f app
 
 # Check service status
 docker compose ps
+
+# Restart services
+docker compose restart
 ```
 
 ## 📚 Dependencies
 
-### Core Dependencies
-- **ChromaDB**: Vector database for embeddings
-- **LangChain**: LLM orchestration framework
-- **Flask**: Web framework for API
+- **ChromaDB**: Vector database
+- **LangChain**: LLM orchestration
+- **Flask**: Web framework
 - **Ollama**: Local LLM inference
-- **Python-dotenv**: Environment variable management
-- **Marshmallow**: Request validation and serialization
-- **Flask-restx**: API documentation (future enhancement)
-
-### Development Dependencies
 - **Docker**: Containerization
-- **Docker Compose**: Service orchestration
-- **Make**: Build automation
-
-## 🔄 Architecture Evolution
-
-### **Previous Architecture**
-- Monolithic Flask application
-- Mixed concerns in single files
-- Direct endpoint definitions
-- Limited error handling
-
-### **Current Architecture**
-- ✅ **Application Factory Pattern**: Clean app initialization
-- ✅ **Service Layer**: Business logic encapsulation
-- ✅ **API Blueprints**: Organized route structure
-- ✅ **Centralized Configuration**: Environment-based config management
-- ✅ **Comprehensive Error Handling**: Proper exception management
-- ✅ **Request Validation**: Input validation with schemas
-- ✅ **Modular Design**: Easy to extend and maintain
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Make your changes following the established architecture patterns
-4. Test thoroughly
-5. Commit your changes: `git commit -m 'Add feature'`
-6. Push to the branch: `git push origin feature-name`
-7. Submit a pull request
+2. Create a feature branch
+3. Run tests: `make test-ci`
+4. Submit a pull request
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- **Star Trek** content for testing
-- **ChromaDB** for vector database functionality
-- **LangChain** for LLM orchestration
-- **Ollama** for local LLM inference
-- **Flask** for the web framework foundation
+MIT License - see LICENSE file for details.
 
 ---
 
