@@ -4,35 +4,309 @@
 
 A Retrieval-Augmented Generation (RAG) system built with ChromaDB, LangChain, and Ollama for answering Star Trek questions using vector embeddings and large language models.
 
-## 🚀 Quick Start
+## 🏗️ Architecture
 
-### Prerequisites
+The system follows a clean, modular architecture with clear separation of concerns:
+
+### **Core Components**
+
+#### 1. **RAG Application** (`startrek-rag/`)
+- **Application Factory**: Clean Flask app initialization
+- **API Blueprints**: Organized REST endpoints under `/api/` prefix
+- **Service Layer**: Business logic encapsulated in `services/rag_service.py`
+- **Configuration Management**: Centralized config with dataclasses
+- **Error Handling**: Comprehensive exception handling throughout
+
+#### 2. **Content Loader** (`content_loader/`)
+- Content processing and chunking
+- Embedding generation via API calls
+- Vector database population
+
+#### 3. **Vector Database** (`chroma/`)
+- ChromaDB instance for storing embeddings
+- Persistent storage for vector data
+
+### **Architecture Benefits**
+- ✅ **Modular Design**: Easy to extend and maintain
+- ✅ **Testability**: Clear separation enables unit testing
+- ✅ **Scalability**: Service layer supports horizontal scaling
+- ✅ **Maintainability**: Clean code structure with proper abstractions
+- ✅ **Error Handling**: Comprehensive error management
+- ✅ **Validation**: Input validation with Marshmallow schemas
+
+### **📊 Detailed Architecture Documentation**
+
+For comprehensive architecture diagrams and detailed system documentation, see:
+- **[📋 Architecture Diagrams](docs/README.md)** - 14 PlantUML diagrams covering system overview, component interactions, data flows, deployment, API endpoints, and processing workflows
+- **🔧 Diagram Generation** - Automated CI/CD diagram generation with syntax validation
+- **📈 Visual Documentation** - Color-coded component diagrams and workflow visualizations
+
+## Prerequisites
 - **Docker & Docker Compose**
 - **Ollama** (for LLM functionality)
 
-### Setup & Run
+- **Git**
+
+## 🛠️ Quick Start
+
+### 1. Clone and Setup
 ```bash
-# 1. Clone and start services
 git clone <your-repo-url>
 cd startrek-rag-llm
-docker compose up -d
+```
 
-# 2. Start Ollama with Docker compatibility
-OLLAMA_HOST=0.0.0.0:11434 ollama serve
+### 2. Start Ollama (Required for LLM functionality)
+```bash
+# Stop any existing Ollama service
+sudo systemctl stop ollama
 
-# 3. Pull the required model
+# Start Ollama with Docker compatibility (listens on all interfaces)
+nohup bash -c 'OLLAMA_HOST=0.0.0.0:11434 ollama serve' > ollama.log 2>&1 &
+
+# Pull the required model
 ollama pull llama3.2
 
-# 4. Process Star Trek content
+# Verify Ollama is accessible
+curl -s http://localhost:11434/api/tags
+```
+
+### 3. Start Docker Services
+```bash
+# Start the application and ChromaDB
+docker compose up -d
+
+# Verify services are running
+docker compose ps
+```
+
+### 4. Process Content (Optional)
+```bash
+# Add Star Trek content to the vector database
 make process-content
 
-# 5. Test the system
+# Check database stats
+curl -s http://localhost:8080/api/stats
+```
+
+### 5. Test the System
+```bash
+# Ask a Star Trek question
 curl -X POST http://localhost:8080/api/query \
   -H "Content-Type: application/json" \
   -d '{"query": "Who is Captain Kirk?", "num_results": 5}'
 ```
 
-## 🏗️ Architecture
+### 6. Shutdown (When Done)
+```bash
+# Stop Docker containers
+docker compose down
+
+# Stop Ollama processes
+pkill ollama
+
+# Verify everything is stopped
+docker compose ps
+ps aux | grep ollama
+```
+
+## 🚀 Usage
+
+### API Endpoints
+
+All endpoints are organized under the `/api/` prefix for consistency:
+
+#### **Root Endpoint**
+```bash
+curl http://localhost:8080/
+```
+Returns API information and available endpoints.
+
+#### **1. Query the RAG System**
+```bash
+curl -X POST http://localhost:8080/api/query \
+  -H "Content-Type: application/json" \
+  -d '{"query": "Who is Captain Kirk?", "num_results": 5}'
+```
+
+#### **2. Add Documents to Vector Database**
+```bash
+curl -X POST http://localhost:8080/api/add \
+  -H "Content-Type: application/json" \
+  -d '{
+    "document": "Your document text",
+    "metadata": {"source": "filename", "chunk_id": 1},
+    "id": "unique_id"
+  }'
+```
+
+#### **3. Generate Embeddings**
+```bash
+curl -X POST http://localhost:8080/api/embed \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Your text here"}'
+```
+
+#### **4. Get Collection Statistics**
+```bash
+curl http://localhost:8080/api/stats
+```
+
+#### **5. Health Check**
+```bash
+curl http://localhost:8080/api/health
+```
+
+### Content Processing
+
+#### **Custom Folder Support**
+
+The system supports processing content from custom folders and URLs from custom files:
+
+```bash
+# Process content from a custom folder
+CONTENT_FOLDER=/path/to/your/content make process-content
+
+# Process URLs from a custom file
+URLS_FILE=/path/to/your/urls.txt make process-urls
+
+# Process both with custom paths
+CONTENT_FOLDER=/path/to/content URLS_FILE=/path/to/urls.txt make process-all
+```
+
+**Examples:**
+```bash
+# Process content from your documents folder
+CONTENT_FOLDER=/home/user/star_trek_docs make process-content
+
+# Process URLs from a different file
+URLS_FILE=/home/user/my_urls.txt make process-urls
+```
+
+**Default Paths:**
+- **Content Folder**: `$(PWD)/test_content` (your current test_content folder)
+- **URLs File**: `$(PWD)/test_content/star_trek_urls.txt`
+
+#### **Process New Content**
+
+```bash
+# Add your content files to test_content/
+make process-content
+
+# Or use a custom folder
+CONTENT_FOLDER=/path/to/your/content make process-content
+```
+
+#### **Process HTML Files**
+```bash
+# Process HTML files in test_content/
+make process-html
+
+# Or use a custom folder
+CONTENT_FOLDER=/path/to/your/html make process-html
+```
+
+#### **Process URLs from File**
+```bash
+# Process URLs listed in test_content/star_trek_urls.txt
+make process-urls
+
+# Or use a custom URLs file
+URLS_FILE=/path/to/your/urls.txt make process-urls
+```
+
+#### **Process All Content Types**
+```bash
+# Process text, HTML, and URLs in one command
+make process-all
+
+# Or use custom paths for all
+CONTENT_FOLDER=/path/to/content URLS_FILE=/path/to/urls.txt make process-all
+```
+
+### Makefile Commands
+
+The system provides convenient Makefile commands for common operations:
+
+#### **Available Commands**
+```bash
+# View all available commands
+make help
+```
+
+**Output:**
+```
+Available commands:
+  make setup         - Create virtual environment and install dependencies
+  make run           - Start the application
+  make clean         - Remove virtual environment and temporary files
+
+Content Processing (with detailed output):
+  make process-content - Process text content files and add to ChromaDB
+  make process-html  - Process HTML files and add to ChromaDB
+  make process-urls  - Process URLs from file and add to ChromaDB
+  make process-all   - Process all content types (text, HTML, URLs)
+
+Content Processing (with verbose logging):
+  make process-content-verbose - Process text files with verbose logging
+  make process-html-verbose  - Process HTML files with verbose logging
+  make process-urls-verbose  - Process URLs with verbose logging
+  make process-all-verbose   - Process all content with verbose logging
+
+Custom Paths:
+  You can override default paths using environment variables:
+  CONTENT_FOLDER=/path/to/your/content make process-content
+  URLS_FILE=/path/to/your/urls.txt make process-urls
+  CONTENT_FOLDER=/path/to/content URLS_FILE=/path/to/urls.txt make process-all
+
+Current defaults:
+  Content folder: /path/to/your/test_content
+  URLs file: /path/to/your/test_content/star_trek_urls.txt
+```
+
+#### **Basic Commands**
+```bash
+# Setup development environment
+make setup
+
+# Start the application locally
+make run
+
+# Clean up temporary files
+make clean
+```
+
+#### **Content Processing Commands**
+```bash
+# Process text content (default: test_content/)
+make process-content
+
+# Process HTML files (default: test_content/)
+make process-html
+
+# Process URLs from file (default: test_content/star_trek_urls.txt)
+make process-urls
+
+# Process all content types
+make process-all
+```
+
+#### **Verbose Logging Commands**
+```bash
+# Process with detailed HTTP request logging
+make process-content-verbose
+make process-html-verbose
+make process-urls-verbose
+make process-all-verbose
+```
+
+#### **Custom Path Commands**
+```bash
+# Process content from custom folder
+CONTENT_FOLDER=/path/to/your/content make process-content
+
+# Process URLs from custom file
+URLS_FILE=/path/to/your/urls.txt make process-urls
+```
 
 - **RAG Application** (`startrek-rag/`): Flask API with service layer architecture
 - **Content Loader** (`content_loader/`): Multi-format content processing (text, HTML, URLs)
@@ -99,11 +373,11 @@ make process-content
 
 # HTML files
 make process-html
+```
 
-# URLs from file
-make process-urls
-
+### Local CI Testing
 # All content types
+```
 make process-all
 ```
 

@@ -10,10 +10,8 @@ services:
     environment:
       - CHROMA_HOST=chroma
       - CHROMA_PORT=8000
-      - OLLAMA_HOST=host.docker.internal
+      - OLLAMA_HOST=192.168.1.86
       - LLM_MODEL=llama3.2
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     depends_on:
       - chroma
     networks:

@@ -62,6 +62,13 @@ content_loader/chroma-data/
 content_loader/content/
 content_loader/__pycache__/
 
+# Security reports
+bandit-report.json
+safety-report.json
+
+# Test content processing directories
+test_content_processed/
+
 # Ignore logs, env, and jars
 *.log
 nohup.out

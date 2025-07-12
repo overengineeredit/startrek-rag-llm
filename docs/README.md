@@ -243,7 +243,7 @@ cd startrek-rag-llm
 make setup
 
 # Start services
-docker-compose up -d
+docker compose up -d
 
 # Run tests
 make test-ci
