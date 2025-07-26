@@ -35,7 +35,7 @@ class Config:
         self.ollama = OllamaConfig(
             host=os.getenv("OLLAMA_HOST", "localhost"),
             port=int(os.getenv("OLLAMA_PORT", "11434")),
-            model=os.getenv("LLM_MODEL", "llama3.2"),
+            model=os.getenv("LLM_MODEL", "deepseek-r1:1.5b"),
         )
 
         self.app = AppConfig(

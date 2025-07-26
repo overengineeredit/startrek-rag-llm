@@ -10,12 +10,14 @@ services:
     environment:
       - CHROMA_HOST=chroma
       - CHROMA_PORT=8000
-      - OLLAMA_HOST=192.168.1.86
-      - LLM_MODEL=llama3.2
+      - OLLAMA_HOST=host.docker.internal
+      - LLM_MODEL=deepseek-r1:1.5b
     depends_on:
       - chroma
     networks:
       - app-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   chroma:
     image: chromadb/chroma:${CHROMA_VERSION:-0.4.24}

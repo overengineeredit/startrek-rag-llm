@@ -11,6 +11,7 @@ The system follows a clean, modular architecture with clear separation of concer
 ### **Core Components**
 
 #### 1. **RAG Application** (`startrek-rag/`)
+
 - **Application Factory**: Clean Flask app initialization
 - **API Blueprints**: Organized REST endpoints under `/api/` prefix
 - **Service Layer**: Business logic encapsulated in `services/rag_service.py`
@@ -18,15 +19,18 @@ The system follows a clean, modular architecture with clear separation of concer
 - **Error Handling**: Comprehensive exception handling throughout
 
 #### 2. **Content Loader** (`content_loader/`)
+
 - Content processing and chunking
 - Embedding generation via API calls
 - Vector database population
 
 #### 3. **Vector Database** (`chroma/`)
+
 - ChromaDB instance for storing embeddings
 - Persistent storage for vector data
 
 ### **Architecture Benefits**
+
 - ✅ **Modular Design**: Easy to extend and maintain
 - ✅ **Testability**: Clear separation enables unit testing
 - ✅ **Scalability**: Service layer supports horizontal scaling
@@ -37,11 +41,13 @@ The system follows a clean, modular architecture with clear separation of concer
 ### **📊 Detailed Architecture Documentation**
 
 For comprehensive architecture diagrams and detailed system documentation, see:
+
 - **[📋 Architecture Diagrams](docs/README.md)** - 14 PlantUML diagrams covering system overview, component interactions, data flows, deployment, API endpoints, and processing workflows
 - **🔧 Diagram Generation** - Automated CI/CD diagram generation with syntax validation
 - **📈 Visual Documentation** - Color-coded component diagrams and workflow visualizations
 
 ## Prerequisites
+
 - **Docker & Docker Compose**
 - **Ollama** (for LLM functionality)
 
@@ -50,12 +56,14 @@ For comprehensive architecture diagrams and detailed system documentation, see:
 ## 🛠️ Quick Start
 
 ### 1. Clone and Setup
+
 ```bash
 git clone <your-repo-url>
 cd startrek-rag-llm
 ```
 
 ### 2. Start Ollama (Required for LLM functionality)
+
 ```bash
 # Stop any existing Ollama service
 sudo systemctl stop ollama
@@ -63,14 +71,15 @@ sudo systemctl stop ollama
 # Start Ollama with Docker compatibility (listens on all interfaces)
 nohup bash -c 'OLLAMA_HOST=0.0.0.0:11434 ollama serve' > ollama.log 2>&1 &
 
-# Pull the required model
-ollama pull llama3.2
+# Pull the required model (DeepSeek 1.5B for Raspberry Pi)
+ollama pull deepseek-r1:1.5b
 
 # Verify Ollama is accessible
 curl -s http://localhost:11434/api/tags
 ```
 
 ### 3. Start Docker Services
+
 ```bash
 # Start the application and ChromaDB
 docker compose up -d
@@ -80,6 +89,7 @@ docker compose ps
 ```
 
 ### 4. Process Content (Optional)
+
 ```bash
 # Add Star Trek content to the vector database
 make process-content
@@ -89,6 +99,7 @@ curl -s http://localhost:8080/api/stats
 ```
 
 ### 5. Test the System
+
 ```bash
 # Ask a Star Trek question
 curl -X POST http://localhost:8080/api/query \
@@ -97,6 +108,7 @@ curl -X POST http://localhost:8080/api/query \
 ```
 
 ### 6. Shutdown (When Done)
+
 ```bash
 # Stop Docker containers
 docker compose down
@@ -116,12 +128,15 @@ ps aux | grep ollama
 All endpoints are organized under the `/api/` prefix for consistency:
 
 #### **Root Endpoint**
+
 ```bash
 curl http://localhost:8080/
 ```
+
 Returns API information and available endpoints.
 
 #### **1. Query the RAG System**
+
 ```bash
 curl -X POST http://localhost:8080/api/query \
   -H "Content-Type: application/json" \
@@ -129,6 +144,7 @@ curl -X POST http://localhost:8080/api/query \
 ```
 
 #### **2. Add Documents to Vector Database**
+
 ```bash
 curl -X POST http://localhost:8080/api/add \
   -H "Content-Type: application/json" \
@@ -140,6 +156,7 @@ curl -X POST http://localhost:8080/api/add \
 ```
 
 #### **3. Generate Embeddings**
+
 ```bash
 curl -X POST http://localhost:8080/api/embed \
   -H "Content-Type: application/json" \
@@ -147,11 +164,13 @@ curl -X POST http://localhost:8080/api/embed \
 ```
 
 #### **4. Get Collection Statistics**
+
 ```bash
 curl http://localhost:8080/api/stats
 ```
 
 #### **5. Health Check**
+
 ```bash
 curl http://localhost:8080/api/health
 ```
@@ -174,6 +193,7 @@ CONTENT_FOLDER=/path/to/content URLS_FILE=/path/to/urls.txt make process-all
 ```
 
 **Examples:**
+
 ```bash
 # Process content from your documents folder
 CONTENT_FOLDER=/home/user/star_trek_docs make process-content
@@ -183,6 +203,7 @@ URLS_FILE=/home/user/my_urls.txt make process-urls
 ```
 
 **Default Paths:**
+
 - **Content Folder**: `$(PWD)/test_content` (your current test_content folder)
 - **URLs File**: `$(PWD)/test_content/star_trek_urls.txt`
 
@@ -197,6 +218,7 @@ CONTENT_FOLDER=/path/to/your/content make process-content
 ```
 
 #### **Process HTML Files**
+
 ```bash
 # Process HTML files in test_content/
 make process-html
@@ -206,6 +228,7 @@ CONTENT_FOLDER=/path/to/your/html make process-html
 ```
 
 #### **Process URLs from File**
+
 ```bash
 # Process URLs listed in test_content/star_trek_urls.txt
 make process-urls
@@ -215,6 +238,7 @@ URLS_FILE=/path/to/your/urls.txt make process-urls
 ```
 
 #### **Process All Content Types**
+
 ```bash
 # Process text, HTML, and URLs in one command
 make process-all
@@ -228,13 +252,15 @@ CONTENT_FOLDER=/path/to/content URLS_FILE=/path/to/urls.txt make process-all
 The system provides convenient Makefile commands for common operations:
 
 #### **Available Commands**
+
 ```bash
 # View all available commands
 make help
 ```
 
 **Output:**
-```
+
+```txt
 Available commands:
   make setup         - Create virtual environment and install dependencies
   make run           - Start the application
@@ -264,6 +290,7 @@ Current defaults:
 ```
 
 #### **Basic Commands**
+
 ```bash
 # Setup development environment
 make setup
@@ -276,6 +303,7 @@ make clean
 ```
 
 #### **Content Processing Commands**
+
 ```bash
 # Process text content (default: test_content/)
 make process-content
@@ -291,6 +319,7 @@ make process-all
 ```
 
 #### **Verbose Logging Commands**
+
 ```bash
 # Process with detailed HTTP request logging
 make process-content-verbose
@@ -300,6 +329,7 @@ make process-all-verbose
 ```
 
 #### **Custom Path Commands**
+
 ```bash
 # Process content from custom folder
 CONTENT_FOLDER=/path/to/your/content make process-content
@@ -317,7 +347,7 @@ For detailed architecture diagrams, see [📋 Architecture Documentation](docs/R
 
 ## 📁 Project Structure
 
-```
+```txt
 startrek-rag-llm/
 ├── startrek-rag/              # Main RAG application
 │   ├── app.py                # Application factory and main entry point
@@ -367,6 +397,7 @@ curl http://localhost:8080/api/stats
 ## 📁 Content Processing
 
 ### Process Different Content Types
+
 ```bash
 # Text files
 make process-content
@@ -376,12 +407,15 @@ make process-html
 ```
 
 ### Local CI Testing
-# All content types
-```
+
+#### All content types
+
+```bash
 make process-all
 ```
 
-### Custom Content Paths
+#### Custom Content Paths
+
 ```bash
 # Process content from custom folder
 CONTENT_FOLDER=/path/to/your/content make process-content
@@ -393,6 +427,7 @@ URLS_FILE=/path/to/your/urls.txt make process-urls
 ## 🧪 Testing
 
 ### Quick Development Testing
+
 ```bash
 # Fast feedback loop
 make test-quick
@@ -402,6 +437,7 @@ make test-ci
 ```
 
 ### Individual Test Components
+
 ```bash
 make test-format    # Code formatting
 make test-lint      # Linting
@@ -419,6 +455,7 @@ make test-unit      # Unit tests
 ## 🔧 Configuration
 
 ### Environment Variables
+
 ```bash
 # Database
 CHROMA_HOST=localhost
@@ -428,7 +465,7 @@ COLLECTION_NAME=startrek
 # Ollama
 OLLAMA_HOST=localhost
 OLLAMA_PORT=11434
-LLM_MODEL=llama3.2
+LLM_MODEL=deepseek-r1:1.5b
 
 # Application
 FLASK_HOST=0.0.0.0
@@ -438,11 +475,13 @@ FLASK_PORT=8080
 ## 🐛 Troubleshooting
 
 ### Common Issues
+
 1. **Ollama Connection**: Ensure `OLLAMA_HOST=0.0.0.0:11434 ollama serve`
 2. **Port Conflicts**: Check ports 8080 and 8000 are available
 3. **Content Processing**: Verify files exist in `test_content/`
 
 ### Debug Commands
+
 ```bash
 # View logs
 docker compose logs app
@@ -475,4 +514,4 @@ MIT License - see LICENSE file for details.
 
 ---
 
-**Happy exploring the final frontier! 🖖** 
+**Happy exploring the final frontier! 🖖**
